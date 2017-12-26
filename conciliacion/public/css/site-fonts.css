@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'avantgarde-bold';
+    src: url(fonts/avantgarde-bold.ttf);
+}
+
+@font-face {
+    font-family: 'avantgarde-lite';
+    src: url(fonts/avantgarde-lite.ttf);
+}
+
+@font-face {
+    font-family: 'avantgarde-regular';
+    src: url(fonts/avantgarde-regular.ttf);
+}
