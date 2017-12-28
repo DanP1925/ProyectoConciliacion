@@ -33,4 +33,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/expediente/editar/{idExpediente}','ExpedienteController@editar');
 
+    Route::get('/mantenimiento/personaNatural/nuevo','PersonaNaturalController@nuevo');
+
+    Route::get('/mantenimiento/personaNatural/lista','PersonaNaturalController@lista');
+    
 });
