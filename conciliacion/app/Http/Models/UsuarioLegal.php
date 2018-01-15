@@ -75,6 +75,4 @@ class UsuarioLegal extends Model {
     public function usuarioLegalEspecialidads() {
         return $this->hasMany(\App\Http\Models\UsuarioLegalEspecialidad::class, 'idUsuarioLegal', 'idUsuario_legal');
     }
-
-
 }

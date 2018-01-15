@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Library\Expediente;
 
-class PersonaNatural extends Controller
+class PersonaNaturalController extends Controller
 {
     public function lista()
     {
@@ -39,5 +40,16 @@ class PersonaNatural extends Controller
     public function destruir($id)
     {
         //
+    }
+
+    public function buscarPersonal()
+    {
+        $expediente = new Expediente;
+
+        dd($expediente.helloLife());
+    }
+
+    public function buscarParteLegal()
+    {
     }
 }

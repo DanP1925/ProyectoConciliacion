@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExpedienteController extends Controller
 {
@@ -11,11 +12,6 @@ class ExpedienteController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function lista()
     {
         return view('expediente.lista');
@@ -23,7 +19,15 @@ class ExpedienteController extends Controller
 
     public function nuevo()
     {
-        return view('expediente.nuevo');
+        $regiones = DB::table('region')->get()->all();
+        $primeraDivision = DB::table('tipo_caso')->get()->all();
+        $segundaDivision = DB::table('tipo_caso_forma')->get()->all();
+        $tiposCuantia = DB::table('cuantia_tipo')->get()->all();
+        $tiposDeterminada = DB::table('cuantia_determinada')->get()->all();
+
+        return view('expediente.nuevo',
+            compact('regiones','primeraDivision', 'segundaDivision'
+                    ,'tiposCuantia','tiposDeterminada'));
     }
 
     public function info()
@@ -34,5 +38,23 @@ class ExpedienteController extends Controller
     public function editar()
     {
         return view('expediente.editar');
+    }
+
+    public function guardar(Request $request)
+    {
+        $validatedData = $request->validate([
+            'numeroExpediente' => 'required',
+            'fechaSolicitud' => 'required|date',
+            'region01' => 'required',
+            'region02' => 'nullable',
+            'region03' => 'nullable',
+            'tipoCaso01' => 'required',
+            'tipoCaso02' => 'required',
+            'cuantiaControversia' => 'required',
+            'tipoCuantía' => 'required',
+            'cuantiaDeterminada' => 'nullable',
+        ]);
+
+        dd($validatedData);
     }
 }

@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/expediente/nuevo','ExpedienteController@nuevo');
 
+    Route::post('/expediente/lista','ExpedienteController@guardar');
+
     Route::get('/expediente/info/{idExpediente}','ExpedienteController@info');
 
     Route::get('/expediente/editar/{idExpediente}','ExpedienteController@editar');
@@ -37,4 +39,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/mantenimiento/personaNatural/lista','PersonaNaturalController@lista');
     
+    Route::post('/expediente/personal/buscar','PersonaNaturalController@buscarPersonal');
 });
