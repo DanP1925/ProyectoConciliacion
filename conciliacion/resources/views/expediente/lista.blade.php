@@ -37,14 +37,8 @@
                 	<div class="table-2cells-div padding-bottom-5">
                     	<div class="left-div">
                             <div class="site-label">
-                                Fecha Inicio
+                                Fecha Inicio de Consulta
                             </div>
-                        </div>
-                        <div class="right-div">
-                        	<div class="site-label-button float-right">
-                                seleccionar
-                            </div>
-                            <div style="clear:both;"></div>
                         </div>
                     </div>
                     <div class="site-control">
@@ -57,14 +51,8 @@
                 	<div class="table-2cells-div padding-bottom-5">
                     	<div class="left-div">
                             <div class="site-label">
-                                Fecha Fin
+                                Fecha Fin de Consulta
                             </div>
-                        </div>
-                        <div class="right-div">
-                        	<div class="site-label-button float-right">
-                                seleccionar
-                            </div>
-                            <div style="clear:both;"></div>
                         </div>
                     </div>
                     <div class="site-control">
@@ -85,9 +73,11 @@
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="fechaInicio" name="fechaInicio" />
+                    		<input type="text" class="site-input" id="demandante" name="demandante" />
                     	</div>
                     </div>
+                </div>
+            	<div class="cell small-2">
                 </div>
     			<div class="cell small-4">
                 	<div class="site-label padding-bottom-5">
@@ -95,43 +85,86 @@
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="fechaInicio" name="fechaInicio" />
-                    	</div>
-                    </div>
-                </div>
-                <div class="cell small-4">
-                	<div class="site-label padding-bottom-5">
-                        Secretario Responsable
-                    </div>
-                    <div class="site-control">
-                    	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="fechaInicio" name="fechaInicio" />
+                    		<input type="text" class="site-input" id="demandado" name="demandado" />
                     	</div>
                     </div>
                 </div>
           	</div>
         </div>
-        
+        <div class="cell small-12 padding-bottom-20">
+        	<div class="grid-x grid-margin-x">
+            	<div class="cell small-4">
+                	<div class="site-label padding-bottom-5">
+                        Miembro del Consorcio Demandante
+                    </div>
+                    <div class="site-control">
+                    	<div class="site-control-border">
+                    		<input type="text" class="site-input" id="miembroDemandante" name="miembroDemandante" />
+                    	</div>
+                    </div>
+                </div>
+            	<div class="cell small-2">
+                </div>
+    			<div class="cell small-4">
+                	<div class="site-label padding-bottom-5">
+                        Miembro del Consorcio Demandado
+                    </div>
+                    <div class="site-control">
+                    	<div class="site-control-border">
+                    		<input type="text" class="site-input" id="miembroDemandado" name="miembroDemandado" />
+                    	</div>
+                    </div>
+                </div>
+          	</div>
+        </div>
+        <div class="cell small-12 padding-bottom-20">
+        	<div class="grid-x grid-margin-x">
+            	<div class="cell small-4">
+                	<div class="site-label padding-bottom-5">
+                        Secretario Responsable
+                    </div>
+                    <div class="site-control">
+                    	<div class="site-control-border">
+                    		<input type="text" class="site-input" id="miembroDemandante" name="miembroDemandante" />
+                    	</div>
+                    </div>
+                </div>
+            	<div class="cell small-2">
+                </div>
+    			<div class="cell small-4">
+                	<div class="site-label padding-bottom-5">
+                        Secretario Lider
+                    </div>
+                    <div class="site-control">
+                    	<div class="site-control-border">
+                    		<input type="text" class="site-input" id="secretarioLider" name="secretarioLider" />
+                    	</div>
+                    </div>
+                </div>
+          	</div>
+        </div>
         <div class="cell small-12 padding-bottom-25">
         	<div class="grid-x grid-margin-x">
             	<div class="cell small-4">
                 	<div class="site-label padding-bottom-5">
-                        Secretario Líder
+                        Estado de Expediente
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="fechaInicio" name="fechaInicio" />
+                    		<select class="site-select" id="estado" name="estado">
+                            	<option value="">Seleccione una opción</option>
+                            </select>
                     	</div>
                     </div>
                 </div>
                 
                 <div class="cell small-4">
                 	<div class="site-label padding-bottom-5">
-                        Tipo Caso / Primera División
+                        Tipo Caso
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                        	<select class="site-select" id="tipoCaso01" name="tipoCaso01">
+                        	<select class="site-select" id="tipoCaso" name="tipoCaso">
                             	<option value="">Seleccione una opción</option>
                             </select>
                        </div>
@@ -139,17 +172,16 @@
                 </div>
                 <div class="cell small-4">
                 	<div class="site-label padding-bottom-5">
-                        Tipo Caso / Segunda División
+                        Subtipo Caso 
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<select class="site-select" id="tipoCaso02" name="tipoCaso02">
+                    		<select class="site-select" id="subtipoCaso" name="subtipoCaso">
                             	<option value="">Seleccione una opción</option>
                             </select>
                     	</div>
                     </div>
                 </div>
-                
           	</div>
         </div>
         
