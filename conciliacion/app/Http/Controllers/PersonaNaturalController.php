@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Library\Expediente;
+use App\Http\Models\UsuarioLegal;
 
 class PersonaNaturalController extends Controller
 {
@@ -42,11 +43,16 @@ class PersonaNaturalController extends Controller
         //
     }
 
-    public function buscarPersonal()
+    public function buscarPersonal(Request $request)
     {
-        $expediente = new Expediente;
+        $expediente = new Expediente($request);
+        $usuariosLegales = UsuarioLegal::all(getNombreDelTipo()); 
+        $personal = [];
 
-        dd($expediente.helloLife());
+
+        dd($usuariosLegales[0]->getNombreDelTipo());
+
+        return view('personal.buscar',compact('expediente'));
     }
 
     public function buscarParteLegal()

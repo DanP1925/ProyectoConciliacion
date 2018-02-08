@@ -75,4 +75,10 @@ class UsuarioLegal extends Model {
     public function usuarioLegalEspecialidads() {
         return $this->hasMany(\App\Http\Models\UsuarioLegalEspecialidad::class, 'idUsuarioLegal', 'idUsuario_legal');
     }
+
+    public function getNombreDelTipo(){
+        
+        $nombre = UsuarioLegalTipo::all()->where('idUsuarioLegalTipo','=',$this->idUsuarioLegalTipo)->first()->nombre;
+        return $nombre; 
+    }
 }
