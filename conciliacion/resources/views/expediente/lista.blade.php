@@ -77,8 +77,6 @@
                     	</div>
                     </div>
                 </div>
-            	<div class="cell small-2">
-                </div>
     			<div class="cell small-4">
                 	<div class="site-label padding-bottom-5">
                         Demandado
@@ -103,8 +101,6 @@
                     	</div>
                     </div>
                 </div>
-            	<div class="cell small-2">
-                </div>
     			<div class="cell small-4">
                 	<div class="site-label padding-bottom-5">
                         Miembro del Consorcio Demandado
@@ -128,8 +124,6 @@
                     		<input type="text" class="site-input" id="miembroDemandante" name="miembroDemandante" />
                     	</div>
                     </div>
-                </div>
-            	<div class="cell small-2">
                 </div>
     			<div class="cell small-4">
                 	<div class="site-label padding-bottom-5">
