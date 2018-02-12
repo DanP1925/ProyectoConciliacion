@@ -60,13 +60,16 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="estadoExpediente" name="estadoExpediente">
                                     <option value="">Seleccione una opción</option>
+                                    @foreach ($estadosExpediente as $estadoExpediente)
+                                    <option value="{{$estadoExpediente->idexpediente_estado}}">{{$estadoExpediente->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-             <div class="cell small-12 padding-bottom-40">
+             <div class="cell small-12 padding-bottom-20">
                 <div class="grid-x grid-margin-x">
                     <div class="cell small-4">
                         <div class="site-label padding-bottom-5">
@@ -90,6 +93,32 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="tipoCaso" name="tipoCaso">
                                     <option value="">Seleccione una opción</option>
+                                    @foreach ($tipos as $tipo)
+                                    <option value="{{$tipo->idTipoCaso}}">{{$tipo->nombre}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="cell small-12 padding-bottom-40">
+                <div class="grid-x grid-margin-x">
+                    <div class="cell small-4">
+                        <div class="table-2cells-div padding-bottom-5">
+                            <div class="left-div">
+                                <div class="site-label">
+                                    Subtipo de Caso 1
+                                </div>
+                            </div>
+                        </div>
+                        <div class="site-control">
+                            <div class="site-control-border">
+                                <select class="site-select" id="subtipoCaso" name="subtipoCaso">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($subtipos as $subtipo)
+                                    <option value="{{$subtipo -> idTipoCasoForma}}">{{$subtipo->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -98,14 +127,36 @@
                         <div class="table-2cells-div padding-bottom-5">
                             <div class="left-div">
                                 <div class="site-label">
-                                    Subtipo de Caso
+                                    Subtipo de Caso 2
                                 </div>
                             </div>
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="subTipoCaso" name="subTipoCaso">
+                                <select class="site-select" id="subtipoCaso2" name="subtipoCaso2">
                                     <option value="">Seleccione una opción</option>
+                                    @foreach ($subtipos as $subtipo)
+                                    <option value="{{$subtipo -> idTipoCasoForma}}">{{$subtipo->nombre}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cell small-4">
+                        <div class="table-2cells-div padding-bottom-5">
+                            <div class="left-div">
+                                <div class="site-label">
+                                    Subtipo de Caso 3
+                                </div>
+                            </div>
+                        </div>
+                        <div class="site-control">
+                            <div class="site-control-border">
+                                <select class="site-select" id="subtipoCaso3" name="subtipoCaso3">
+                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($subtipos as $subtipo)
+                                    <option value="{{$subtipo -> idTipoCasoForma}}">{{$subtipo->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -150,7 +201,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="tipoCuantía" name="tipoCuantía">
+                                <select class="site-select" id="tipoCuantia" name="tipoCuantia">
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($tiposCuantia as $tipoCuantia)
                                     <option value="{{$tipoCuantia->idCuantiaTipo}}">{{$tipoCuantia->nombre}}</option>
@@ -725,6 +776,20 @@
                     </div>
                 </div>
             </div>
+            @if ($errors->any())
+            <div class="cell small-12 padding-bottom-50 error">
+                <div class="site-list-item-text padding-bottom-5">
+                    Los siguientes errores fueron encontraros cuando registrabamos el expediente:
+                </div>
+                <div class="site-list-item-label">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            @endif
         </div>
     </form>
 </div>

@@ -305,7 +305,17 @@ a{
 	vertical-align:middle;
 }
 
+.error{
+    color: #D8000C;
+    background-color: #FFD2D2;
+}
 
+
+.error i{
+    margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+}
 
 /* Small only */
 @media screen and (max-width: 39.9375em) {
