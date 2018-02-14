@@ -21,7 +21,7 @@
         </div>
         <div class="cell small-8 header-text-div text-align-right">
             <a href="{{ url('/expediente/lista',[]) }}"><strong>Expedientes</strong></a> | 
-            <strong>Designaciones</strong> | 
+            <a href="{{ url('/designacion/lista',[]) }}"><strong>Designaciones</strong></a> | 
             <strong>Facturas</strong> | 
             <strong>Mantenimientos</strong> | 
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

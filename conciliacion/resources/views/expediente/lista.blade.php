@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Expedientes')
+
 @section('content')
 
 <div class="grid-container">

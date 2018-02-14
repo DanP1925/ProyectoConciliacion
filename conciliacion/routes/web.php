@@ -38,6 +38,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mantenimiento/personaNatural/nuevo','PersonaNaturalController@nuevo');
 
     Route::get('/mantenimiento/personaNatural/lista','PersonaNaturalController@lista');
+
+    Route::get('/designacion/lista','DesignacionController@lista');
+
+    Route::get('/propuesta/lista','PropuestaController@lista');
+
+    Route::get('/propuesta/nuevo','PropuestaController@nuevo');
     
     Route::post('/expediente/personal/buscar','PersonaNaturalController@buscarPersonal');
 });
