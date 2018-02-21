@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Designaciones')
+@section('title', 'Directorio de Arbitros')
 
 @section('content')
 
@@ -10,21 +10,7 @@
             <div class="table-2cells-div padding-top-30 padding-bottom-40">
                 <div class="left-div">
                     <div class="site-title">
-                        DESIGNACIONES
-                    </div>
-                </div>
-                <div class="right-div">
-                    <div class="float-right">
-                        <a href="{{ url ('/propuesta/lista',[])}}">
-                            <div class="site-title-button ">
-                                Ver Propuestas
-                            </div>
-                        </a>
-                        <a href="{{ url ('/propuesta/nuevo',[])}}">
-                            <div class="site-title-button ">
-                                Nueva Propuesta
-                            </div>
-                        </a>
+                        DIRECTORIO DE ÁRBITROS
                     </div>
                 </div>
             </div>
@@ -204,11 +190,9 @@
         </div>
 
         <div class="cell small-12 padding-bottom-50">
-            <a href="{{ url ('/usuariolegal/arbitros',[])}}">
-                <div class="site-form-button float-left">
-                    buscar
-                </div>
-            </a>
+            <div class="site-form-button float-left">
+                buscar
+            </div>
             <div style="clear:both;"></div>
         </div>
 
@@ -216,7 +200,7 @@
             <a href="{{ url ('/designacion/info',[])}}">
                 <div class="site-list-item-div background-color-F5F5F5">
                     <div class="grid-x grid-margin-x">
-                        <div class="cell small-2">
+                        <div class="cell small-1">
                             <div class="site-list-item-label padding-bottom-5">
                                 Nombre
                             </div>
@@ -264,6 +248,11 @@
                                 3
                             </div>
                         </div>
+                        <div class="cell small-1">
+                            <div class="site-list-item-text">
+                                <i class="fa fa-male" style="font-size:36px;"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </a>
@@ -271,7 +260,7 @@
             <a href="{{ url ('/designacion/info',[])}}">
                 <div class="site-list-item-div background-color-FFFFFF">
                     <div class="grid-x grid-margin-x">
-                        <div class="cell small-2">
+                        <div class="cell small-1">
                             <div class="site-list-item-label padding-bottom-5">
                                 Nombre
                             </div>
@@ -318,6 +307,9 @@
                             <div class="site-list-item-text">
                                 2
                             </div>
+                        </div>
+                        <div class="cell small-1">
+                                <i class="fa fa-male" style="font-size:36px;"></i>
                         </div>
                     </div>
                 </div>

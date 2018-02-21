@@ -21,9 +21,10 @@ class DesignacionController extends Controller
         //
     }
 
-    public function detalle($id)
+    //public function info($id)
+    public function info()
     {
-        //
+        return view('designacion.info');
     }
 
     public function editar($id)

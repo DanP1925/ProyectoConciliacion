@@ -108,7 +108,7 @@
                     	</div>
                     </div>
                 </div>
-          	</div>
+            </div>
         </div>
 
         <div class="cell small-12 padding-bottom-50">
@@ -119,64 +119,66 @@
         </div>
 
         <div class="cell small-12 padding-bottom-50">
-            <div class="site-list-item-div background-color-F5F5F5">
-                <div class="grid-x grid-margin-x">
-                    <div class="cell small-2">
-                        <div class="site-list-item-label padding-bottom-5">
-                            Número de Expediente
+            <a href="{{ url ('/propuesta/nuevo',[])}}">
+                <div class="site-list-item-div background-color-F5F5F5">
+                    <div class="grid-x grid-margin-x">
+                        <div class="cell small-2">
+                            <div class="site-list-item-label padding-bottom-5">
+                                Número de Expediente
+                            </div>
+                            <div class="site-list-item-text">
+                                123-456-78
+                            </div>
                         </div>
-                        <div class="site-list-item-text">
-                            123-456-78
+                        <div class="cell small-2">
+                            <div class="site-list-item-label padding-bottom-5">
+                                Demandante
+                            </div>
+                            <div class="site-list-item-text">
+                                Tottus
+                            </div>
+                            <div class="site-list-item-label padding-bottom-5">
+                                Demandado
+                            </div>
+                            <div class="site-list-item-text">
+                                Cencosud
+                            </div>
                         </div>
-                    </div>
-                    <div class="cell small-2">
-                        <div class="site-list-item-label padding-bottom-5">
-                            Demandante
+                        <div class="cell small-2">
+                            <div class="site-list-item-label padding-bottom-5">
+                                Propuesta 1
+                            </div>
+                            <div class="site-list-item-text">
+                                Juan Pérez
+                            </div>
                         </div>
-                        <div class="site-list-item-text">
-                            Tottus
+                        <div class="cell small-2">
+                            <div class="site-list-item-label padding-bottom-5">
+                                Propuesta 2
+                            </div>
+                            <div class="site-list-item-text">
+                                Pedro Pérez
+                            </div>
                         </div>
-                        <div class="site-list-item-label padding-bottom-5">
-                            Demandado
+                        <div class="cell small-2">
+                            <div class="site-list-item-label padding-bottom-5">
+                                Propuesta 3
+                            </div>
+                            <div class="site-list-item-text">
+                                Pedro Coelho
+                            </div>
                         </div>
-                        <div class="site-list-item-text">
-                            Cencosud
-                        </div>
-                    </div>
-                    <div class="cell small-2">
-                        <div class="site-list-item-label padding-bottom-5">
-                            Propuesta 1
-                        </div>
-                        <div class="site-list-item-text">
-                            Juan Pérez
-                        </div>
-                    </div>
-                    <div class="cell small-2">
-                        <div class="site-list-item-label padding-bottom-5">
-                            Propuesta 2
-                        </div>
-                        <div class="site-list-item-text">
-                            Pedro Pérez
-                        </div>
-                    </div>
-                    <div class="cell small-2">
-                        <div class="site-list-item-label padding-bottom-5">
-                            Propuesta 3
-                        </div>
-                        <div class="site-list-item-text">
-                            Pedro Coelho
-                        </div>
-                    </div>
-                    <div class="cell small-2">
-                        <div class="site-list-item-label padding-bottom-5">
-                            Designado
-                        </div>
-                        <div class="site-list-item-text">
-                            Juan Pérez
+                        <div class="cell small-2">
+                            <div class="site-list-item-label padding-bottom-5">
+                                Designado
+                            </div>
+                            <div class="site-list-item-text">
+                                Juan Pérez
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
 
             <div class="site-list-item-div background-color-FFFFFF">
                 <div class="grid-x grid-margin-x">

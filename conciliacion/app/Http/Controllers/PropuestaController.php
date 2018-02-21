@@ -40,4 +40,9 @@ class PropuestaController extends Controller
     {
         //
     }
+
+    public function detallearbitro()
+    {
+        return view('propuesta.detallearbitro');
+    }
 }

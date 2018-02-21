@@ -41,9 +41,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/designacion/lista','DesignacionController@lista');
 
+    Route::get('/designacion/info','DesignacionController@info');
+
     Route::get('/propuesta/lista','PropuestaController@lista');
 
     Route::get('/propuesta/nuevo','PropuestaController@nuevo');
     
+    Route::get('/propuesta/detallearbitro','PropuestaController@detallearbitro');
+
+    Route::get('/usuariolegal/arbitros','UsuarioLegalController@buscararbitro');
+
     Route::post('/expediente/personal/buscar','PersonaNaturalController@buscarPersonal');
 });
