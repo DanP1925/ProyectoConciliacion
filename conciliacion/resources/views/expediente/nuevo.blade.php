@@ -13,7 +13,7 @@
                 <div class="table-2cells-div padding-top-30 padding-bottom-40">
                     <div class="left-div">
                         <div class="site-title">
-                            NUEVO EXPEDIENTE
+                            DETALLE DE EXPEDIENTE
                         </div>
                     </div>
                     <div class="right-div">
@@ -245,9 +245,13 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="personal/buscar" name="accion" value="buscarSecretario" class="site-label-button float-right">
-                                    buscar
-                                </button>
+                                <!--<button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretario" class="site-label-button float-right">-->
+                                <a href="{{ url('/usuariolegal/directorio', []) }}">
+                                    <div class="site-label-button float-right">
+                                        buscar
+                                    </div>
+                                </a>
+                                <!--</button>-->
                                 <div style="clear:both;"></div>
                             </div>
                         </div>
@@ -496,6 +500,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="cell small-4">
+                        <div class="site-label padding-bottom-5">
+                            Tipo de Designación del Árbitro Único
+                        </div>
+                        <div class="site-control">
+                            <div class="site-control-border">
+                                <select class="site-select" id="resultado" name="resultado">
+                                    <option value="">Seleccione una opción</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="cell small-12 padding-bottom-20">
@@ -503,6 +519,16 @@
                     <div class="cell small-12">
                         <div class="site-subtitle padding-bottom-20">
                             TRIBUNAL ARBITRAL
+                        </div>
+                    </div>
+                    <div class="cell small-4">
+                        <div class="site-label padding-bottom-5">
+                            Presidente Tribunal
+                        </div>
+                        <div class="site-control">
+                            <div class="site-control-border">
+                                <input type="text" class="site-input" id="presidenteTribunal" name="presidenteTribunal" />
+                            </div>
                         </div>
                     </div>
                     <div class="cell small-4">
@@ -525,27 +551,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cell small-4">
-                        <div class="site-label padding-bottom-5">
-                            Presidente Tribunal
-                        </div>
-                        <div class="site-control">
-                            <div class="site-control-border">
-                                <input type="text" class="site-input" id="presidenteTribunal" name="presidenteTribunal" />
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="cell small-12 padding-bottom-40">
                 <div class="grid-x grid-margin-x">
                     <div class="cell small-4">
                         <div class="site-label padding-bottom-5">
+                            Tipo de Designación Presidente Tribunal
+                        </div>
+                        <div class="site-control">
+                            <div class="site-control-border">
+                                <select class="site-select" id="resultado" name="resultado">
+                                    <option value="">Seleccione una opción</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cell small-4">
+                        <div class="site-label padding-bottom-5">
                             Tipo de Designación Demandante
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="tipoDemandante" name="tipoDemandante" />
+                                <select class="site-select" id="resultado" name="resultado">
+                                    <option value="">Seleccione una opción</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -555,7 +585,9 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="tipoDemandado" name="tipoDemandado" />
+                                <select class="site-select" id="resultado" name="resultado">
+                                    <option value="">Seleccione una opción</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -565,13 +597,13 @@
                 <div class="grid-x grid-margin-x">
                     <div class="cell small-12">
                         <div class="site-subtitle padding-bottom-20">
-                            ACTUACIONES ARBITRALES
+                            INCIDENTES EN LA CORTE
                         </div>
                     </div>
                     <div class="cell small-4">
                         <label class="site-label">
                             <input type="checkbox" name="reconsideracion" value="reconsideracion">
-                            Reconsideración
+                            Recusación
                         </label>
                     </div>
                     <div class="cell small-4">
@@ -583,7 +615,7 @@
                     <div class="cell small-4">
                         <label class="site-label">
                             <input type="checkbox" name="reliquidacion" value="reliquidacion">
-                            Reliquidación
+                            Reconsideración
                         </label>
                     </div>
                 </div>
@@ -599,7 +631,7 @@
                     <div class="cell small-4">
                         <label class="site-label">
                             <input type="checkbox" name="recusacion" value="recusacion">
-                            Recusación
+                            Reliquidación
                         </label>
                     </div>
                 </div>
@@ -673,7 +705,7 @@
                     </div>
                     <div class="cell small-4">
                         <div class="site-label padding-bottom-5">
-                            Laudado forma
+                            Ejecución de Forma del Laudo
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">

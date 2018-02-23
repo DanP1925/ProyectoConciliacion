@@ -60,9 +60,7 @@ class ExpedienteController extends Controller
             'cuantiaControversiaInicial' => 'required',
             'cuantiaControversiaFinal' => 'nullable',
             'tipoCuantia' => 'required',
-
-            /*'cuantiaDeterminada' => 'nullable',
-             */
+            'escalaPago' => 'required',
         ]);
 
         dd($validatedData);

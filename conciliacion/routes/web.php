@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/propuesta/detallearbitro','PropuestaController@detallearbitro');
 
-    Route::get('/usuariolegal/arbitros','UsuarioLegalController@buscararbitro');
+    Route::get('/usuariolegal/arbitros','UsuarioLegalController@buscarArbitro');
 
-    Route::post('/expediente/personal/buscar','PersonaNaturalController@buscarPersonal');
+    Route::get('/usuariolegal/directorio','UsuarioLegalController@buscarPersonal');
 });
