@@ -68,20 +68,7 @@ class UsuarioLegalController extends Controller
         $paises = DB::table('usuario_legal_pais')->get()->all();
         $perfiles = DB::table('usuario_legal_tipo')->get()->all();
 
-        $nombre = $request->input('nombre');
-        $apellidoPaterno = $request->input('apellidoPaterno');
-        $apellidoMaterno = $request->input('apellidoMaterno');
-        $profesion = $request->input('profesion');
-        $pais = $request->input('pais');
-        $perfil = $request->input('perfil');
-        $telefono = $request->input('telefono');
-        $correo = $request->input('correo');
-
-        $secretarios = UsuarioLegal::where('nombre','LIKE', '%'.$nombre.'%')
-            ->where('apellidoPaterno','LIKE','%'.$apellidoPaterno.'%')
-            ->where('apellidoMaterno','LIKE','%'.$apellidoMaterno.'%')
-            ->where('idUsuarioLegalProfesion','=',$profesion)
-            ->get();
+        $secretarios = UsuarioLegal::buscarPersonal($request);
 
         return view('usuariolegal.directorio',
             compact('profesiones',
