@@ -32,7 +32,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="numeroExpediente" name="numeroExpediente" />
+                                <input type="text" class="site-input" id="numeroExpediente" name="numeroExpediente" @if (!is_null($expedienteTemporal->numeroExpediente)) value="{{$expedienteTemporal->numeroExpediente}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="date" class="site-input" id="fechaSolicitud" name="fechaSolicitud" />
+                                <input type="date" class="site-input" id="fechaSolicitud" name="fechaSolicitud" @if (!is_null($expedienteTemporal->fechaSolicitud)) value="{{$expedienteTemporal->fechaSolicitud}}" @endif//>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                                 <select class="site-select" id="estadoExpediente" name="estadoExpediente">
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($estadosExpediente as $estadoExpediente)
-                                    <option value="{{$estadoExpediente->idexpediente_estado}}">{{$estadoExpediente->nombre}}</option>
+                                    <option value="{{$estadoExpediente->idExpedienteEstado}}" @if ($estadoExpediente->idExpedienteEstado == $expedienteTemporal->estadoExpediente) selected @endif>{{$estadoExpediente->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -96,7 +96,7 @@
                                 <select class="site-select" id="tipoCaso" name="tipoCaso">
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($tipos as $tipo)
-                                    <option value="{{$tipo->idTipoCaso}}">{{$tipo->nombre}}</option>
+                                    <option value="{{$tipo->idExpedienteTipoCaso}}" @if ($tipo->idExpedienteTipoCaso == $expedienteTemporal->tipoCaso) selected @endif>{{$tipo->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -119,7 +119,7 @@
                                 <select class="site-select" id="subtipoCaso" name="subtipoCaso">
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($subtipos as $subtipo)
-                                    <option value="{{$subtipo -> idTipoCasoForma}}">{{$subtipo->nombre}}</option>
+                                    <option value="{{$subtipo->idExpedienteSubtipoCaso}}" @if ($subtipo->idExpedienteSubtipoCaso == $expedienteTemporal->subtipoCaso) selected @endif>{{$subtipo->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -138,7 +138,7 @@
                                 <select class="site-select" id="subtipoCaso2" name="subtipoCaso2">
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($subtipos as $subtipo)
-                                    <option value="{{$subtipo -> idTipoCasoForma}}">{{$subtipo->nombre}}</option>
+                                    <option value="{{$subtipo -> idExpedienteSubtipoCaso}}" @if ($subtipo->idExpedienteSubtipoCaso == $expedienteTemporal->subtipoCaso2) selected @endif>{{$subtipo->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -157,7 +157,7 @@
                                 <select class="site-select" id="subtipoCaso3" name="subtipoCaso3">
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($subtipos as $subtipo)
-                                    <option value="{{$subtipo -> idTipoCasoForma}}">{{$subtipo->nombre}}</option>
+                                    <option value="{{$subtipo -> idExpedienteSubtipoCaso}}" @if ($subtipo->idExpedienteSubtipoCaso == $expedienteTemporal->subtipoCaso3) selected @endif>{{$subtipo->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -179,7 +179,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="cuantiaControversiaInicial" name="cuantiaControversiaInicial" />
+                                <input type="text" class="site-input" id="cuantiaControversiaInicial" name="cuantiaControversiaInicial" @if (!is_null($expedienteTemporal->cuantiaControversiaInicial)) value="{{$expedienteTemporal->cuantiaControversiaInicial}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="cuantiaControversiaFinal" name="cuantiaControversiaFinal" />
+                                <input type="text" class="site-input" id="cuantiaControversiaFinal" name="cuantiaControversiaFinal" @if (!is_null($expedienteTemporal->cuantiaControversiaFinal)) value="{{$expedienteTemporal->cuantiaControversiaFinal}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -206,7 +206,7 @@
                                 <select class="site-select" id="tipoCuantia" name="tipoCuantia">
                                     <option value="">Seleccione una opción</option>
                                     @foreach ($tiposCuantia as $tipoCuantia)
-                                    <option value="{{$tipoCuantia->idCuantiaTipo}}">{{$tipoCuantia->nombre}}</option>
+                                    <option value="{{$tipoCuantia->idCuantiaTipo}}" @if ($tipoCuantia->idCuantiaTipo == $expedienteTemporal->tipoCuantia) selected @endif>{{$tipoCuantia->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -220,8 +220,8 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="escalaPago" name="escalaPago">
                                     <option value="">Seleccione una opción</option>
-                                    @foreach ($tiposDeterminada as $tipoDeterminada)
-                                    <option value="{{$tipoDeterminada->idCuantiaDeterminada}}">{{$tipoDeterminada->nombre}}</option>
+                                    @foreach ($escalasDePago as $escalaDePago)
+                                    <option value="{{$escalaDePago->idCuantiaEscalaPago}}" @if ($escalaDePago->idCuantiaEscalaPago == $expedienteTemporal->escalaPago) selected @endif>{{$escalaDePago->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -245,19 +245,17 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <!--<button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretario" class="site-label-button float-right">-->
-                                <a href="{{ url('/usuariolegal/directorio', []) }}">
+                                <button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretario" class="site-label-button float-right">
                                     <div class="site-label-button float-right">
                                         buscar
                                     </div>
-                                </a>
-                                <!--</button>-->
+                                </button>
                                 <div style="clear:both;"></div>
                             </div>
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="secretarioResponable" name="secretarioResponable" placeholder="Seleccione un personal" />
+                                <input type="text" class="site-input" id="secretarioResponable" name="secretarioResponable" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->secretarioArbitral)) value="{{$expedienteTemporal->secretarioArbitral}}" @endif/>
                             </div>
                         </div>
                     </div>

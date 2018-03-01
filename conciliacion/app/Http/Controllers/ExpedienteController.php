@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Library\ExpedienteTemporal;
 
 class ExpedienteController extends Controller
 {
@@ -17,13 +18,26 @@ class ExpedienteController extends Controller
         return view('expediente.lista');
     }
 
-    public function nuevo()
+    public function nuevo(Request $request)
     {
+        $expedienteTemporal = new ExpedienteTemporal($request);
+
+        ExpedienteTemporal::quitarDeSesion($request);
+
+        if (!is_null($request->input('accion'))){
+            $accion = explode(" ",$request->input('accion'));
+            $tipoAccion = $accion[0];
+            $resultadoAccion = $accion[1];
+        }
+
+        if ($tipoAccion == "secretarioArbitral")
+            $expedienteTemporal->agregarSecretario($resultadoAccion);
+
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
-        $tipos = DB::table('tipo_caso')->get()->all();
-        $subtipos = DB::table('tipo_caso_forma')->get()->all();
+        $tipos = DB::table('expediente_tipo_caso')->get()->all();
+        $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
         $tiposCuantia = DB::table('cuantia_tipo')->get()->all();
-        $tiposDeterminada = DB::table('cuantia_determinada')->get()->all();
+        $escalasDePago  = DB::table('cuantia_escala_pago')->get()->all();
 
         $regiones = DB::table('region')->get()->all();
 
@@ -33,7 +47,8 @@ class ExpedienteController extends Controller
                     'tipos',
                     'subtipos',
                     'tiposCuantia',
-                    'tiposDeterminada'));
+                    'escalasDePago',
+                    'expedienteTemporal'));
     }
 
     public function info()

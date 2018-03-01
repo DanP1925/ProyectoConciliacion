@@ -4,10 +4,10 @@
 
 @section('content')
 <div class="grid-container">
-    <form method="POST" action="/usuariolegal/directorio">
-        {{ csrf_field() }}
-        <div class="grid-x">
-            <div class="cell small-12">
+    <div class="grid-x">
+        <div class="cell small-12">
+            <form method="POST" action="/usuariolegal/directorio">
+                {{ csrf_field() }}
                 <div class="table-2cells-div padding-top-30 padding-bottom-40">
                     <div class="left-div">
                         <div class="site-title">
@@ -148,15 +148,18 @@
                     </button>
                     <div style="clear:both;"></div>
                 </div>
+            </form>
+        </div>
+        <div class="cell small-12 padding-bottom-50">
 
-                <div class="cell small-12 padding-bottom-50">
-
-                    @foreach ($secretarios as $secretario)
-                    @if ($loop->index % 2 == 0)
-                    <div class="site-list-item-div background-color-F5F5F5">
+            @foreach ($secretarios as $secretario)
+            <form method="POST" action="/expediente/nuevo">
+                {{ csrf_field() }}
+                @if ($loop->index % 2 == 0)
+                <div class="site-list-item-div background-color-F5F5F5">
                     @else 
                     <div class="site-list-item-div background-color-FFFFFF">
-                    @endif
+                        @endif
                         <div class="grid-x grid-margin-x">
                             <div class="cell small-4">
                                 <div class="site-list-item-label padding-bottom-3">
@@ -191,16 +194,17 @@
                                 </div>
                             </div>
                             <div class="cell small-1">
-                                <i class="fa fa-user " style="font-size:36px;"></i>
+                                <button type="submit" name="accion" value="secretarioArbitral {{$secretario->idUsuario_legal}}">
+                                    <i class="fa fa-user " style="font-size:36px;"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                     @endforeach
-
                 </div>
 
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 @endsection
