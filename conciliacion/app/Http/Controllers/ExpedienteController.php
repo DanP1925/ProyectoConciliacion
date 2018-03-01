@@ -28,10 +28,12 @@ class ExpedienteController extends Controller
             $accion = explode(" ",$request->input('accion'));
             $tipoAccion = $accion[0];
             $resultadoAccion = $accion[1];
+            
+            if ($tipoAccion == "buscarSecretario")
+                $expedienteTemporal->agregarSecretario($resultadoAccion);
+            else if ($tipoAccion == "buscarLider")
+                $expedienteTemporal->agregarSecretarioLider($resultadoAccion);
         }
-
-        if ($tipoAccion == "secretarioArbitral")
-            $expedienteTemporal->agregarSecretario($resultadoAccion);
 
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
         $tipos = DB::table('expediente_tipo_caso')->get()->all();

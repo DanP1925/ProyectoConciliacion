@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div class="cell small-12 padding-bottom-50">
-                    <button class="site-form-button float-left">
+                    <button name="accion" value="{{$accion}}" class="site-form-button float-left">
                         buscar
                     </button>
                     <div style="clear:both;"></div>
@@ -194,7 +194,7 @@
                                 </div>
                             </div>
                             <div class="cell small-1">
-                                <button type="submit" name="accion" value="secretarioArbitral {{$secretario->idUsuario_legal}}">
+                                <button type="submit" name="accion" value="{{$accion}} {{$secretario->idUsuario_legal}}">
                                     <i class="fa fa-user " style="font-size:36px;"></i>
                                 </button>
                             </div>

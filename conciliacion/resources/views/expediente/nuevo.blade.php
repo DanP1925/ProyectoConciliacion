@@ -255,7 +255,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="secretarioResponable" name="secretarioResponable" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->secretarioArbitral)) value="{{$expedienteTemporal->secretarioArbitral}}" @endif/>
+                                <input type="text" class="site-input" id="secretarioResponable" name="secretarioResponsable" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->secretarioArbitral)) value="{{$expedienteTemporal->secretarioArbitral}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -267,7 +267,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" name="accion" value="buscarLider" class="site-label-button float-right">
+                                <button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarLider" class="site-label-button float-right">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -275,7 +275,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="secretarioLider" name="secretarioLider" placeholder="Seleccione un personal" />
+                                <input type="text" class="site-input" id="secretarioLider" name="secretarioLider" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->secretarioArbitralLider)) value="{{$expedienteTemporal->secretarioArbitralLider}}" @endif/>
                             </div>
                         </div>
                     </div>

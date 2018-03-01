@@ -9,6 +9,32 @@ use App\Library\ExpedienteTemporal;
 
 class UsuarioLegalController extends Controller
 {
+
+
+    public function buscarArbitro()
+    {
+        return view('usuariolegal.arbitros');
+    }
+
+    public function buscarPersonal(Request $request)
+    {
+        $profesiones = DB::table('usuario_legal_profesion')->get()->all();
+        $paises = DB::table('usuario_legal_pais')->get()->all();
+        $perfiles = DB::table('usuario_legal_tipo')->get()->all();
+
+        $accion = $request->input('accion');
+        $secretarios = UsuarioLegal::buscarPersonal($request);
+        ExpedienteTemporal::guardarEnSesion($request);
+
+        
+        return view('usuariolegal.directorio',
+            compact('profesiones',
+                    'paises',
+                    'perfiles',
+                    'secretarios',
+                    'accion'));
+    }
+
     public function lista()
     {
         //
@@ -44,31 +70,4 @@ class UsuarioLegalController extends Controller
         //
     }
 
-    public function buscarArbitro()
-    {
-        return view('usuariolegal.arbitros');
-    }
-
-    public function buscarPersonal(Request $request)
-    {
-
-        $profesiones = DB::table('usuario_legal_profesion')->get()->all();
-        $paises = DB::table('usuario_legal_pais')->get()->all();
-        $perfiles = DB::table('usuario_legal_tipo')->get()->all();
-
-        $accion = $request->input('accion');
-        if (is_null($accion))
-            $secretarios = UsuarioLegal::buscarPersonal($request);
-        else
-        {
-            ExpedienteTemporal::guardarEnSesion($request);
-            $secretarios = UsuarioLegal::all();
-        }
-
-        return view('usuariolegal.directorio',
-            compact('profesiones',
-                    'paises',
-                    'perfiles',
-                    'secretarios'));
-    }
 }

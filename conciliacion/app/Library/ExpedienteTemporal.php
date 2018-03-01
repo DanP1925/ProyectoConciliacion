@@ -36,6 +36,12 @@ class ExpedienteTemporal {
         $this->cuantiaControversiaFinal = $request->session()->get('cuantiaControversiaFinal');
         $this->tipoCuantia = $request->session()->get('tipoCuantia');
         $this->escalaPago = $request->session()->get('escalaPago');
+
+        if (!is_null($request->session()->get('secretarioArbitral')))
+            $this->secretarioArbitral = $request->session()->get('secretarioArbitral');
+
+        if (!is_null($request->session()->get('secretarioArbitralLider')))
+            $this->secretarioArbitralLider = $request->session()->get('secretarioArbitralLider');
     }
 
     function agregarSecretario($idUsuarioLegal){
@@ -45,8 +51,15 @@ class ExpedienteTemporal {
         $this->secretarioArbitral .= ' '.$secretario->apellidoMaterno;
     }
 
+    function agregarSecretarioLider($idUsuarioLegal){
+        $secretario = DB::table('usuario_legal')->where('idUsuario_legal',$idUsuarioLegal)->first();
+        $this->secretarioArbitralLider = $secretario->nombre;
+        $this->secretarioArbitralLider .= ' '.$secretario->apellidoPaterno;
+        $this->secretarioArbitralLider .= ' '.$secretario->apellidoMaterno;
+    }
+
     public static function guardarEnSesion(Request $request){
-        
+
         if (!is_null($request->input('numeroExpediente')))
             $request->session()->put('numeroExpediente',$request->input('numeroExpediente'));
 
@@ -83,11 +96,11 @@ class ExpedienteTemporal {
         if (!is_null($request->input('escalaPago')))
             $request->session()->put('escalaPago',$request->input('escalaPago'));
 
-        if (!is_null($request->input('secretarioArbitral')))
-            $request->session()->put('secretarioArbitral',$request->input('secretarioArbitral'));
+        if (!is_null($request->input('secretarioResponsable')))
+            $request->session()->put('secretarioArbitral',$request->input('secretarioResponsable'));
 
-        if (!is_null($request->input('secretarioArbitralLider')))
-            $request->session()->put('secretarioArbitralLider',$request->input('secretarioArbitralLider'));
+        if (!is_null($request->input('secretarioLider')))
+            $request->session()->put('secretarioArbitralLider',$request->input('secretarioLider'));
     }
 
     public static function quitarDeSesion(Request $request){
