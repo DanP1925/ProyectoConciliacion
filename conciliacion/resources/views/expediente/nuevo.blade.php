@@ -300,7 +300,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button class="site-label-button float-right">
+                                <button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandante" class="site-label-button float-right">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>

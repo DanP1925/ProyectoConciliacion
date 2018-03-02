@@ -54,4 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/usuariolegal/arbitros','UsuarioLegalController@buscarArbitro');
 
     Route::post('/usuariolegal/directorio','UsuarioLegalController@buscarPersonal');
+
+    Route::post('/clientelegal/directorio','ClienteLegalController@buscarCliente');
+
 });
