@@ -4,6 +4,8 @@ namespace App\Library;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Models\ExpedienteClienteLegal;
+use App\Http\Models\ConsorcioPersonaDetalle;
 
 class ExpedienteTemporal {
 
@@ -13,14 +15,22 @@ class ExpedienteTemporal {
     var $numeroExpedienteAsociado;
     var $tipoCaso;
     var $subtipoCaso;
-    var $subtipoCaso2;
-    var $subtipoCaso3;
     var $cuantiaControversiaInicial;
     var $cuantiaControversiaFinal;
     var $tipoCuantia;
     var $escalaPago;
     var $secretarioArbitral;
     var $secretarioArbitralLider;
+	var $demandante;
+	var $demandado;
+	var $consorcioDemandante;
+	var $miembroDemandante;
+	var $miembroDemandante2;
+	var $miembroDemandante3;
+	var $consorcioDemandado;
+	var $miembroDemandado;
+	var $miembroDemandado2;
+	var $miembroDemandado3;
 
     function __construct(Request $request)
     {
@@ -30,8 +40,6 @@ class ExpedienteTemporal {
         $this->numeroExpedienteAsociado = $request->session()->get('numeroExpedienteAsociado');
         $this->tipoCaso = $request->session()->get('tipoCaso');
         $this->subtipoCaso = $request->session()->get('subtipoCaso');
-        $this->subtipoCaso2 = $request->session()->get('subtipoCaso2');
-        $this->subtipoCaso3 = $request->session()->get('subtipoCaso3');
         $this->cuantiaControversiaInicial = $request->session()->get('cuantiaControversiaInicial');
         $this->cuantiaControversiaFinal = $request->session()->get('cuantiaControversiaFinal');
         $this->tipoCuantia = $request->session()->get('tipoCuantia');
@@ -42,6 +50,36 @@ class ExpedienteTemporal {
 
         if (!is_null($request->session()->get('secretarioArbitralLider')))
             $this->secretarioArbitralLider = $request->session()->get('secretarioArbitralLider');
+
+		if (!is_null($request->session()->get('demandante')))
+			$this->demandante = $request->session()->get('demandante');
+
+		if (!is_null($request->session()->get('demandado')))
+			$this->demandado = $request->session()->get('demandado');
+
+		if (!is_null($request->session()->get('consorcioDemandante')))
+			$this->consorcioDemandante = $request->session()->get('consorcioDemandante');
+
+		if (!is_null($request->session()->get('miembroDemandante')))
+			$this->miembroDemandante = $request->session()->get('miembroDemandante');
+
+		if (!is_null($request->session()->get('miembroDemandante2')))
+			$this->miembroDemandante2 = $request->session()->get('miembroDemandante2');
+
+		if (!is_null($request->session()->get('miembroDemandante3')))
+			$this->miembroDemandante3 = $request->session()->get('miembroDemandante3');
+
+		if (!is_null($request->session()->get('consorcioDemandado')))
+			$this->consorcioDemandado = $request->session()->get('consorcioDemandado');
+
+		if (!is_null($request->session()->get('miembroDemandado')))
+			$this->miembroDemandado = $request->session()->get('miembroDemandado');
+
+		if (!is_null($request->session()->get('miembroDemandado2')))
+			$this->miembroDemandado2 = $request->session()->get('miembroDemandado2');
+
+		if (!is_null($request->session()->get('miembroDemandado3')))
+			$this->miembroDemandado3 = $request->session()->get('miembroDemandado3');
     }
 
     function agregarSecretario($idUsuarioLegal){
@@ -57,6 +95,49 @@ class ExpedienteTemporal {
         $this->secretarioArbitralLider .= ' '.$secretario->apellidoPaterno;
         $this->secretarioArbitralLider .= ' '.$secretario->apellidoMaterno;
     }
+
+	function agregarDemandante($idClienteLegal){
+
+		$demandante = ExpedienteClienteLegal::where('idExpedienteClienteLegal',$idClienteLegal)->first();
+
+		if ($demandante->flgTipoPersona == 'J'){
+			$personaJuridica = $demandante->getPersonaJuridica();
+			$this->demandante = $personaJuridica->razonSocial;
+
+			$consorcio = ConsorcioPersonaDetalle::where('idPersonaJuridica',$personaJuridica->idPersonaJuridica)->first();
+
+			if(!is_null($consorcio)){
+				$this->consorcioDemandante = $consorcio->getConsorcioPersona()->nombre;
+
+				$listaMiembros = $consorcio->getMiembros();
+
+			}
+
+		} else {
+			$personaNatural = $demandante->getPersonaNatural();
+			$this->demandante = $personaNatural->nombre;
+			$this->demandante .= ' '.$personaNatural->apellidoPaterno;
+			$this->demandante .= ' '.$personaNatural->apellidoMaterno;
+
+			$consorcio = ConsorcioPersonaDetalle::where('idPersonaNatural',$personaNatural->idPersonaNatural)->first();
+
+		}
+	}
+
+	function agregarDemandado($idClienteLegal){
+
+		$demandado = ExpedienteClienteLegal::where('idExpedienteClienteLegal',$idClienteLegal)->first();
+
+		if ($demandado->flgTipoPersona == 'J'){
+			$personaJuridica = $demandado->getPersonaJuridica();
+			$this->demandado= $personaJuridica->razonSocial;
+		} else {
+			$personaNatural = $demandado->getPersonaNatural();
+			$this->demandado = $personaNatural->nombre;
+			$this->demandado .= ' '.$personaNatural->apellidoPaterno;
+			$this->demandado .= ' '.$personaNatural->apellidoMaterno;
+		}
+	}
 
     public static function guardarEnSesion(Request $request){
 
@@ -78,12 +159,6 @@ class ExpedienteTemporal {
         if (!is_null($request->input('subtipoCaso')))
             $request->session()->put('subtipoCaso',$request->input('subtipoCaso'));
 
-        if (!is_null($request->input('subtipoCaso2')))
-            $request->session()->put('subtipoCaso2',$request->input('subtipoCaso2'));
-
-        if (!is_null($request->input('subtipoCaso3')))
-            $request->session()->put('subtipoCaso3',$request->input('subtipoCaso3'));
-
         if (!is_null($request->input('cuantiaControversiaInicial')))
             $request->session()->put('cuantiaControversiaInicial',$request->input('cuantiaControversiaInicial'));
 
@@ -101,6 +176,36 @@ class ExpedienteTemporal {
 
         if (!is_null($request->input('secretarioLider')))
             $request->session()->put('secretarioArbitralLider',$request->input('secretarioLider'));
+
+        if (!is_null($request->input('demandante')))
+            $request->session()->put('demandante',$request->input('demandante'));
+
+        if (!is_null($request->input('demandado')))
+            $request->session()->put('demandado',$request->input('demandado'));
+
+		if (!is_null($request->input('consorcioDemandante')))
+			$request->session()->put('consorcioDemandante',$request->input('consorcioDemandante'));
+
+		if (!is_null($request->input('miembroDemandante')))
+			$request->session()->put('miembroDemandante',$request->input('miembroDemandante'));
+
+		if (!is_null($request->input('miembroDemandante2')))
+			$request->session()->put('miembroDemandante2',$request->input('miembroDemandante2'));
+
+		if (!is_null($request->input('miembroDemandante3')))
+			$request->session()->put('miembroDemandante3',$request->input('miembroDemandante3'));
+
+		if (!is_null($request->input('consorcioDemandado')))
+			$request->session()->put('consorcioDemandado',$request->input('consorcioDemandado'));
+
+		if (!is_null($request->input('miembroDemandado')))
+			$request->session()->put('miembroDemandado',$request->input('miembroDemandado'));
+
+		if (!is_null($request->input('miembroDemandado2')))
+			$request->session()->put('miembroDemandado2',$request->input('miembroDemandado2'));
+
+		if (!is_null($request->input('miembroDemandado3')))
+			$request->session()->put('miembroDemandado3',$request->input('miembroDemandado3'));
     }
 
     public static function quitarDeSesion(Request $request){
@@ -111,14 +216,22 @@ class ExpedienteTemporal {
         $request->session()->forget('numeroExpedienteAsociado');
         $request->session()->forget('tipoCaso');
         $request->session()->forget('subtipoCaso');
-        $request->session()->forget('subtipoCaso2');
-        $request->session()->forget('subtipoCaso3');
         $request->session()->forget('cuantiaControversiaInicial');
         $request->session()->forget('cuantiaControversiaFinal');
         $request->session()->forget('tipoCuantia');
         $request->session()->forget('escalaPago');
         $request->session()->forget('secretarioArbitral');
         $request->session()->forget('secretarioArbitralLider');
+        $request->session()->forget('demandante');
+        $request->session()->forget('demandado');
+		$request->session()->forget('consorcioDemandante');
+		$request->session()->forget('miembroDemandante');
+		$request->session()->forget('miembroDemandante2');
+		$request->session()->forget('miembroDemandante3');
+		$request->session()->forget('consorcioDemandado');
+		$request->session()->forget('miembroDemandado');
+		$request->session()->forget('miembroDemandado2');
+		$request->session()->forget('miembroDemandado3');
 
     }
 }

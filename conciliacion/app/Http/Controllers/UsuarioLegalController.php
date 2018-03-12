@@ -26,7 +26,6 @@ class UsuarioLegalController extends Controller
         $secretarios = UsuarioLegal::buscarPersonal($request);
         ExpedienteTemporal::guardarEnSesion($request);
 
-        
         return view('usuariolegal.directorio',
             compact('profesiones',
                     'paises',

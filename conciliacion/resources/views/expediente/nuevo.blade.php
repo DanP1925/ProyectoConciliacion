@@ -102,15 +102,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-             </div>
-             <div class="cell small-12 padding-bottom-40">
-                <div class="grid-x grid-margin-x">
                     <div class="cell small-4">
                         <div class="table-2cells-div padding-bottom-5">
                             <div class="left-div">
                                 <div class="site-label">
-                                    Subtipo de Caso 1
+                                    Subtipo de Caso
                                 </div>
                             </div>
                         </div>
@@ -125,46 +121,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cell small-4">
-                        <div class="table-2cells-div padding-bottom-5">
-                            <div class="left-div">
-                                <div class="site-label">
-                                    Subtipo de Caso 2
-                                </div>
-                            </div>
-                        </div>
-                        <div class="site-control">
-                            <div class="site-control-border">
-                                <select class="site-select" id="subtipoCaso2" name="subtipoCaso2">
-                                    <option value="">Seleccione una opción</option>
-                                    @foreach ($subtipos as $subtipo)
-                                    <option value="{{$subtipo -> idExpedienteSubtipoCaso}}" @if ($subtipo->idExpedienteSubtipoCaso == $expedienteTemporal->subtipoCaso2) selected @endif>{{$subtipo->nombre}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cell small-4">
-                        <div class="table-2cells-div padding-bottom-5">
-                            <div class="left-div">
-                                <div class="site-label">
-                                    Subtipo de Caso 3
-                                </div>
-                            </div>
-                        </div>
-                        <div class="site-control">
-                            <div class="site-control-border">
-                                <select class="site-select" id="subtipoCaso3" name="subtipoCaso3">
-                                    <option value="">Seleccione una opción</option>
-                                    @foreach ($subtipos as $subtipo)
-                                    <option value="{{$subtipo -> idExpedienteSubtipoCaso}}" @if ($subtipo->idExpedienteSubtipoCaso == $expedienteTemporal->subtipoCaso3) selected @endif>{{$subtipo->nombre}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </div>           
+             </div>
             
             <div class="cell small-12 padding-bottom-20">
                 <div class="grid-x grid-margin-x">
@@ -308,7 +266,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="demandante" name="demandante" placeholder="Seleccione un personal" />
+                                <input type="text" class="site-input" id="demandante" name="demandante" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->demandante)) value="{{$expedienteTemporal->demandante}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -320,15 +278,15 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <div class="site-label-button float-right">
+                                <button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandado" class="site-label-button float-right">
                                     buscar
-                                </div>
+                                </button>
                                 <div style="clear:both;"></div>
                             </div>
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="demandado" name="demandado" placeholder="Seleccione un personal" />
+                                <input type="text" class="site-input" id="demandado" name="demandado" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->demandado)) value="{{$expedienteTemporal->demandado}}" @endif />
                             </div>
                         </div>
                     </div>
@@ -337,6 +295,26 @@
                     </div>
                 </div>
             </div>
+			@if (!is_null($expedienteTemporal->consorcioDemandante) || !is_null($expedienteTemporal->consorcioDemandado))
+			<div class="cell small-12 padding-bottom-40">
+                <div class="grid-x grid-margin-x">
+                    <div class="cell small-4">
+					@if (!is_null($expedienteTemporal->consorcioDemandante))
+						<div class="site-list-item-label padding-bottom-3">
+							Nombre Consorcio
+						</div>
+						<div class="site-list-item-text padding-bottom-5">
+							{{$expedienteTemporal->consorcioDemandante}}
+						</div>
+					@endif
+					</div>
+                    <div class="cell small-4">
+					@if (!is_null($expedienteTemporal->consorcioDemandado))
+					@endif
+					</div>
+				</div>
+			</div>
+			@endif
             <div class="cell small-12 padding-bottom-40">
                 <div class="grid-x grid-margin-x">
                     <div class="cell small-4">

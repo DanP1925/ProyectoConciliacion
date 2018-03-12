@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Models\ExpedienteClienteLegal;
+use App\Library\ExpedienteTemporal;
 
 class ClienteLegalController extends Controller
 {
     public function buscarCliente(Request $request)
     {
+        $accion = $request->input('accion');
+        $clientes = ExpedienteClienteLegal::buscarCliente($request); 
+        ExpedienteTemporal::guardarEnSesion($request);
 
-        return view('clientelegal.directorio');
+        return view('clientelegal.directorio',
+			compact('clientes',
+					'accion'));
     }
 
     public function index()

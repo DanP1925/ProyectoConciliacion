@@ -154,10 +154,10 @@
 
             @foreach ($secretarios as $secretario)
             <form method="POST" action="/expediente/nuevo">
-                {{ csrf_field() }}
+				{{ csrf_field() }}
                 @if ($loop->index % 2 == 0)
                 <div class="site-list-item-div background-color-F5F5F5">
-                    @else 
+					@else 
                     <div class="site-list-item-div background-color-FFFFFF">
                         @endif
                         <div class="grid-x grid-margin-x">
@@ -202,7 +202,6 @@
                     </div>
                     @endforeach
                 </div>
-
             </form>
         </div>
     </div>

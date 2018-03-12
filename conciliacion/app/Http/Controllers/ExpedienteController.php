@@ -33,6 +33,10 @@ class ExpedienteController extends Controller
                 $expedienteTemporal->agregarSecretario($resultadoAccion);
             else if ($tipoAccion == "buscarLider")
                 $expedienteTemporal->agregarSecretarioLider($resultadoAccion);
+			else if ($tipoAccion == "buscarDemandante")
+				$expedienteTemporal->agregarDemandante($resultadoAccion);
+			else if ($tipoAccion == "buscarDemandado")
+				$expedienteTemporal->agregarDemandado($resultadoAccion);
         }
 
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
