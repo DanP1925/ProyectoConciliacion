@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Models\ExpedienteClienteLegal;
 use App\Http\Models\ConsorcioPersonaDetalle;
+use App\Http\Models\Region;
 
 class ExpedienteTemporal {
 
@@ -24,13 +25,15 @@ class ExpedienteTemporal {
 	var $demandante;
 	var $demandado;
 	var $consorcioDemandante;
-	var $miembroDemandante;
-	var $miembroDemandante2;
-	var $miembroDemandante3;
+	var $miembrosDemandante;
 	var $consorcioDemandado;
-	var $miembroDemandado;
-	var $miembroDemandado2;
-	var $miembroDemandado3;
+	var $miembrosDemandado;
+	var $tipoDemandante;
+	var $tipoDemandado;
+	var $origenArbitraje;
+	var $montoContrato;
+	var $anhoContrato;
+	var $regiones;
 
     function __construct(Request $request)
     {
@@ -60,84 +63,28 @@ class ExpedienteTemporal {
 		if (!is_null($request->session()->get('consorcioDemandante')))
 			$this->consorcioDemandante = $request->session()->get('consorcioDemandante');
 
-		if (!is_null($request->session()->get('miembroDemandante')))
-			$this->miembroDemandante = $request->session()->get('miembroDemandante');
-
-		if (!is_null($request->session()->get('miembroDemandante2')))
-			$this->miembroDemandante2 = $request->session()->get('miembroDemandante2');
-
-		if (!is_null($request->session()->get('miembroDemandante3')))
-			$this->miembroDemandante3 = $request->session()->get('miembroDemandante3');
+		if (!is_null($request->session()->get('miembrosDemandante')))
+			$this->miembrosDemandante = $request->session()->get('miembrosDemandante');
 
 		if (!is_null($request->session()->get('consorcioDemandado')))
 			$this->consorcioDemandado = $request->session()->get('consorcioDemandado');
 
-		if (!is_null($request->session()->get('miembroDemandado')))
-			$this->miembroDemandado = $request->session()->get('miembroDemandado');
+		if (!is_null($request->session()->get('miembrosDemandado')))
+			$this->miembrosDemandado = $request->session()->get('miembrosDemandado');
 
-		if (!is_null($request->session()->get('miembroDemandado2')))
-			$this->miembroDemandado2 = $request->session()->get('miembroDemandado2');
+        $this->tipoDemandante = $request->session()->get('tipoDemandante');
+        $this->tipoDemandado = $request->session()->get('tipoDemandado');
 
-		if (!is_null($request->session()->get('miembroDemandado3')))
-			$this->miembroDemandado3 = $request->session()->get('miembroDemandado3');
+		if (!is_null($request->session()->get('origenArbitraje')))
+			$this->origenArbitraje = $request->session()->get('origenArbitraje');
+
+		if (!is_null($request->session()->get('montoContrato')))
+			$this->montoContrato = $request->session()->get('montoContrato');
+
+		$this->anhoContrato = $request->session()->get('anhoContrato');
+		$this->regiones = $request->session()->get('regiones');
+
     }
-
-    function agregarSecretario($idUsuarioLegal){
-        $secretario = DB::table('usuario_legal')->where('idUsuario_legal',$idUsuarioLegal)->first();
-        $this->secretarioArbitral = $secretario->nombre;
-        $this->secretarioArbitral .= ' '.$secretario->apellidoPaterno;
-        $this->secretarioArbitral .= ' '.$secretario->apellidoMaterno;
-    }
-
-    function agregarSecretarioLider($idUsuarioLegal){
-        $secretario = DB::table('usuario_legal')->where('idUsuario_legal',$idUsuarioLegal)->first();
-        $this->secretarioArbitralLider = $secretario->nombre;
-        $this->secretarioArbitralLider .= ' '.$secretario->apellidoPaterno;
-        $this->secretarioArbitralLider .= ' '.$secretario->apellidoMaterno;
-    }
-
-	function agregarDemandante($idClienteLegal){
-
-		$demandante = ExpedienteClienteLegal::where('idExpedienteClienteLegal',$idClienteLegal)->first();
-
-		if ($demandante->flgTipoPersona == 'J'){
-			$personaJuridica = $demandante->getPersonaJuridica();
-			$this->demandante = $personaJuridica->razonSocial;
-
-			$consorcio = ConsorcioPersonaDetalle::where('idPersonaJuridica',$personaJuridica->idPersonaJuridica)->first();
-
-			if(!is_null($consorcio)){
-				$this->consorcioDemandante = $consorcio->getConsorcioPersona()->nombre;
-
-				$listaMiembros = $consorcio->getMiembros();
-
-			}
-
-		} else {
-			$personaNatural = $demandante->getPersonaNatural();
-			$this->demandante = $personaNatural->nombre;
-			$this->demandante .= ' '.$personaNatural->apellidoPaterno;
-			$this->demandante .= ' '.$personaNatural->apellidoMaterno;
-
-			$consorcio = ConsorcioPersonaDetalle::where('idPersonaNatural',$personaNatural->idPersonaNatural)->first();
-
-		}
-	}
-
-	function agregarDemandado($idClienteLegal){
-
-		$demandado = ExpedienteClienteLegal::where('idExpedienteClienteLegal',$idClienteLegal)->first();
-
-		if ($demandado->flgTipoPersona == 'J'){
-			$personaJuridica = $demandado->getPersonaJuridica();
-			$this->demandado= $personaJuridica->razonSocial;
-		} else {
-			$personaNatural = $demandado->getPersonaNatural();
-			$this->demandado = $personaNatural->nombre;
-			$this->demandado .= ' '.$personaNatural->apellidoPaterno;
-			$this->demandado .= ' '.$personaNatural->apellidoMaterno;
-		}
-	}
 
     public static function guardarEnSesion(Request $request){
 
@@ -186,26 +133,32 @@ class ExpedienteTemporal {
 		if (!is_null($request->input('consorcioDemandante')))
 			$request->session()->put('consorcioDemandante',$request->input('consorcioDemandante'));
 
-		if (!is_null($request->input('miembroDemandante')))
-			$request->session()->put('miembroDemandante',$request->input('miembroDemandante'));
-
-		if (!is_null($request->input('miembroDemandante2')))
-			$request->session()->put('miembroDemandante2',$request->input('miembroDemandante2'));
-
-		if (!is_null($request->input('miembroDemandante3')))
-			$request->session()->put('miembroDemandante3',$request->input('miembroDemandante3'));
+		if (!is_null($request->input('miembrosDemandante')))
+			$request->session()->put('miembrosDemandante',$request->input('miembrosDemandante'));
 
 		if (!is_null($request->input('consorcioDemandado')))
 			$request->session()->put('consorcioDemandado',$request->input('consorcioDemandado'));
 
-		if (!is_null($request->input('miembroDemandado')))
-			$request->session()->put('miembroDemandado',$request->input('miembroDemandado'));
+		if (!is_null($request->input('miembrosDemandado')))
+			$request->session()->put('miembrosDemandado',$request->input('miembrosDemandado'));
 
-		if (!is_null($request->input('miembroDemandado2')))
-			$request->session()->put('miembroDemandado2',$request->input('miembroDemandado2'));
+		if (!is_null($request->input('tipoDemandante')))
+			$request->session()->put('tipoDemandante',$request->input('tipoDemandante'));
 
-		if (!is_null($request->input('miembroDemandado3')))
-			$request->session()->put('miembroDemandado3',$request->input('miembroDemandado3'));
+		if (!is_null($request->input('tipoDemandado')))
+			$request->session()->put('tipoDemandado',$request->input('tipoDemandado'));
+
+		if (!is_null($request->input('origenArbitraje')))
+			$request->session()->put('origenArbitraje', $request->input('origenArbitraje'));
+
+		if (!is_null($request->input('montoContrato')))
+			$request->session()->put('montoContrato', $request->input('montoContrato'));
+
+		if (!is_null($request->input('anhoContrato')))
+			$request->session()->put('anhoContrato', $request->input('anhoContrato'));
+
+		if (!is_null($request->input('regiones')))
+			$request->session()->put('regiones', $request->input('regiones'));
     }
 
     public static function quitarDeSesion(Request $request){
@@ -225,13 +178,144 @@ class ExpedienteTemporal {
         $request->session()->forget('demandante');
         $request->session()->forget('demandado');
 		$request->session()->forget('consorcioDemandante');
-		$request->session()->forget('miembroDemandante');
-		$request->session()->forget('miembroDemandante2');
-		$request->session()->forget('miembroDemandante3');
+		$request->session()->forget('miembrosDemandante');
 		$request->session()->forget('consorcioDemandado');
-		$request->session()->forget('miembroDemandado');
-		$request->session()->forget('miembroDemandado2');
-		$request->session()->forget('miembroDemandado3');
-
+		$request->session()->forget('miembrosDemandado');
+        $request->session()->forget('tipoDemandante');
+        $request->session()->forget('tipoDemandado');
+        $request->session()->forget('origenArbitraje');
+        $request->session()->forget('montoContrato');
+        $request->session()->forget('anhoContrato');
+		$request->session()->forget('regiones');
     }
+
+    function agregarSecretario($idUsuarioLegal){
+        $secretario = DB::table('usuario_legal')->where('idUsuario_legal',$idUsuarioLegal)->first();
+        $this->secretarioArbitral = $secretario->nombre;
+        $this->secretarioArbitral .= ' '.$secretario->apellidoPaterno;
+        $this->secretarioArbitral .= ' '.$secretario->apellidoMaterno;
+    }
+
+    function agregarSecretarioLider($idUsuarioLegal){
+        $secretario = DB::table('usuario_legal')->where('idUsuario_legal',$idUsuarioLegal)->first();
+        $this->secretarioArbitralLider = $secretario->nombre;
+        $this->secretarioArbitralLider .= ' '.$secretario->apellidoPaterno;
+        $this->secretarioArbitralLider .= ' '.$secretario->apellidoMaterno;
+    }
+
+	function agregarDemandante($idClienteLegal){
+
+		$demandante = ExpedienteClienteLegal::where('idExpedienteClienteLegal',$idClienteLegal)->first();
+
+		if ($demandante->flgTipoPersona == 'J'){
+			$personaJuridica = $demandante->getPersonaJuridica();
+			$this->demandante = $personaJuridica->razonSocial;
+
+			$consorcio = ConsorcioPersonaDetalle::where('idPersonaJuridica',$personaJuridica->idPersonaJuridica)->first();
+
+			if(!is_null($consorcio)){
+				$this->consorcioDemandante = $consorcio->getConsorcioPersona()->nombre;
+
+				$listaIds = $consorcio->getMiembros();
+				$listaMiembros = [];
+				foreach ($listaIds as $id){
+					$nombre = DB::table('persona_juridica')->where('idPersonaJuridica',$id)->first()->razonSocial;
+					array_push($listaMiembros,$nombre);
+				}
+				$this->miembrosDemandante = $listaMiembros;
+			} else {
+				$this->consorcioDemandante = null;
+				$this->miembrosDemandante = null;
+			}
+
+		} else {
+			$personaNatural = $demandante->getPersonaNatural();
+			$this->demandante = $personaNatural->nombre;
+			$this->demandante .= ' '.$personaNatural->apellidoPaterno;
+			$this->demandante .= ' '.$personaNatural->apellidoMaterno;
+
+			$consorcio = ConsorcioPersonaDetalle::where('idPersonaNatural',$personaNatural->idPersonaNatural)->first();
+
+			if (!is_null($consorcio)){
+				$this->consorcioDemandante = $consorcio->getConsorcioPersona()->nombre;
+
+				$listaIds = $consorcio->getMiembros();
+				$listaMiembros = [];
+				foreach ($listaIds as $id){
+					$nombre = DB::table('persona_natural')->where('idPersonaNatural',$id)->first()->nombre;
+					$nombre += ' ';
+					$nombre += DB::table('persona_natural')->where('idPersonaNatural',$id)->first()->apellidoPaterno;
+					$nombre += ' ';
+					$nombre += DB::table('persona_natural')->where('idPersonaNatural',$id)->first()->apellidoMaterno;
+					array_push($listaMiembros,$nombre);
+				}
+				$this->miembrosDemandante = $listaMiembros;
+			} else {
+				$this->consorcioDemandante = null;
+				$this->miembrosDemandante = null;
+			}
+
+		}
+	}
+
+	function agregarDemandado($idClienteLegal){
+
+		$demandado = ExpedienteClienteLegal::where('idExpedienteClienteLegal',$idClienteLegal)->first();
+
+		if ($demandado->flgTipoPersona == 'J'){
+			$personaJuridica = $demandado->getPersonaJuridica();
+			$this->demandado= $personaJuridica->razonSocial;
+
+			$consorcio = ConsorcioPersonaDetalle::where('idPersonaJuridica',$personaJuridica->idPersonaJuridica)->first();
+			if(!is_null($consorcio)){
+				$this->consorcioDemandado = $consorcio->getConsorcioPersona()->nombre;
+
+				$listaIds = $consorcio->getMiembros();
+				$listaMiembros = [];
+				foreach ($listaIds as $id){
+					$nombre = DB::table('persona_juridica')->where('idPersonaJuridica',$id)->first()->razonSocial;
+					array_push($listaMiembros,$nombre);
+				}
+				$this->miembrosDemandado = $listaMiembros;
+			} else{
+				$this->consorcioDemandado = null;
+				$this->miembrosDemandado = null;
+			}
+
+		} else {
+			$personaNatural = $demandado->getPersonaNatural();
+			$this->demandado = $personaNatural->nombre;
+			$this->demandado .= ' '.$personaNatural->apellidoPaterno;
+			$this->demandado .= ' '.$personaNatural->apellidoMaterno;
+
+			$consorcio = ConsorcioPersonaDetalle::where('idPersonaNatural',$personaNatural->idPersonaNatural)->first();
+
+			if (!is_null($consorcio)){
+				$this->consorcioDemandado = $consorcio->getConsorcioPersona()->nombre;
+
+				$listaIds = $consorcio->getMiembros();
+				$listaMiembros = [];
+				foreach ($listaIds as $id){
+					$nombre = DB::table('persona_natural')->where('idPersonaNatural',$id)->first()->nombre;
+					$nombre += ' ';
+					$nombre += DB::table('persona_natural')->where('idPersonaNatural',$id)->first()->apellidoPaterno;
+					$nombre += ' ';
+					$nombre += DB::table('persona_natural')->where('idPersonaNatural',$id)->first()->apellidoMaterno;
+					array_push($listaMiembros,$nombre);
+				}
+				$this->miembrosDemandado = $listaMiembros;
+			} else{
+				$this->consorcioDemandado = null;
+				$this->miembrosDemandado = null;
+			}
+		}
+	}
+
+
+	function agregarRegion($idRegion){
+		$region = Region::where('idRegion',$idRegion)->first()->nombre;
+		if (is_null($this->regiones))
+			$this->regiones = [];
+		array_push($this->regiones,$region);
+	}
 }

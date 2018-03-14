@@ -300,16 +300,62 @@
                 <div class="grid-x grid-margin-x">
                     <div class="cell small-4">
 					@if (!is_null($expedienteTemporal->consorcioDemandante))
+						<input type="hidden" name="consorcioDemandante" value="{{$expedienteTemporal->consorcioDemandante}}" />
 						<div class="site-list-item-label padding-bottom-3">
 							Nombre Consorcio
 						</div>
 						<div class="site-list-item-text padding-bottom-5">
 							{{$expedienteTemporal->consorcioDemandante}}
 						</div>
+						@foreach ($expedienteTemporal->miembrosDemandante as $miembro)
+						<input type="hidden" name="miembrosDemandante[]" value="{{$miembro}}" />
+						@if ($loop->index % 2 == 0)
+							<div class="site-list-item-div background-color-F5F5F5">
+						@else
+							<div class="site-list-item-div background-color-FFFFFF">
+						@endif
+							<div class="grid-x grid-margin-x">
+								<div class="cell small-12">
+									<div class="site-list-item-label padding-bottom-3">
+										Miembro {{$loop->index + 1}}
+									</div>
+									<div class="site-list-item-text">
+										{{$miembro}}
+									</div>
+								</div>
+							</div>
+						</div>
+						@endforeach
 					@endif
 					</div>
                     <div class="cell small-4">
 					@if (!is_null($expedienteTemporal->consorcioDemandado))
+						<input type="hidden" name="consorcioDemandado" value="{{$expedienteTemporal->consorcioDemandado}}" />
+						<div class="site-list-item-label padding-bottom-3">
+							Nombre Consorcio
+						</div>
+						<div class="site-list-item-text padding-bottom-5">
+							{{$expedienteTemporal->consorcioDemandado}}
+						</div>
+						@foreach ($expedienteTemporal->miembrosDemandado as $miembro)
+						<input type="hidden" name="miembrosDemandado[]" value="{{$miembro}}" />
+						@if ($loop->index % 2 == 0)
+							<div class="site-list-item-div background-color-F5F5F5">
+						@else
+							<div class="site-list-item-div background-color-FFFFFF">
+						@endif
+							<div class="grid-x grid-margin-x">
+								<div class="cell small-12">
+									<div class="site-list-item-label padding-bottom-3">
+										Miembro {{$loop->index + 1}}
+									</div>
+									<div class="site-list-item-text">
+										{{$miembro}}
+									</div>
+								</div>
+							</div>
+						</div>
+						@endforeach
 					@endif
 					</div>
 				</div>
@@ -329,6 +375,8 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="tipoDemandante" name="tipoDemandante">
                                     <option value="">Seleccione una opción</option>
+									<option value="PUB" @if ($expedienteTemporal->tipoDemandante == "PUB") selected @endif>Público</option>
+									<option value="PRI" @if ($expedienteTemporal->tipoDemandante == "PRI") selected @endif>Privado</option>
                                 </select>
                             </div>
                         </div>
@@ -345,6 +393,8 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="tipoDemandado" name="tipoDemandado">
                                     <option value="">Seleccione una opción</option>
+									<option value="PUB" @if ($expedienteTemporal->tipoDemandado == "PUB") selected @endif>Público</option>
+									<option value="PRI" @if ($expedienteTemporal->tipoDemandado == "PRI") selected @endif>Privado</option>
                                 </select>
                             </div>
                         </div>
@@ -370,6 +420,9 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="origenArbitraje" name="origenArbitraje">
                                     <option value="">Seleccione una opción</option>
+                                    @foreach ($origenesArbitraje as $origenArbitraje)
+                                    <option value="{{$origenArbitraje->idArbitrajeOrigen}}" @if ($origenArbitraje->idArbitrajeOrigen == $expedienteTemporal->origenArbitraje) selected @endif>{{$origenArbitraje->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -382,6 +435,9 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="montoContrato" name="montoContrato">
                                     <option value="">Seleccione una opción</option>
+                                    @foreach ($montosContrato as $montoContrato)
+                                    <option value="{{$montoContrato->idArbitrajeMontoContrato}}" @if ($montoContrato->idArbitrajeMontoContrato == $expedienteTemporal->montoContrato) selected @endif>{{$montoContrato->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -392,7 +448,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="añoContrato" name="añoContrato" />
+                                <input type="text" class="site-input" id="anhoContrato" name="anhoContrato" @if (!is_null($expedienteTemporal->anhoContrato)) value="{{$expedienteTemporal->anhoContrato}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -408,7 +464,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="Agregar Regiones" class="site-label-button float-right">
+                                <button type="submit" formaction="/region/directorio" name="accion" value="buscarRegion" class="site-label-button float-right">
                                     AGREGAR REGIONES
                                 </button>
                                 <div style="clear:both;"></div>
@@ -418,36 +474,32 @@
                 </div>
             </div>
             <div class="cell small-9 padding-bottom-50">
-                <div class="site-list-item-div background-color-F5F5F5">
+				@if(!is_null($expedienteTemporal->regiones))
+				@foreach ($expedienteTemporal->regiones as $region)
+				<input id="region {{$loop->index + 1}}" type="hidden" name="regiones[]" value="{{$region}}" />
+				@if ($loop->index % 2 == 0)
+				<div id="outputRegion {{$loop->index + 1}}" class="site-list-item-div background-color-F5F5F5">
+				@else
+                <div id="outputRegion {{$loop->index + 1}}" class="site-list-item-div background-color-FFFFFF">
+				@endif
                     <div class="grid-x grid-margin-x">
                         <div class="cell small-10">
                             <div class="site-list-item-label padding-bottom-3">
                                 Nombre
                             </div>
                             <div class="site-list-item-text padding-bottom-5">
-                                Lima
+								{{$region}}
                             </div>
                         </div>
                         <div class="cell small-2">
-                            <i class="fa fa-trash" style="font-size:36px;"></i>
+							<button type="button" onclick="quitarRegion({{$loop->index + 1}});" >
+								<i class="fa fa-trash" style="font-size:36px;"></i>
+							</button>
                         </div>
                     </div>
                 </div>
-                <div class="site-list-item-div background-color-FFFFFF">
-                    <div class="grid-x grid-margin-x">
-                        <div class="cell small-10">
-                            <div class="site-list-item-label padding-bottom-3">
-                                Nombre
-                            </div>
-                            <div class="site-list-item-text padding-bottom-5">
-                                Ica
-                            </div>
-                        </div>
-                        <div class="cell small-2">
-                            <i class="fa fa-trash" style="font-size:36px;"></i>
-                        </div>
-                    </div>
-                </div>
+				@endforeach
+				@endif
             </div>
             <div class="cell small-12 padding-bottom-40">
                 <div class="grid-x grid-margin-x">
@@ -803,4 +855,15 @@
         </div>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function quitarRegion(indexRegion) {
+	var region = document.getElementById('region ' + indexRegion);
+	region.parentNode.removeChild(region);
+	var outputRegion = document.getElementById('outputRegion ' + indexRegion);
+	outputRegion.parentNode.removeChild(outputRegion);
+}
+</script>
 @endsection

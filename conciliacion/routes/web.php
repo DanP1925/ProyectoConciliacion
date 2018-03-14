@@ -57,4 +57,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/clientelegal/directorio','ClienteLegalController@buscarCliente');
 
+    Route::post('/region/directorio','RegionController@buscarRegion');
+
 });

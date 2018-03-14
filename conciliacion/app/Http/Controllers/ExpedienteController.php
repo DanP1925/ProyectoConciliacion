@@ -21,7 +21,6 @@ class ExpedienteController extends Controller
     public function nuevo(Request $request)
     {
         $expedienteTemporal = new ExpedienteTemporal($request);
-
         ExpedienteTemporal::quitarDeSesion($request);
 
         if (!is_null($request->input('accion'))){
@@ -37,6 +36,8 @@ class ExpedienteController extends Controller
 				$expedienteTemporal->agregarDemandante($resultadoAccion);
 			else if ($tipoAccion == "buscarDemandado")
 				$expedienteTemporal->agregarDemandado($resultadoAccion);
+			else if ($tipoAccion == "buscarRegion")
+				$expedienteTemporal->agregarRegion($resultadoAccion);
         }
 
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
@@ -44,17 +45,18 @@ class ExpedienteController extends Controller
         $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
         $tiposCuantia = DB::table('cuantia_tipo')->get()->all();
         $escalasDePago  = DB::table('cuantia_escala_pago')->get()->all();
-
-        $regiones = DB::table('region')->get()->all();
+		$origenesArbitraje = DB::table('arbitraje_origen')->get()->all();
+		$montosContrato = DB::table('arbitraje_monto_contrato')->get()->all();
 
         return view('expediente.nuevo',
             compact('estadosExpediente',
-                    'regiones',
                     'tipos',
                     'subtipos',
                     'tiposCuantia',
                     'escalasDePago',
-                    'expedienteTemporal'));
+					'expedienteTemporal',
+					'origenesArbitraje',
+					'montosContrato'));
     }
 
     public function info()
@@ -82,6 +84,13 @@ class ExpedienteController extends Controller
             'cuantiaControversiaFinal' => 'nullable',
             'tipoCuantia' => 'required',
             'escalaPago' => 'required',
+			'secretarioResponsable' => 'nullable',
+			'secretarioLider' => 'nullable',
+			'demandante' => 'nulable',
+			'demandado' => 'required',
+			'origenArbitraje' => 'nullable',
+			'montoContrato' => 'nullable',
+			'anhoContrato' => 'nullable',
         ]);
 
         dd($validatedData);
