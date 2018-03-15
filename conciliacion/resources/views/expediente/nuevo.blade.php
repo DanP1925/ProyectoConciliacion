@@ -13,7 +13,7 @@
                 <div class="table-2cells-div padding-top-30 padding-bottom-40">
                     <div class="left-div">
                         <div class="site-title">
-                            DETALLE DE EXPEDIENTE
+                            NUEVO EXPEDIENTE
                         </div>
                     </div>
                     <div class="right-div">
@@ -79,7 +79,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="numeroExpedienteAsociado" name="numeroExpedienteAsociado" />
+                                <input type="text" class="site-input" id="numeroExpedienteAsociado" name="numeroExpedienteAsociado" @if (!is_null($expedienteTemporal->numeroExpedienteAsociado)) value="{{$expedienteTemporal->numeroExpedienteAsociado}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -266,6 +266,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
+								<input type="hidden" name="idDemandante" value="{{$expedienteTemporal->idDemandante}}" />
                                 <input type="text" class="site-input" id="demandante" name="demandante" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->demandante)) value="{{$expedienteTemporal->demandante}}" @endif/>
                             </div>
                         </div>
@@ -286,6 +287,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
+								<input type="hidden" name="idDemandado" value="{{$expedienteTemporal->idDemandado}}" />
                                 <input type="text" class="site-input" id="demandado" name="demandado" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->demandado)) value="{{$expedienteTemporal->demandado}}" @endif />
                             </div>
                         </div>
@@ -511,7 +513,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/recurso/nuevo" name="accion" value="agregarRecurso" class="site-label-button float-right">
+                                <button class="site-label-button float-right">
                                     VER PROPUESTAS
                                 </button>
                                 <div style="clear:both;"></div>
@@ -717,7 +719,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="Agregar Recursos" class="site-label-button float-right">
+                                <button type="submit" formaction="/recurso/nuevo" name="accion" value="agregarRecurso" class="site-label-button float-right">
                                     AGREGAR RECURSOS
                                 </button>
                                 <div style="clear:both;"></div>
@@ -727,30 +729,42 @@
                 </div>
             </div>
             <div class="cell small-12 padding-bottom-50">
-                <div class="site-list-item-div background-color-F5F5F5">
+				@if(!is_null($expedienteTemporal->recursos))
+				@foreach ($expedienteTemporal->recursos as $recurso)
+				<input id="recursoPresentado {{$loop->index + 1}}" type="hidden" name="recursoPresentado[]" value="{{$recurso->recursoPresentado}}" />
+				<input id="fechaPresentacion {{$loop->index + 1}}" type="hidden" name="fechaPresentacion[]" value="{{$recurso->fechaPresentacion}}" />
+				<input id="resultadoRecursoPresentado {{$loop->index + 1}}" type="hidden" name="resultadoRecursoPresentado[]" value="{{$recurso->resultadoRecursoPresentado}}" />
+				<input id="fechaResultado {{$loop->index + 1}}" type="hidden" name="fechaResultado[]" value="{{$recurso->fechaResultado}}" />
+				@if ($loop->index % 2 == 0)
+				<div id="outputRecurso {{$loop->index + 1}}" class="site-list-item-div background-color-F5F5F5">
+				@else
+                <div id="outputRecurso {{$loop->index + 1}}" class="site-list-item-div background-color-FFFFFF">
+				@endif
                     <div class="grid-x grid-margin-x">
                         <div class="cell small-3">
                             <div class="site-list-item-label padding-bottom-3">
                                 Recurso
                             </div>
                             <div class="site-list-item-text padding-bottom-5">
-                                Rectificación
+								@if (!is_null($recurso->recursoPresentado))
+								{{$recurso->getNombreRecurso()}}
+								@endif
                             </div>
                         </div>
-                        <div class="cell small-3">
+                        <div class="cell small-2">
                             <div class="site-list-item-label padding-bottom-3">
                                 Fecha de Presentación
                             </div>
                             <div class="site-list-item-text padding-bottom-5">
-                                10/10/2018
+								{{$recurso->fechaPresentacion}}
                             </div>
                         </div>
-                        <div class="cell small-3">
+                        <div class="cell small-2">
                             <div class="site-list-item-label padding-bottom-3">
                                 Fecha de Resultado
                             </div>
                             <div class="site-list-item-text padding-bottom-5">
-                                Por definir
+								{{$recurso->fechaResultado}}
                             </div>
                         </div>
                         <div class="cell small-3">
@@ -758,47 +772,25 @@
                                 Resultado
                             </div>
                             <div class="site-list-item-text padding-bottom-5">
-                                Por definir
+								@if (!is_null($recurso->resultadoRecursoPresentado))
+								{{$recurso->getNombreResultado()}}
+								@endif
                             </div>
+                        </div>
+                        <div class="cell small-1">
+							<button type="submit" formaction="/recurso/editar" name="accion" value="editarRecurso {{$loop->index}}" class="site-label-button float-right">
+								<i class="fa fa-edit" style="font-size:36px;"></i>
+							</button>
+						</div>
+                        <div class="cell small-1">
+							<button type="button" onclick="quitarRecurso({{$loop->index + 1}});" >
+								<i class="fa fa-trash" style="font-size:36px;"></i>
+							</button>
                         </div>
                     </div>
                 </div>
-                <div class="site-list-item-div background-color-FFFFFF">
-                    <div class="grid-x grid-margin-x">
-                        <div class="cell small-3">
-                            <div class="site-list-item-label padding-bottom-3">
-                                Recurso
-                            </div>
-                            <div class="site-list-item-text padding-bottom-5">
-                                Interpretación
-                            </div>
-                        </div>
-                        <div class="cell small-3">
-                            <div class="site-list-item-label padding-bottom-3">
-                                Fecha de Presentación
-                            </div>
-                            <div class="site-list-item-text padding-bottom-5">
-                                10/10/2018
-                            </div>
-                        </div>
-                        <div class="cell small-3">
-                            <div class="site-list-item-label padding-bottom-3">
-                                Fecha de Resultado
-                            </div>
-                            <div class="site-list-item-text padding-bottom-5">
-                                12/10/2018
-                            </div>
-                        </div>
-                        <div class="cell small-3">
-                            <div class="site-list-item-label padding-bottom-3">
-                                Resultado
-                            </div>
-                            <div class="site-list-item-text padding-bottom-5">
-                                Aprobado
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				@endforeach
+				@endif
             </div>
             @if ($errors->any())
             <div class="cell small-12 padding-bottom-50 error">
@@ -826,6 +818,20 @@ function quitarRegion(indexRegion) {
 	region.parentNode.removeChild(region);
 	var outputRegion = document.getElementById('outputRegion ' + indexRegion);
 	outputRegion.parentNode.removeChild(outputRegion);
-}
+};
+
+
+function quitarRecurso(indexRecurso) {
+	var recursoPresentado = document.getElementById('recursoPresentado ' + indexRecurso);
+	recursoPresentado.parentNode.removeChild(recursoPresentado);
+	var fechaPresentacion = document.getElementById('fechaPresentacion ' + indexRecurso);
+	fechaPresentacion.parentNode.removeChild(fechaPresentacion);
+	var resultadoRecursoPresentado = document.getElementById('resultadoRecursoPresentado ' + indexRecurso);
+	resultadoRecursoPresentado.parentNode.removeChild(resultadoRecursoPresentado);
+	var fechaResultado = document.getElementById('fechaResultado ' + indexRecurso);
+	fechaResultado.parentNode.removeChild(fechaResultado);
+	var outputRecurso = document.getElementById('outputRecurso ' + indexRecurso);
+	outputRecurso.parentNode.removeChild(outputRecurso);
+};
 </script>
 @endsection

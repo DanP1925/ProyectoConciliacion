@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Models\ExpedienteClienteLegal;
 use App\Http\Models\ConsorcioPersonaDetalle;
 use App\Http\Models\Region;
+use App\Library\RecursoTemporal;
 
 class ExpedienteTemporal {
 
@@ -22,7 +23,9 @@ class ExpedienteTemporal {
     var $escalaPago;
     var $secretarioArbitral;
     var $secretarioArbitralLider;
+	var $idDemandante;
 	var $demandante;
+	var $idDemandado;
 	var $demandado;
 	var $consorcioDemandante;
 	var $miembrosDemandante;
@@ -47,6 +50,7 @@ class ExpedienteTemporal {
 	var $resultadoEnSoles;
 	var $ejecucionLaudo;
 	var $laudadoAFavor;
+	var $recursos;
 
     function __construct(Request $request)
     {
@@ -67,11 +71,15 @@ class ExpedienteTemporal {
         if (!is_null($request->session()->get('secretarioArbitralLider')))
             $this->secretarioArbitralLider = $request->session()->get('secretarioArbitralLider');
 
-		if (!is_null($request->session()->get('demandante')))
+		if (!is_null($request->session()->get('demandante'))){
+			$this->idDemandante = $request->session()->get('idDemandante');
 			$this->demandante = $request->session()->get('demandante');
+		}
 
-		if (!is_null($request->session()->get('demandado')))
+		if (!is_null($request->session()->get('demandado'))){
+			$this->idDemandado = $request->session()->get('idDemandado');
 			$this->demandado = $request->session()->get('demandado');
+		}
 
 		if (!is_null($request->session()->get('consorcioDemandante')))
 			$this->consorcioDemandante = $request->session()->get('consorcioDemandante');
@@ -126,6 +134,8 @@ class ExpedienteTemporal {
 
 		if (!is_null($request->session()->get('laudadoAFavor')))
 			$this->laudadoAFavor = $request->session()->get('laudadoAFavor');
+
+		$this->recursos = $request->session()->get('recursos');
     }
 
     public static function guardarEnSesion(Request $request){
@@ -166,8 +176,14 @@ class ExpedienteTemporal {
         if (!is_null($request->input('secretarioLider')))
             $request->session()->put('secretarioArbitralLider',$request->input('secretarioLider'));
 
+        if (!is_null($request->input('idDemandante')))
+            $request->session()->put('idDemandante',$request->input('idDemandante'));
+
         if (!is_null($request->input('demandante')))
             $request->session()->put('demandante',$request->input('demandante'));
+
+        if (!is_null($request->input('idDemandado')))
+            $request->session()->put('idDemandado',$request->input('idDemandado'));
 
         if (!is_null($request->input('demandado')))
             $request->session()->put('demandado',$request->input('demandado'));
@@ -240,6 +256,26 @@ class ExpedienteTemporal {
 
 		if (!is_null($request->input('laudadoAFavor')))
 			$request->session()->put('laudadoAFavor', $request->input('laudadoAFavor'));
+
+		// Recursos
+		if (!is_null($request->input('recursoPresentado'))){
+
+			$recursos = [];
+			
+			$recursosPresentados = $request->input('recursoPresentado');
+			$fechasPresentacion = $request->input('fechaPresentacion');
+			$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');
+			$fechasResultado = $request->input('fechaResultado');
+			
+			$length = count($recursosPresentados);
+			for($i=0;$i<$length;$i++){
+				$nuevoRecurso = RecursoTemporal::withData($recursosPresentados[$i],$fechasPresentacion[$i],
+														$resultadosRecursosPresentado[$i],$fechasResultado[$i]);
+				array_push($recursos,$nuevoRecurso);
+			}
+
+			$request->session()->put('recursos', $recursos);
+		}
     }
 
     public static function quitarDeSesion(Request $request){
@@ -256,7 +292,9 @@ class ExpedienteTemporal {
         $request->session()->forget('escalaPago');
         $request->session()->forget('secretarioArbitral');
         $request->session()->forget('secretarioArbitralLider');
+        $request->session()->forget('idDemandante');
         $request->session()->forget('demandante');
+        $request->session()->forget('idDemandado');
         $request->session()->forget('demandado');
 		$request->session()->forget('consorcioDemandante');
 		$request->session()->forget('miembrosDemandante');
@@ -281,6 +319,7 @@ class ExpedienteTemporal {
 		$request->session()->forget('resultadoEnSoles');
 		$request->session()->forget('ejecucionLaudo');
 		$request->session()->forget('laudadoAFavor');
+		$request->session()->forget('recursos');
     }
 
     function agregarSecretario($idUsuarioLegal){
@@ -299,6 +338,7 @@ class ExpedienteTemporal {
 
 	function agregarDemandante($idClienteLegal){
 
+		$this->idDemandante = $idClienteLegal;
 		$demandante = ExpedienteClienteLegal::where('idExpedienteClienteLegal',$idClienteLegal)->first();
 
 		if ($demandante->flgTipoPersona == 'J'){
@@ -354,6 +394,7 @@ class ExpedienteTemporal {
 
 	function agregarDemandado($idClienteLegal){
 
+		$this->idDemandado = $idClienteLegal;
 		$demandado = ExpedienteClienteLegal::where('idExpedienteClienteLegal',$idClienteLegal)->first();
 
 		if ($demandado->flgTipoPersona == 'J'){
@@ -411,5 +452,18 @@ class ExpedienteTemporal {
 		if (is_null($this->regiones))
 			$this->regiones = [];
 		array_push($this->regiones,$region);
+	}
+
+	function agregarRecurso(Request $request){
+		$nuevoRecurso = RecursoTemporal::withRequest($request);
+		if (is_null($this->recursos))
+			$this->recursos= [];
+		array_push($this->recursos,$nuevoRecurso);
+	}
+
+	function editarRecurso($id, Request $request){
+		$nuevoRecurso = RecursoTemporal::withRequest($request);
+		$this->recursos[$id] = $nuevoRecurso;
+
 	}
 }

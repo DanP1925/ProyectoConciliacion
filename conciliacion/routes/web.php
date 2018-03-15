@@ -59,5 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/region/directorio','RegionController@buscarRegion');
 
-    Route::post('/recurso/nuevo','RegionController@nuevo');
+    Route::post('/recurso/nuevo','RecursoController@nuevo');
+
+    Route::post('/recurso/editar','RecursoController@editar');
 });
