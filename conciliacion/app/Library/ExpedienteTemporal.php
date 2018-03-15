@@ -34,6 +34,19 @@ class ExpedienteTemporal {
 	var $montoContrato;
 	var $anhoContrato;
 	var $regiones;
+	var $arbitroUnico;
+	var $designacionArbitroUnico;
+	var $presidenteTribunal;
+	var $arbitroDemandante;
+	var $arbitroDemandado;
+	var $designacionPresidenteTribunal;
+	var $designacionDemandante;
+	var $designacionDemandado;
+	var $fechaLaudo;
+	var $resultadoLaudo;
+	var $resultadoEnSoles;
+	var $ejecucionLaudo;
+	var $laudadoAFavor;
 
     function __construct(Request $request)
     {
@@ -83,7 +96,36 @@ class ExpedienteTemporal {
 
 		$this->anhoContrato = $request->session()->get('anhoContrato');
 		$this->regiones = $request->session()->get('regiones');
+		$this->arbitroUnico = $request->session()->get('arbitroUnico');
 
+		if (!is_null($request->session()->get('designacionArbitroUnico')))
+			$this->designacionArbitroUnico = $request->session()->get('designacionArbitroUnico');
+
+		$this->presidenteTribunal = $request->session()->get('presidenteTribunal');
+		$this->arbitroDemandante = $request->session()->get('arbitroDemandante');
+		$this->arbitroDemandado = $request->session()->get('arbitroDemandado');
+
+		if (!is_null($request->session()->get('designacionPresidenteTribunal')))
+			$this->designacionPresidenteTribunal = $request->session()->get('designacionPresidenteTribunal');
+
+		if (!is_null($request->session()->get('designacionDemandante')))
+			$this->designacionDemandante = $request->session()->get('designacionDemandante');
+
+		if (!is_null($request->session()->get('designacionDemandado')))
+			$this->designacionDemandado = $request->session()->get('designacionDemandado');
+
+		$this->fechaLaudo = $request->session()->get('fechaLaudo');
+
+		if (!is_null($request->session()->get('resultadoLaudo')))
+			$this->resultadoLaudo = $request->session()->get('resultadoLaudo');
+
+		$this->resultadoEnSoles = $request->session()->get('resultadoEnSoles');
+
+		if (!is_null($request->session()->get('ejecucionLaudo')))
+			$this->ejecucionLaudo = $request->session()->get('ejecucionLaudo');
+
+		if (!is_null($request->session()->get('laudadoAFavor')))
+			$this->laudadoAFavor = $request->session()->get('laudadoAFavor');
     }
 
     public static function guardarEnSesion(Request $request){
@@ -159,6 +201,45 @@ class ExpedienteTemporal {
 
 		if (!is_null($request->input('regiones')))
 			$request->session()->put('regiones', $request->input('regiones'));
+
+		if (!is_null($request->input('arbitroUnico')))
+			$request->session()->put('arbitroUnico', $request->input('arbitroUnico'));
+
+		if (!is_null($request->input('designacionArbitroUnico')))
+			$request->session()->put('designacionArbitroUnico', $request->input('designacionArbitroUnico'));
+
+		if (!is_null($request->input('presidenteTribunal')))
+			$request->session()->put('presidenteTribunal', $request->input('presidenteTribunal'));
+
+		if (!is_null($request->input('arbitroDemandante')))
+			$request->session()->put('arbitroDemandante', $request->input('arbitroDemandante'));
+
+		if (!is_null($request->input('arbitroDemandado')))
+			$request->session()->put('arbitroDemandado', $request->input('arbitroDemandado'));
+
+		if (!is_null($request->input('designacionPresidenteTribunal')))
+			$request->session()->put('designacionPresidenteTribunal', $request->input('designacionPresidenteTribunal'));
+		
+		if (!is_null($request->input('designacionDemandante')))
+			$request->session()->put('designacionDemandante', $request->input('designacionDemandante'));
+
+		if (!is_null($request->input('designacionDemandado')))
+			$request->session()->put('designacionDemandado', $request->input('designacionDemandado'));
+
+		if (!is_null($request->input('fechaLaudo')))
+			$request->session()->put('fechaLaudo', $request->input('fechaLaudo'));
+
+		if (!is_null($request->input('resultadoLaudo')))
+			$request->session()->put('resultadoLaudo', $request->input('resultadoLaudo'));
+
+		if (!is_null($request->input('resultadoEnSoles')))
+			$request->session()->put('resultadoEnSoles', $request->input('resultadoEnSoles'));
+
+		if (!is_null($request->input('ejecucionLaudo')))
+			$request->session()->put('ejecucionLaudo', $request->input('ejecucionLaudo'));
+
+		if (!is_null($request->input('laudadoAFavor')))
+			$request->session()->put('laudadoAFavor', $request->input('laudadoAFavor'));
     }
 
     public static function quitarDeSesion(Request $request){
@@ -187,6 +268,19 @@ class ExpedienteTemporal {
         $request->session()->forget('montoContrato');
         $request->session()->forget('anhoContrato');
 		$request->session()->forget('regiones');
+		$request->session()->forget('arbitroUnico');
+		$request->session()->forget('designacionArbitroUnico');
+		$request->session()->forget('presidenteTribunal');
+		$request->session()->forget('arbitroDemandante');
+		$request->session()->forget('arbitroDemandado');
+		$request->session()->forget('designacionPresidenteTribunal');
+		$request->session()->forget('designacionDemandante');
+		$request->session()->forget('designacionDemandado');
+		$request->session()->forget('fechaLaudo');
+		$request->session()->forget('resultadoLaudo');
+		$request->session()->forget('resultadoEnSoles');
+		$request->session()->forget('ejecucionLaudo');
+		$request->session()->forget('laudadoAFavor');
     }
 
     function agregarSecretario($idUsuarioLegal){

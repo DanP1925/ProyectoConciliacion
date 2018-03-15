@@ -511,7 +511,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="Ver Propuesta" class="site-label-button float-right">
+                                <button type="submit" formaction="/recurso/nuevo" name="accion" value="agregarRecurso" class="site-label-button float-right">
                                     VER PROPUESTAS
                                 </button>
                                 <div style="clear:both;"></div>
@@ -524,7 +524,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="arbitroUnico" name="arbitroUnico" />
+                                <input type="text" class="site-input" id="arbitroUnico" name="arbitroUnico" @if (!is_null($expedienteTemporal->arbitroUnico)) value="{{$expedienteTemporal->arbitroUnico}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -534,8 +534,10 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="resultado" name="resultado">
+                                <select class="site-select" id="designacionArbitroUnico" name="designacionArbitroUnico">
                                     <option value="">Seleccione una opción</option>
+									<option value="Parte" @if ($expedienteTemporal->designacionArbitroUnico == "Parte") selected @endif>Designado por la Parte</option>
+									<option value="Corte" @if ($expedienteTemporal->designacionArbitroUnico == "Corte") selected @endif>Designado por la Corte</option>
                                 </select>
                             </div>
                         </div>
@@ -555,7 +557,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="presidenteTribunal" name="presidenteTribunal" />
+                                <input type="text" class="site-input" id="presidenteTribunal" name="presidenteTribunal" @if (!is_null($expedienteTemporal->presidenteTribunal)) value="{{$expedienteTemporal->presidenteTribunal}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -565,7 +567,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="arbitro Demandante" name="arbitroDemandante" />
+                                <input type="text" class="site-input" id="arbitroDemandante" name="arbitroDemandante" @if (!is_null($expedienteTemporal->arbitroDemandante)) value="{{$expedienteTemporal->arbitroDemandante}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -575,7 +577,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="arbitroDemandado" name="arbitroDemandado" />
+                                <input type="text" class="site-input" id="arbitroDemandado" name="arbitroDemandado" @if (!is_null($expedienteTemporal->arbitroDemandado)) value="{{$expedienteTemporal->arbitroDemandado}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -589,8 +591,10 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="resultado" name="resultado">
+                                <select class="site-select" id="designacionPresidenteTribunal" name="designacionPresidenteTribunal">
                                     <option value="">Seleccione una opción</option>
+									<option value="Parte" @if ($expedienteTemporal->designacionPresidenteTribunal == "Parte") selected @endif>Designado por la Parte</option>
+									<option value="Corte" @if ($expedienteTemporal->designacionPresidenteTribunal == "Corte") selected @endif>Designado por la Corte</option>
                                 </select>
                             </div>
                         </div>
@@ -601,8 +605,10 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="resultado" name="resultado">
+                                <select class="site-select" id="designacionDemandante" name="designacionDemandante">
                                     <option value="">Seleccione una opción</option>
+									<option value="Parte" @if ($expedienteTemporal->designacionDemandante == "Parte") selected @endif>Designado por la Parte</option>
+									<option value="Corte" @if ($expedienteTemporal->designacionDemandante == "Corte") selected @endif>Designado por la Corte</option>
                                 </select>
                             </div>
                         </div>
@@ -613,54 +619,13 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="resultado" name="resultado">
+                                <select class="site-select" id="designacionDemandado" name="designacionDemandado">
                                     <option value="">Seleccione una opción</option>
+									<option value="Parte" @if ($expedienteTemporal->designacionDemandado == "Parte") selected @endif>Designado por la Parte</option>
+									<option value="Corte" @if ($expedienteTemporal->designacionDemandado == "Corte") selected @endif>Designado por la Corte</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cell small-12 padding-bottom-20">
-                <div class="grid-x grid-margin-x">
-                    <div class="cell small-12">
-                        <div class="site-subtitle padding-bottom-20">
-                            INCIDENTES EN LA CORTE
-                        </div>
-                    </div>
-                    <div class="cell small-4">
-                        <label class="site-label">
-                            <input type="checkbox" name="reconsideracion" value="reconsideracion">
-                            Recusación
-                        </label>
-                    </div>
-                    <div class="cell small-4">
-                        <label class="site-label">
-                            <input type="checkbox" name="liquidacion" value="liquidacion">
-                            Liquidación
-                        </label>
-                    </div>
-                    <div class="cell small-4">
-                        <label class="site-label">
-                            <input type="checkbox" name="reliquidacion" value="reliquidacion">
-                            Reconsideración
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="cell small-12 padding-bottom-40">
-                <div class="grid-x grid-margin-x">
-                    <div class="cell small-4">
-                        <label class="site-label">
-                            <input type="checkbox" name="renuncia" value="renuncia">
-                            Renuncia
-                        </label>
-                    </div>
-                    <div class="cell small-4">
-                        <label class="site-label">
-                            <input type="checkbox" name="recusacion" value="recusacion">
-                            Reliquidación
-                        </label>
                     </div>
                 </div>
             </div>
@@ -677,7 +642,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="fechaLaudo" name="fechaLaudo" />
+                                <input type="date" class="site-input" id="fechaLaudo" name="fechaLaudo" @if (!is_null($expedienteTemporal->fechaLaudo)) value="{{$expedienteTemporal->fechaLaudo}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -687,8 +652,11 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="resultado" name="resultado">
+                                <select class="site-select" id="resultadoLaudo" name="resultadoLaudo">
                                     <option value="">Seleccione una opción</option>
+                                    @foreach ($resultadosLaudo as $resultadoLaudo)
+                                    <option value="{{$resultadoLaudo->idLaudoResultado}}" @if ($resultadoLaudo->idLaudoResultado == $expedienteTemporal->resultadoLaudo) selected @endif>{{$resultadoLaudo->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -699,7 +667,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="resultadoEnSoles" name="resultadoEnSoles" />
+                                <input type="text" class="site-input" id="resultadoEnSoles" name="resultadoEnSoles" @if (!is_null($expedienteTemporal->resultadoEnSoles)) value="{{$expedienteTemporal->resultadoEnSoles}}" @endif />
                             </div>
                         </div>
                     </div>
@@ -713,8 +681,11 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="ejecucion" name="ejecucion">
+                                <select class="site-select" id="ejecucionLaudo" name="ejecucionLaudo">
                                     <option value="">Seleccione una opción</option>
+                                    @foreach ($ejecucionesLaudo as $ejecucionLaudo)
+                                    <option value="{{$ejecucionLaudo->idLaudoEjecucion}}" @if ($ejecucionLaudo->idLaudoEjecucion == $expedienteTemporal->ejecucionLaudo) selected @endif>{{$ejecucionLaudo->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -727,18 +698,9 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="laudadoAFavor" name="laudadoAFavor">
                                     <option value="">Seleccione una opción</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cell small-4">
-                        <div class="site-label padding-bottom-5">
-                            Ejecución de Forma del Laudo
-                        </div>
-                        <div class="site-control">
-                            <div class="site-control-border">
-                                <select class="site-select" id="laudadoForma" name="laudadoForma">
-                                    <option value="">Seleccione una opción</option>
+                                    @foreach ($favorLaudo as $favor)
+                                    <option value="{{$favor->idLaudoAFavor}}" @if ($favor->idLaudoAFavor == $expedienteTemporal->laudadoAFavor) selected @endif>{{$favor->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

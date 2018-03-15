@@ -47,6 +47,9 @@ class ExpedienteController extends Controller
         $escalasDePago  = DB::table('cuantia_escala_pago')->get()->all();
 		$origenesArbitraje = DB::table('arbitraje_origen')->get()->all();
 		$montosContrato = DB::table('arbitraje_monto_contrato')->get()->all();
+		$resultadosLaudo = DB::table('laudo_resultado')->get()->all();
+		$ejecucionesLaudo = DB::table('laudo_ejecucion')->get()->all();
+		$favorLaudo = DB::table('laudo_a_favor')->get()->all();
 
         return view('expediente.nuevo',
             compact('estadosExpediente',
@@ -56,7 +59,10 @@ class ExpedienteController extends Controller
                     'escalasDePago',
 					'expedienteTemporal',
 					'origenesArbitraje',
-					'montosContrato'));
+					'montosContrato',
+					'resultadosLaudo',
+					'ejecucionesLaudo',
+					'favorLaudo'));
     }
 
     public function info()
