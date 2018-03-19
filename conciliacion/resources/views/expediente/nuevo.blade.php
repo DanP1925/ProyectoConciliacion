@@ -512,12 +512,6 @@
                                     ÁRBITRO ÚNICO
                                 </div>
                             </div>
-                            <div class="right-div">
-                                <button class="site-label-button float-right">
-                                    VER PROPUESTAS
-                                </button>
-                                <div style="clear:both;"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="cell small-4">

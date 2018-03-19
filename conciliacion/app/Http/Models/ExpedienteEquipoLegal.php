@@ -1,5 +1,6 @@
 <?php namespace App\Http\Models;
 
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -43,5 +44,13 @@ class ExpedienteEquipoLegal extends Model {
     public function usuarioLegal4() {
         return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idArbitroDemandado', 'idUsuario_legal');
     }
+
+	public static function insertarEquipo($idExpediente, Request $request){
+		table('expediente_equipo_legal')->insert(
+			['idExpediente' => $idExpediente,
+			'idArbitroUnico',
+			]
+		);
+	}
 
 }

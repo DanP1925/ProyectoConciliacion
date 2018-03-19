@@ -1,6 +1,8 @@
 <?php namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LaudoRecursoPresentado extends Model {
 
@@ -9,20 +11,40 @@ class LaudoRecursoPresentado extends Model {
      */
 
     protected $table = 'laudo_recurso_presentado';
-    protected $fillable = ['idLaudo', 'idLaudoRecursoEnContra', 'idLaudoRecursoPresentadoResultado', 'fechaSolicitud', 'fechaResultado'];
+    protected $fillable = ['idLaudoRecursoPresentado', 'idExpediente', 'idLaudoRecurso', 'idLaudorecursoResultado', 'fechaPresentacion', 'fechaResultado'];
 
 
-    public function laudo() {
-        return $this->belongsTo(\App\Http\Models\Laudo::class, 'idLaudo', 'idLaudo');
+    public function expediente() {
+        return $this->belongsTo(\App\Http\Models\Expediente::class, 'idExpediente', 'idExpediente');
     }
 
-    public function laudoRecursoEnContra() {
-        return $this->belongsTo(\App\Http\Models\LaudoRecursoEnContra::class, 'idLaudoRecursoEnContra', 'idLaudoRecursoEnContra');
+    public function laudoEstado() {
+        return $this->belongsTo(\App\Http\Models\LaudoRecurso::class, 'idLaudoRecurso', 'idLaudoRecurso');
     }
 
-    public function laudoRecursoPresentadoResultado() {
-        return $this->belongsTo(\App\Http\Models\LaudoRecursoPresentadoResultado::class, 'idLaudoRecursoPresentadoResultado', 'idLaudoRecursoPresentadoResultado');
+    public function laudoResultado() {
+        return $this->belongsTo(\App\Http\Models\LaudoRecursoResultado::class, 'idLaudoRecursoResultado', 'idLaudoRecursoResultado');
     }
 
+	public static function insertarRecursos($idExpediente, Request $request){
+
+		$recursos = [];
+
+		$recursosPresentados = $request->input('recursoPresentado');
+		$fechasPresentacion = $request->input('fechaPresentacion');
+		$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');
+		$fechasResultado = $request->input('fechaResultado');
+
+		$length = count($recursosPresentados);
+		for($i=0;$i<$length;$i++){
+			DB::table('laudo_recurso_presentado')->insert(
+				['idExpediente' => $idExpediente,
+				'idLaudoRecurso' => $recursosPresentados[$i],
+				'idLaudoRecursoResultado' => $resultadosRecursosPresentado[$i],
+				'fechaPresentacion' => $fechasPresentacion[$i],
+				'fechaResultado' => $fechasResultado[$i]]
+			);
+		}
+	}
 
 }

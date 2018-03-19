@@ -82,7 +82,9 @@ class Expediente extends Model {
 			'cuantiaMontoFinal' => $request->input('cuantiaControversiaFinal'),
 			'arbitrajeAnhoContrato' => $request->input('anhoContrato'),
 			'laudofecha' => $request->input('fechaLaudo'),
-			'laudoMontoResultado' => $request->input('resultadoEnSoles')]);
+			'laudoMontoResultado' => $request->input('resultadoEnSoles')]
+		);
 
+		return $idExpediente;
 	}
 }

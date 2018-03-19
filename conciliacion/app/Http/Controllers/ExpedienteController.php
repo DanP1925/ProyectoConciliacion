@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Library\ExpedienteTemporal;
 use App\Http\Models\Expediente;
+use App\Http\Models\ExpedienteEquipoLegal;
 use App\Http\Models\LaudoRecursoPresentado;
 use App\Http\Models\UsuarioLegal;
 
@@ -127,13 +128,11 @@ class ExpedienteController extends Controller
 			'fechaResultado' => 'nullable',
         ]);
 
-		//Expediente
-		Expediente::insertarExpediente($request);
+		dd($validatedData);
+		$idExpediente = Expediente::insertarExpediente($request);
+		ExpedienteEquipoLegal::insertarEquipo($idExpediente, $request);
+		LaudoRecursoPresentado::insertarRecursos($idExpediente, $request);
 
-		//Laudado
-
-		//EquipoLegal
-
-        dd($validatedData);
+		return view('expediente.nuevo');
     }
 }
