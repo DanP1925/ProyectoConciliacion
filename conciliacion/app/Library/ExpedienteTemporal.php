@@ -39,11 +39,8 @@ class ExpedienteTemporal {
 	var $regiones;
 	var $arbitroUnico;
 	var $designacionArbitroUnico;
-	var $idPresidenteTribunal;
 	var $presidenteTribunal;
-	var $idArbitroDemandante;
 	var $arbitroDemandante;
-	var $idArbitroDemandado;
 	var $arbitroDemandado;
 	var $designacionPresidenteTribunal;
 	var $designacionDemandante;
@@ -113,16 +110,8 @@ class ExpedienteTemporal {
 			$this->designacionArbitroUnico = $request->session()->get('designacionArbitroUnico');
 
 		$this->presidenteTribunal = $request->session()->get('presidenteTribunal');
-		if (!is_null($request->session()->get('idPresidenteTribunal')))
-			$this->idPresidenteTribunal= $request->session()->get('idPresidenteTribunal');
-
 		$this->arbitroDemandante = $request->session()->get('arbitroDemandante');
-		if (!is_null($request->session()->get('idArbitroDemandante')))
-			$this->idArbitroDemandante = $request->session()->get('idArbitroDemandante');
-
 		$this->arbitroDemandado = $request->session()->get('arbitroDemandado');
-		if (!is_null($request->session()->get('idArbitroDemandado')))
-			$this->idArbitroDemandado = $request->session()->get('idArbitroDemandado');
 
 		if (!is_null($request->session()->get('designacionPresidenteTribunal')))
 			$this->designacionPresidenteTribunal = $request->session()->get('designacionPresidenteTribunal');

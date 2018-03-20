@@ -19,7 +19,12 @@ class ExpedienteController extends Controller
 
     public function lista()
     {
-        return view('expediente.lista');
+        $estadosExpediente = DB::table('expediente_estado')->get()->all();
+        $tipos = DB::table('expediente_tipo_caso')->get()->all();
+        $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
+
+		return view('expediente.lista', compact('estadosExpediente',
+					'tipos', 'subtipos' ));
     }
 
     public function nuevo(Request $request)
@@ -128,11 +133,10 @@ class ExpedienteController extends Controller
 			'fechaResultado' => 'nullable',
         ]);
 
-		dd($validatedData);
 		$idExpediente = Expediente::insertarExpediente($request);
 		ExpedienteEquipoLegal::insertarEquipo($idExpediente, $request);
 		LaudoRecursoPresentado::insertarRecursos($idExpediente, $request);
 
-		return view('expediente.nuevo');
+		return view('expediente.lista');
     }
 }

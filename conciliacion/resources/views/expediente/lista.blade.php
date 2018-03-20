@@ -31,7 +31,7 @@
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="fechaInicio" name="fechaInicio" />
+                    		<input type="text" class="site-input" id="numeroExpediente" name="numeroExpediente" />
                     	</div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="miembroDemandante" name="miembroDemandante" />
+                    		<input type="text" class="site-input" id="secretarioResponsable" name="secretarioResponsable" />
                     	</div>
                     </div>
                 </div>
@@ -149,6 +149,9 @@
                     	<div class="site-control-border">
                     		<select class="site-select" id="estado" name="estado">
                             	<option value="">Seleccione una opción</option>
+								@foreach ($estadosExpediente as $estadoExpediente)
+								<option value="{{$estadoExpediente->idExpedienteEstado}}">{{$estadoExpediente->nombre}}</option>
+								@endforeach
                             </select>
                     	</div>
                     </div>
@@ -162,6 +165,9 @@
                     	<div class="site-control-border">
                         	<select class="site-select" id="tipoCaso" name="tipoCaso">
                             	<option value="">Seleccione una opción</option>
+								@foreach ($tipos as $tipo)
+								<option value="{{$tipo->idExpedienteTipoCaso}}">{{$tipo->nombre}}</option>
+								@endforeach
                             </select>
                        </div>
                     </div>
@@ -174,6 +180,9 @@
                     	<div class="site-control-border">
                     		<select class="site-select" id="subtipoCaso" name="subtipoCaso">
                             	<option value="">Seleccione una opción</option>
+								@foreach ($subtipos as $subtipo)
+								<option value="{{$subtipo->idExpedienteSubtipoCaso}}">{{$subtipo->nombre}}</option>
+								@endforeach
                             </select>
                     	</div>
                     </div>
@@ -287,6 +296,7 @@
             </div>
             
             <div class="site-list-item-div background-color-F5F5F5">
+				@foreach ($expedientes as $expediente)
             	<a href="{{ url('/expediente/info',['idExpediente' => 'codigo']) }}">
                     <div class="table-3cells-div">
                         <div class="left-div">
@@ -333,6 +343,7 @@
                         </div>
                     </div>
             	</a>
+				@endforeach
             </div>
         </div>
         
