@@ -213,6 +213,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
+								<input type="hidden" name="idSecretarioResponsable" value="{{$expedienteTemporal->idSecretarioResponsable}}" />
                                 <input type="text" class="site-input" id="secretarioResponable" name="secretarioResponsable" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->secretarioArbitral)) value="{{$expedienteTemporal->secretarioArbitral}}" @endif/>
                             </div>
                         </div>
@@ -233,6 +234,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
+								<input type="hidden" name="idSecretarioLider" value="{{$expedienteTemporal->idSecretarioLider}}" />
                                 <input type="text" class="site-input" id="secretarioLider" name="secretarioLider" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->secretarioArbitralLider)) value="{{$expedienteTemporal->secretarioArbitralLider}}" @endif/>
                             </div>
                         </div>

@@ -22,9 +22,10 @@ class ExpedienteController extends Controller
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
         $tipos = DB::table('expediente_tipo_caso')->get()->all();
         $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
+		$expedientes = Expediente::get()->all();
 
 		return view('expediente.lista', compact('estadosExpediente',
-					'tipos', 'subtipos' ));
+					'tipos', 'subtipos', 'expedientes' ));
     }
 
     public function nuevo(Request $request)
@@ -102,7 +103,9 @@ class ExpedienteController extends Controller
             'cuantiaControversiaFinal' => 'nullable',
             'tipoCuantia' => 'required',
             'escalaPago' => 'required',
+			'idSecretarioResponsable' => 'nullable',
 			'secretarioResponsable' => 'nullable',
+			'idSecretarioLider' => 'nullable',
 			'secretarioLider' => 'nullable',
 			'idDemandante' => 'required',
 			'demandante' => 'required',
@@ -137,6 +140,12 @@ class ExpedienteController extends Controller
 		ExpedienteEquipoLegal::insertarEquipo($idExpediente, $request);
 		LaudoRecursoPresentado::insertarRecursos($idExpediente, $request);
 
-		return view('expediente.lista');
+        $estadosExpediente = DB::table('expediente_estado')->get()->all();
+        $tipos = DB::table('expediente_tipo_caso')->get()->all();
+        $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
+		$expedientes = Expediente::get()->all();
+
+		return view('expediente.lista', compact('estadosExpediente',
+					'tipos', 'subtipos', 'expedientes' ));
     }
 }

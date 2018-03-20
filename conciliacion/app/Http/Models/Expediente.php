@@ -11,7 +11,7 @@ class Expediente extends Model {
      */
 
     protected $table = 'expediente';
-    protected $fillable = ['idExpediente', 'idExpedienteEstado', 'idExpedienteTipoCaso', 'idExpedienteSubtipoCaso', 'idDemandante', 'idDemandado', 'idCuantiaTipo', 'idCuantiaEscalaPago', 'idArbitrajeOrigen', 'idArbitrajeMontoContrato', 'idLaudoResultado', 'idLaudoEjecucion', 'idLaudoAFavor', 'numeroExpediente', 'numeroExpedienteAsociado', 'fechaSolicitud', 'cuantiaMontoInicial', 'cuantiaMontoFinal', 'arbitrajeAnhoContrato', 'laudofecha', 'laudoMontoResultado'];
+    protected $fillable = ['idExpediente', 'idExpedienteEstado', 'idExpedienteTipoCaso', 'idExpedienteSubtipoCaso', 'idDemandante', 'idDemandado', 'idCuantiaTipo', 'idCuantiaEscalaPago', 'idArbitrajeOrigen', 'idArbitrajeMontoContrato', 'idLaudoResultado', 'idLaudoEjecucion', 'idLaudoAFavor', 'idSecretarioLider', 'idSecretarioResponsable', 'numeroExpediente', 'numeroExpedienteAsociado', 'fechaSolicitud', 'cuantiaMontoInicial', 'cuantiaMontoFinal', 'arbitrajeAnhoContrato', 'laudofecha', 'laudoMontoResultado'];
 
 	public function arbitrajeMontoContrato(){
         return $this->belongsTo(\App\Http\Models\ArbitrajeMontoContrato::class, 'idArbitrajeMontoContrato', 'idArbitrajeMontoContrato');
@@ -53,6 +53,14 @@ class Expediente extends Model {
         return $this->belongsTo(\App\Http\Models\LaudoAFavor::class, 'idLaudoAFavor', 'idLaudoAFavor');
 	}
 
+	public function secretarioLider(){
+        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idSecretarioLider', 'idUsuario_legal');
+	}
+
+	public function sercretarioResponsable(){
+        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idSecretarioResponsable', 'idUsuario_legal');
+	}
+
 	public function laudoEjecucion(){
         return $this->belongsTo(\App\Http\Models\LaudoEjecucion::class, 'idLaudoEjecucion', 'idLaudoEjecucion');
 	}
@@ -75,6 +83,8 @@ class Expediente extends Model {
 			'idLaudoResultado' => $request->input('resultadoLaudo'),
 			'idLaudoEjecucion' => $request->input('ejecucionLaudo'),
 			'idLaudoAFavor' => $request->input('laudadoAFavor'),
+			'idSecretarioLider' => $request->input('idSecretarioLider'),
+			'idSecretarioResponsable' => $request->input('idSecretarioResponsable'),
 			'numeroExpediente' => $request->input('numeroExpediente'),
 			'numeroExpedienteAsociado' => $request->input('numeroExpedienteAsociado'),
 			'fechaSolicitud' => $request->input('fechaSolicitud'),
@@ -86,5 +96,53 @@ class Expediente extends Model {
 		);
 
 		return $idExpediente;
+	}
+
+	public function getFecha(){
+		return explode(" ",$this->fechaSolicitud)[0];
+	}
+
+	public function getTipoCaso(){
+		$tipoCaso = DB::table('expediente_tipo_caso')->where('idExpedienteTipoCaso',$this->idExpedienteTipoCaso)->first();
+		return $tipoCaso->nombre;
+	}
+
+	public function getSubtipoCaso(){
+		$subtipoCaso = DB::table('expediente_subtipo_caso')->where('idExpedienteSubtipoCaso',$this->idExpedienteSubtipoCaso)->first();
+		return $subtipoCaso->nombre;
+	}
+
+	public function getDemandante(){
+		$clienteLegal = DB::table('expediente_cliente_legal')->where('idExpedienteClienteLegal',$this->idDemandante)->first();
+		if ($clienteLegal->flgTipoPersona == 'J'){
+			$personaJuridica = DB::table('persona_juridica')->where('idPersonaJuridica',$clienteLegal->idPersonaJuridica)->first();
+			$nombre = $personaJuridica->razonSocial;
+		} else {
+			$personaNatural = DB::table('persona_natural')->where('idPersonaNatural',$clienteLegal->idPersonaNatural)->first();
+			$nombre = ($personaNatural->nombre).' '.($personaNatural->apellidoPaterno).' '.($personaNatural->apellidoMaterno);
+		}
+		return $nombre;
+	}
+	
+	public function getDemandado(){
+		$clienteLegal = DB::table('expediente_cliente_legal')->where('idExpedienteClienteLegal',$this->idDemandado)->first();
+		if ($clienteLegal->flgTipoPersona == 'J'){
+			$personaJuridica = DB::table('persona_juridica')->where('idPersonaJuridica',$clienteLegal->idPersonaJuridica)->first();
+			$nombre = $personaJuridica->razonSocial;
+		} else {
+			$personaNatural = DB::table('persona_natural')->where('idPersonaNatural',$clienteLegal->idPersonaNatural)->first();
+			$nombre = ($personaNatural->nombre).' '.($personaNatural->apellidoPaterno).' '.($personaNatural->apellidoMaterno);
+		}
+		return $nombre;
+	}
+
+	public function getSecretarioResponsable(){
+		$usuario = DB::table('usuario_legal')->where('idUsuario_legal',$this->idSecretarioResponsable)->first();
+		return ($usuario->nombre).' '.($usuario->apellidoPaterno).' '.($usuario->apellidoMaterno);
+	}
+
+	public function getSecretarioLider(){
+		$usuario = DB::table('usuario_legal')->where('idUsuario_legal',$this->idSecretarioLider)->first();
+		return ($usuario->nombre).' '.($usuario->apellidoPaterno).' '.($usuario->apellidoMaterno);
 	}
 }

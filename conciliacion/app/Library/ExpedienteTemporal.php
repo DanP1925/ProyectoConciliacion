@@ -21,7 +21,9 @@ class ExpedienteTemporal {
     var $cuantiaControversiaFinal;
     var $tipoCuantia;
     var $escalaPago;
+	var $idSecretarioResponsable;
     var $secretarioArbitral;
+	var $idSecretarioLider;
     var $secretarioArbitralLider;
 	var $idDemandante;
 	var $demandante;
@@ -65,11 +67,15 @@ class ExpedienteTemporal {
         $this->tipoCuantia = $request->session()->get('tipoCuantia');
         $this->escalaPago = $request->session()->get('escalaPago');
 
-        if (!is_null($request->session()->get('secretarioArbitral')))
+        if (!is_null($request->session()->get('secretarioArbitral'))){
+			$this->idSecretarioResponsable = $request->session()->get('idSecretarioResponsable');
             $this->secretarioArbitral = $request->session()->get('secretarioArbitral');
+		}
 
-        if (!is_null($request->session()->get('secretarioArbitralLider')))
+        if (!is_null($request->session()->get('secretarioArbitralLider'))){
+            $this->idSecretarioLider= $request->session()->get('idSecretarioLider');
             $this->secretarioArbitralLider = $request->session()->get('secretarioArbitralLider');
+		}
 
 		if (!is_null($request->session()->get('demandante'))){
 			$this->idDemandante = $request->session()->get('idDemandante');
@@ -170,8 +176,14 @@ class ExpedienteTemporal {
         if (!is_null($request->input('escalaPago')))
             $request->session()->put('escalaPago',$request->input('escalaPago'));
 
+        if (!is_null($request->input('idSecretarioResponsable')))
+            $request->session()->put('idSecretarioResponsable',$request->input('idSecretarioResponsable'));
+
         if (!is_null($request->input('secretarioResponsable')))
             $request->session()->put('secretarioArbitral',$request->input('secretarioResponsable'));
+
+        if (!is_null($request->input('idSecretarioLider')))
+            $request->session()->put('idSecretarioLider',$request->input('idSecretarioLider'));
 
         if (!is_null($request->input('secretarioLider')))
             $request->session()->put('secretarioArbitralLider',$request->input('secretarioLider'));
@@ -290,7 +302,9 @@ class ExpedienteTemporal {
         $request->session()->forget('cuantiaControversiaFinal');
         $request->session()->forget('tipoCuantia');
         $request->session()->forget('escalaPago');
+        $request->session()->forget('idSecretarioResponsable');
         $request->session()->forget('secretarioArbitral');
+        $request->session()->forget('idSecretarioLider');
         $request->session()->forget('secretarioArbitralLider');
         $request->session()->forget('idDemandante');
         $request->session()->forget('demandante');
@@ -324,6 +338,7 @@ class ExpedienteTemporal {
 
     function agregarSecretario($idUsuarioLegal){
         $secretario = DB::table('usuario_legal')->where('idUsuario_legal',$idUsuarioLegal)->first();
+		$this->idSecretarioResponsable = $secretario->idUsuario_legal;
         $this->secretarioArbitral = $secretario->nombre;
         $this->secretarioArbitral .= ' '.$secretario->apellidoPaterno;
         $this->secretarioArbitral .= ' '.$secretario->apellidoMaterno;
@@ -331,6 +346,7 @@ class ExpedienteTemporal {
 
     function agregarSecretarioLider($idUsuarioLegal){
         $secretario = DB::table('usuario_legal')->where('idUsuario_legal',$idUsuarioLegal)->first();
+		$this->idSecretarioLider = $secretario->idUsuario_legal;
         $this->secretarioArbitralLider = $secretario->nombre;
         $this->secretarioArbitralLider .= ' '.$secretario->apellidoPaterno;
         $this->secretarioArbitralLider .= ' '.$secretario->apellidoMaterno;

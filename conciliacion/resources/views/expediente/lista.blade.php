@@ -198,157 +198,58 @@
         </div>
         
         <div class="cell small-12 padding-bottom-50">
-        	<div class="site-list-item-div background-color-F5F5F5">
-            	<a href="{{ url('/expediente/info',['idExpediente' => 'codigo']) }}">
-                    <div class="table-3cells-div">
-                        <div class="left-div">
-                            <div class="site-list-item-expediente-fecha padding-bottom-3">
-                                08/05/2016
-                            </div>
-                            <div class="site-list-item-expediente-numero padding-bottom-3">
-                                1194-256-16
-                            </div>
-                            <div class="site-list-item-label">
-                                Tipo caso:
-                            </div>
-                            <div class="site-list-item-label">
-                                <span class="font-avantgarde-regular">Nombre Tipo caso / Subdivisión caso</span>
-                            </div>
-                        </div>
-                        <div class="middle-div">
-                            <div class="site-list-item-label padding-bottom-3">
-                                Secretario Responsable
-                            </div>
-                            <div class="site-list-item-text padding-bottom-5">
-                                Nombre Secretario Responsable
-                            </div>
-                            <div class="site-list-item-label padding-bottom-3">
-                                Secretario Lider
-                            </div>
-                            <div class="site-list-item-text">
-                                Nombre Secretario Lider
-                            </div>
-                        </div>
-                        <div class="right-div">
-                            <div class="site-list-item-label padding-bottom-3">
-                                Demandante
-                            </div>
-                            <div class="site-list-item-text padding-bottom-5">
-                                Nombre Demandante
-                            </div>
-                            <div class="site-list-item-label padding-bottom-3">
-                                Demandado
-                            </div>
-                            <div class="site-list-item-text">
-                                Nombre Demandado
-                            </div>
-                        </div>
-                    </div>
-            	</a>
-            </div>
-            
-            <a href="{{ url('/expediente/info',['idExpediente' => 'codigo']) }}">
-            <div class="site-list-item-div background-color-FFFFFF">
-                <div class="table-3cells-div">
-                    <div class="left-div">
-                        <div class="site-list-item-expediente-fecha padding-bottom-3">
-                            08/05/2016
-                        </div>
-                        <div class="site-list-item-expediente-numero padding-bottom-3">
-                            1194-256-16
-                        </div>
-                        <div class="site-list-item-label">
-                            Tipo caso:
-                        </div>
-                        <div class="site-list-item-label">
-                            <span class="font-avantgarde-regular">Nombre Tipo caso / Subdivisión caso</span>
-                        </div>
-                    </div>
-                    <div class="middle-div">
-                        <div class="site-list-item-label padding-bottom-3">
-                            Secretario Responsable
-                        </div>
-                        <div class="site-list-item-text padding-bottom-5">
-                            Nombre Secretario Responsable
-                        </div>
-                        <div class="site-list-item-label padding-bottom-3">
-                            Secretario Lider
-                        </div>
-                        <div class="site-list-item-text">
-                            Nombre Secretario Lider
-                        </div>
-                    </div>
-                    <div class="right-div">
-                        <div class="site-list-item-label padding-bottom-3">
-                            Demandante
-                        </div>
-                        <div class="site-list-item-text padding-bottom-5">
-                            Nombre Demandante
-                        </div>
-                        <div class="site-list-item-label padding-bottom-3">
-                            Demandado
-                        </div>
-                        <div class="site-list-item-text">
-                            Nombre Demandado
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+			@foreach ($expedientes as $expediente)
+			@if ($loop->index % 2 == 0)
             <div class="site-list-item-div background-color-F5F5F5">
-				@foreach ($expedientes as $expediente)
-            	<a href="{{ url('/expediente/info',['idExpediente' => 'codigo']) }}">
-                    <div class="table-3cells-div">
-                        <div class="left-div">
-                            <div class="site-list-item-expediente-fecha padding-bottom-3">
-                                08/05/2016
-                            </div>
-                            <div class="site-list-item-expediente-numero padding-bottom-3">
-                                1194-256-16
-                            </div>
-                            <div class="site-list-item-label">
-                                Tipo caso:
-                            </div>
-                            <div class="site-list-item-label">
-                                <span class="font-avantgarde-regular">Nombre Tipo caso / Subdivisión caso</span>
-                            </div>
-                        </div>
-                        <div class="middle-div">
-                            <div class="site-list-item-label padding-bottom-3">
-                                Secretario Responsable
-                            </div>
-                            <div class="site-list-item-text padding-bottom-5">
-                                Nombre Secretario Responsable
-                            </div>
-                            <div class="site-list-item-label padding-bottom-3">
-                                Secretario Lider
-                            </div>
-                            <div class="site-list-item-text">
-                                Nombre Secretario Lider
-                            </div>
-                        </div>
-                        <div class="right-div">
-                            <div class="site-list-item-label padding-bottom-3">
-                                Demandante
-                            </div>
-                            <div class="site-list-item-text padding-bottom-5">
-                                Nombre Demandante
-                            </div>
-                            <div class="site-list-item-label padding-bottom-3">
-                                Demandado
-                            </div>
-                            <div class="site-list-item-text">
-                                Nombre Demandado
-                            </div>
-                        </div>
-                    </div>
-            	</a>
-				@endforeach
-            </div>
-        </div>
-        
-        <div class="cell small-12 padding-bottom-50 paginate-div">
-        	<font color="#C0C0C0">«  1</font> <u>2</u> <u>3</u>  <u>»</u>
+			@else
+            <div class="site-list-item-div background-color-FFFFFF">
+			@endif
+				<div class="table-3cells-div">
+					<div class="left-div">
+						<div class="site-list-item-expediente-fecha padding-bottom-3">
+							{{$expediente->getFecha()}}
+						</div>
+						<div class="site-list-item-expediente-numero padding-bottom-3">
+							{{$expediente->numeroExpediente}}
+						</div>
+						<div class="site-list-item-label">
+							Tipo caso:
+						</div>
+						<div class="site-list-item-label">
+							<span class="font-avantgarde-regular">{{$expediente->getTipoCaso()}} / {{$expediente->getSubtipoCaso()}}</span>
+						</div>
+					</div>
+					<div class="middle-div">
+						<div class="site-list-item-label padding-bottom-3">
+							Secretario Responsable
+						</div>
+						<div class="site-list-item-text padding-bottom-5">
+							{{$expediente->getSecretarioResponsable()}}
+						</div>
+						<div class="site-list-item-label padding-bottom-3">
+							Secretario Lider
+						</div>
+						<div class="site-list-item-text">
+							{{$expediente->getSecretarioLider()}}
+						</div>
+					</div>
+					<div class="right-div">
+						<div class="site-list-item-label padding-bottom-3">
+							Demandante
+						</div>
+						<div class="site-list-item-text padding-bottom-5">
+							{{$expediente->getDemandante()}}
+						</div>
+						<div class="site-list-item-label padding-bottom-3">
+							Demandado
+						</div>
+						<div class="site-list-item-text">
+							{{$expediente->getDemandado()}}
+						</div>
+					</div>
+				</div>
+			</div>
+			@endforeach
         </div>
         
     </div>
