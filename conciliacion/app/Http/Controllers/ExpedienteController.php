@@ -28,6 +28,17 @@ class ExpedienteController extends Controller
 					'tipos', 'subtipos', 'expedientes' ));
     }
 
+	public function buscar(Request $request)
+	{
+        $estadosExpediente = DB::table('expediente_estado')->get()->all();
+        $tipos = DB::table('expediente_tipo_caso')->get()->all();
+        $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
+		$expedientes = Expediente::buscarExpediente($request);
+
+		return view('expediente.lista', compact('estadosExpediente',
+					'tipos', 'subtipos', 'expedientes' ));
+	}
+
     public function nuevo(Request $request)
     {
         $expedienteTemporal = new ExpedienteTemporal($request);
@@ -80,7 +91,7 @@ class ExpedienteController extends Controller
 					'favorLaudo'));
     }
 
-    public function info()
+    public function info($id)
     {
         return view('expediente.info');
     }

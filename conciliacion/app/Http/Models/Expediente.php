@@ -98,6 +98,63 @@ class Expediente extends Model {
 		return $idExpediente;
 	}
 
+	public static function buscarExpediente(Request $request){
+		$numeroExpediente = $request->input('numeroExpediente');
+		$resultadoJuridico = Expediente::where('numeroExpediente','LIKE','%'.$numeroExpediente.'%');
+		$resultadoNatural = Expediente::where('numeroExpediente','LIKE','%'.$numeroExpediente.'%');
+
+		if (!is_null($request->input('fechaInicio'))){
+			$fechaInicio = $request->input('fechaInicio');
+			$resultadoJuridico = $resultadoJuridico->where('fechaSolicitud','>',$fechaInicio);
+			$resultadoNatural = $resultadoNatural->where('fechaSolicitud','>',$fechaInicio);
+		}
+
+		if (!is_null($request->input('fechaFin'))){
+			$fechaFin = $request->input('fechaFin');
+			$resultadoJuridico = $resultadoJuridico->where('fechaSolicitud','<',$fechaFin);
+			$resultadoNatural = $resultadoNatural->where('fechaSolicitud','<',$fechaFin);
+		}
+
+		if (!is_null($request->input('demandante'))){
+			$nombreDemandante = $request->input('demandante');
+
+			//Persona Juridica
+			$personasJuridicas = DB::table('persona_juridica')->where('razonSocial','LIKE','%'.$nombreDemandante.'%')->get();
+			$listaPersonasJuridicas = [];
+			foreach($personasJuridicas as $personaJuridica){
+				array_push($listaPersonasJuridicas , $personaJuridica->idPersonaJuridica);
+			}
+			$clientesJuridicos = DB::table('expediente_cliente_legal')->whereIn('idPersonaJuridica',$listaPersonasJuridicas)->get();
+			$listaClientesJuridicos = [];
+			foreach($clientesJuridicos as $clienteJuridico){
+				array_push($listaClientesJuridicos, $clienteJuridico->idExpedienteClienteLegal);
+			}
+			$expedientesJuridicos = $resultadoJuridico->whereIn('idDemandante',$listaClientesJuridicos); 
+
+			//Persona Natural
+			$personasNaturales = DB::table('persona_natural')->where('nombre','LIKE','%'.$nombreDemandante.'%');
+			$personasNaturales = $personasNaturales->where('apellidoPaterno','LIKE','%'.$nombreDemandante.'%');
+			$personasNaturales = $personasNaturales->where('apellidoMaterno','LIKE','%'.$nombreDemandante.'%')->get();
+
+			$listaPersonasNaturales = [];
+			foreach($personasNaturales as $personaNatural){
+				array_push($listaPersonasNaturales, $personaNatural->idPersonaNatural);
+			}
+			$clientesNaturales = DB::table('expediente_cliente_legal')->whereIn('idPersonaNatural',$listaPersonasNaturales)->get();
+			$listaClientesNaturales = [];
+			foreach($clientesNaturales as $clienteNatural){
+				array_push($listaClientesNaturales, $clienteNatural->idExpedienteClienteLegal);
+			}
+			$expedientesNaturales = $resultadoNatural->whereIn('idDemandante',$listaClientesNaturales); 
+
+			$resultado = $expedientesJuridicos->union($expedientesNaturales);
+			$resultado = $resultado->distinct();
+
+		}
+
+		return $resultado->get();
+	}
+
 	public function getFecha(){
 		return explode(" ",$this->fechaSolicitud)[0];
 	}

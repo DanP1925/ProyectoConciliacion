@@ -23,6 +23,8 @@
                 </div>
             </div>
 		</div>
+		<form method="POST" action="/expediente/buscar">
+			{{ csrf_field() }}
         <div class="cell small-12 padding-bottom-20">
         	<div class="grid-x grid-margin-x">
             	<div class="cell small-4">
@@ -45,7 +47,7 @@
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="fechaInicio" name="fechaInicio" />
+                    		<input type="date" class="site-input" id="fechaInicio" name="fechaInicio" />
                     	</div>
                     </div>
                 </div>
@@ -59,7 +61,7 @@
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="fechaFin" name="fechaFin" />
+                    		<input type="date" class="site-input" id="fechaFin" name="fechaFin" />
                     	</div>
                     </div>
                 </div>
@@ -191,14 +193,16 @@
         </div>
         
         <div class="cell small-12 padding-bottom-50">
-        	<div class="site-form-button float-left">
+        	<button type="submit" class="site-form-button float-left">
             	buscar
-            </div>
+            </button>
             <div style="clear:both;"></div>
         </div>
+		</form>
         
         <div class="cell small-12 padding-bottom-50">
 			@foreach ($expedientes as $expediente)
+			<a href="/expediente/info/{{$expediente->idExpediente}}">
 			@if ($loop->index % 2 == 0)
             <div class="site-list-item-div background-color-F5F5F5">
 			@else
@@ -249,6 +253,7 @@
 					</div>
 				</div>
 			</div>
+			</a>
 			@endforeach
         </div>
         
