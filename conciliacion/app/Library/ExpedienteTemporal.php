@@ -54,95 +54,277 @@ class ExpedienteTemporal {
 	var $laudadoAFavor;
 	var $recursos;
 
-    function __construct(Request $request)
+    function __construct()
     {
-        $this->numeroExpediente = $request->session()->get('numeroExpediente');
-        $this->fechaSolicitud = $request->session()->get('fechaSolicitud');
-        $this->estadoExpediente = $request->session()->get('estadoExpediente');
-        $this->numeroExpedienteAsociado = $request->session()->get('numeroExpedienteAsociado');
-        $this->tipoCaso = $request->session()->get('tipoCaso');
-        $this->subtipoCaso = $request->session()->get('subtipoCaso');
-        $this->cuantiaControversiaInicial = $request->session()->get('cuantiaControversiaInicial');
-        $this->cuantiaControversiaFinal = $request->session()->get('cuantiaControversiaFinal');
-        $this->tipoCuantia = $request->session()->get('tipoCuantia');
-        $this->escalaPago = $request->session()->get('escalaPago');
+    }
+
+	public static function withRequest(Request $request)
+	{
+		$instance = new self();
+        $instance->numeroExpediente = $request->session()->get('numeroExpediente');
+        $instance->fechaSolicitud = $request->session()->get('fechaSolicitud');
+        $instance->estadoExpediente = $request->session()->get('estadoExpediente');
+        $instance->numeroExpedienteAsociado = $request->session()->get('numeroExpedienteAsociado');
+        $instance->tipoCaso = $request->session()->get('tipoCaso');
+        $instance->subtipoCaso = $request->session()->get('subtipoCaso');
+        $instance->cuantiaControversiaInicial = $request->session()->get('cuantiaControversiaInicial');
+        $instance->cuantiaControversiaFinal = $request->session()->get('cuantiaControversiaFinal');
+        $instance->tipoCuantia = $request->session()->get('tipoCuantia');
+        $instance->escalaPago = $request->session()->get('escalaPago');
 
         if (!is_null($request->session()->get('secretarioArbitral'))){
-			$this->idSecretarioResponsable = $request->session()->get('idSecretarioResponsable');
-            $this->secretarioArbitral = $request->session()->get('secretarioArbitral');
+			$instance->idSecretarioResponsable = $request->session()->get('idSecretarioResponsable');
+            $instance->secretarioArbitral = $request->session()->get('secretarioArbitral');
 		}
 
         if (!is_null($request->session()->get('secretarioArbitralLider'))){
-            $this->idSecretarioLider= $request->session()->get('idSecretarioLider');
-            $this->secretarioArbitralLider = $request->session()->get('secretarioArbitralLider');
+            $instance->idSecretarioLider= $request->session()->get('idSecretarioLider');
+            $instance->secretarioArbitralLider = $request->session()->get('secretarioArbitralLider');
 		}
 
 		if (!is_null($request->session()->get('demandante'))){
-			$this->idDemandante = $request->session()->get('idDemandante');
-			$this->demandante = $request->session()->get('demandante');
+			$instance->idDemandante = $request->session()->get('idDemandante');
+			$instance->demandante = $request->session()->get('demandante');
 		}
 
 		if (!is_null($request->session()->get('demandado'))){
-			$this->idDemandado = $request->session()->get('idDemandado');
-			$this->demandado = $request->session()->get('demandado');
+			$instance->idDemandado = $request->session()->get('idDemandado');
+			$instance->demandado = $request->session()->get('demandado');
 		}
 
 		if (!is_null($request->session()->get('consorcioDemandante')))
-			$this->consorcioDemandante = $request->session()->get('consorcioDemandante');
+			$instance->consorcioDemandante = $request->session()->get('consorcioDemandante');
 
 		if (!is_null($request->session()->get('miembrosDemandante')))
-			$this->miembrosDemandante = $request->session()->get('miembrosDemandante');
+			$instance->miembrosDemandante = $request->session()->get('miembrosDemandante');
 
 		if (!is_null($request->session()->get('consorcioDemandado')))
-			$this->consorcioDemandado = $request->session()->get('consorcioDemandado');
+			$instance->consorcioDemandado = $request->session()->get('consorcioDemandado');
 
 		if (!is_null($request->session()->get('miembrosDemandado')))
-			$this->miembrosDemandado = $request->session()->get('miembrosDemandado');
+			$instance->miembrosDemandado = $request->session()->get('miembrosDemandado');
 
-        $this->tipoDemandante = $request->session()->get('tipoDemandante');
-        $this->tipoDemandado = $request->session()->get('tipoDemandado');
+        $instance->tipoDemandante = $request->session()->get('tipoDemandante');
+        $instance->tipoDemandado = $request->session()->get('tipoDemandado');
 
 		if (!is_null($request->session()->get('origenArbitraje')))
-			$this->origenArbitraje = $request->session()->get('origenArbitraje');
+			$instance->origenArbitraje = $request->session()->get('origenArbitraje');
 
 		if (!is_null($request->session()->get('montoContrato')))
-			$this->montoContrato = $request->session()->get('montoContrato');
+			$instance->montoContrato = $request->session()->get('montoContrato');
 
-		$this->anhoContrato = $request->session()->get('anhoContrato');
-		$this->regiones = $request->session()->get('regiones');
-		$this->arbitroUnico = $request->session()->get('arbitroUnico');
+		$instance->anhoContrato = $request->session()->get('anhoContrato');
+		$instance->regiones = $request->session()->get('regiones');
+		$instance->arbitroUnico = $request->session()->get('arbitroUnico');
 
 		if (!is_null($request->session()->get('designacionArbitroUnico')))
-			$this->designacionArbitroUnico = $request->session()->get('designacionArbitroUnico');
+			$instance->designacionArbitroUnico = $request->session()->get('designacionArbitroUnico');
 
-		$this->presidenteTribunal = $request->session()->get('presidenteTribunal');
-		$this->arbitroDemandante = $request->session()->get('arbitroDemandante');
-		$this->arbitroDemandado = $request->session()->get('arbitroDemandado');
+		$instance->presidenteTribunal = $request->session()->get('presidenteTribunal');
+		$instance->arbitroDemandante = $request->session()->get('arbitroDemandante');
+		$instance->arbitroDemandado = $request->session()->get('arbitroDemandado');
 
 		if (!is_null($request->session()->get('designacionPresidenteTribunal')))
-			$this->designacionPresidenteTribunal = $request->session()->get('designacionPresidenteTribunal');
+			$instance->designacionPresidenteTribunal = $request->session()->get('designacionPresidenteTribunal');
 
 		if (!is_null($request->session()->get('designacionDemandante')))
-			$this->designacionDemandante = $request->session()->get('designacionDemandante');
+			$instance->designacionDemandante = $request->session()->get('designacionDemandante');
 
 		if (!is_null($request->session()->get('designacionDemandado')))
-			$this->designacionDemandado = $request->session()->get('designacionDemandado');
+			$instance->designacionDemandado = $request->session()->get('designacionDemandado');
 
-		$this->fechaLaudo = $request->session()->get('fechaLaudo');
+		$instance->fechaLaudo = $request->session()->get('fechaLaudo');
 
 		if (!is_null($request->session()->get('resultadoLaudo')))
-			$this->resultadoLaudo = $request->session()->get('resultadoLaudo');
+			$instance->resultadoLaudo = $request->session()->get('resultadoLaudo');
 
-		$this->resultadoEnSoles = $request->session()->get('resultadoEnSoles');
+		$instance->resultadoEnSoles = $request->session()->get('resultadoEnSoles');
 
 		if (!is_null($request->session()->get('ejecucionLaudo')))
-			$this->ejecucionLaudo = $request->session()->get('ejecucionLaudo');
+			$instance->ejecucionLaudo = $request->session()->get('ejecucionLaudo');
 
 		if (!is_null($request->session()->get('laudadoAFavor')))
-			$this->laudadoAFavor = $request->session()->get('laudadoAFavor');
+			$instance->laudadoAFavor = $request->session()->get('laudadoAFavor');
 
-		$this->recursos = $request->session()->get('recursos');
-    }
+		$instance->recursos = $request->session()->get('recursos');
+		return $instance;
+	}
+
+	public static function withId($id){
+		$instance = new self();
+
+		$expediente = DB::table('expediente')->where('idExpediente',$id)->first();
+		$equipoLegal = DB::table('expediente_equipo_legal')->where('idExpediente',$id)->first();
+		$recursosLaudo = DB::table('laudo_recurso_presentado')->where('idExpediente',$id)->get()->all();
+
+        $instance->numeroExpediente = $expediente->numeroExpediente;
+		$instance->fechaSolicitud = explode(" ",$expediente->fechaSolicitud)[0];
+		$instance->estadoExpediente = $expediente->idExpedienteEstado;
+		$instance->numeroExpedienteAsociado = $expediente->numeroExpedienteAsociado;
+		$instance->tipoCaso = $expediente->idExpedienteTipoCaso;
+		$instance->subtipoCaso = $expediente->idExpedienteSubtipoCaso;
+		$instance->cuantiaControversiaInicial = $expediente->cuantiaMontoInicial;
+		$instance->cuantiaControversiaFinal = $expediente->cuantiaMontoFinal;
+		$instance->tipoCuantia = $expediente->idCuantiaTipo;
+		$instance->escalaPago = $expediente->idCuantiaEscalaPago;
+
+		$secretarioResponsable = DB::table('usuario_legal')->where('idUsuario_legal',$expediente->idSecretarioResponsable)->first();
+		$instance->idSecretarioResponsable = $secretarioResponsable->idUsuario_legal;
+		$instance->secretarioArbitral = ($secretarioResponsable->nombre).' '.($secretarioResponsable->apellidoPaterno).' '.($secretarioResponsable->apellidoMaterno);
+
+		$secretarioLider = DB::table('usuario_legal')->where('idUsuario_legal',$expediente->idSecretarioLider)->first();
+		$instance->idSecretarioLider = $secretarioLider->idUsuario_legal;
+		$instance->secretarioArbitralLider = ($secretarioLider->nombre).' '.($secretarioLider->apellidoPaterno).' '.($secretarioLider->apellidoMaterno);
+
+		$demandante = DB::table('expediente_cliente_legal')->where('idExpedienteClienteLegal',$expediente->idDemandante)->first();
+
+		$instance->idDemandante = $demandante->idExpedienteClienteLegal;
+		if ($demandante->flgTipoPersona == 'J'){
+			$personaJuridica = DB::table('persona_juridica')->where('idPersonaJuridica',$demandante->idPersonaJuridica)->first();
+			$instance->demandante = $personaJuridica->razonSocial;
+
+			if (!is_null($personaJuridica)){
+				$consorcioDemandante = DB::table('consorcio_persona_detalle')->where('idPersonaJuridica',$personaJuridica->idPersonaJuridica)->first();
+				$nombreConsorcioPersona = DB::table('consorcio_persona')->where('idConsorcioPersona',$consorcioDemandante->idConsorcioPersona)->first();
+				$instance->consorcioDemandante = $nombreConsorcioPersona->nombre;
+				$miembrosConsorcio = DB::table('consorcio_persona_detalle')->where('idConsorcioPersona',$consorcioDemandante->idConsorcioPersona)->get()->all();
+				$listaNombreMiembros = [];
+				foreach($miembrosConsorcio as $miembro){
+					$miembroJuridico = DB::table('persona_juridica')->where('idPersonaJuridica',$miembro->idPersonaJuridica)->first();
+					array_push($listaNombreMiembros,$miembroJuridico->razonSocial);
+				}
+				$instance->miembrosDemandante = $listaNombreMiembros;
+			}
+		} else if ($demandante->flgTipoPersona == 'N'){
+			$personaNatural = DB::table('persona_natural')->where('idPersonaNatural',$demandante->idPersonaNatural)->first();
+			$instance->demandante = ($personaNatural->nombre).' '.($personaNatural->apellidoPaterno).' '.($personaNatural->apellidoMaterno);
+
+			if (!is_null($personaNatural)){
+				$consorcioDemandante = DB::table('consorcio_persona_detalle')->where('idPersonaNatural',$personaNatural->idPersonaNatural)->first();
+				$nombreConsorcioPersona = DB::table('consorcio_persona')->where('idConsorcioPersona',$consorcioDemandante->idConsorcioPersona)->first();
+				$instance->consorcioDemandante = $nombreConsorcioPersona->nombre;
+				$miembrosConsorcio = DB::table('consorcio_persona_detalle')->where('idConsorcioPersona',$consorcioDemandante->idConsorcioPersona)->get()->all();
+				$listaNombreMiembros = [];
+				foreach($miembrosConsorcio as $miembro){
+					$miembroNatural = DB::table('persona_natural')->where('idPersonaNatural',$miembro->idPersonaNatural)->first();
+					$nombre = ($miembroNatural.nombre).' '.($miembroNatural.apellidoPaterno).' '.($miembroNatural.apellidoMaterno);
+					array_push($listaNombreMiembros,$nombre);
+				}
+				$instance->miembrosDemandante = $listaNombreMiembros;
+			}
+		}
+
+		$demandado = DB::table('expediente_cliente_legal')->where('idExpedienteClienteLegal',$expediente->idDemandado)->first();
+
+		$instance->idDemandado = $demandado->idExpedienteClienteLegal;
+		if ($demandado->flgTipoPersona == 'J'){
+			$personaJuridica = DB::table('persona_juridica')->where('idPersonaJuridica',$demandado->idPersonaJuridica)->first();
+			$instance->demandado = $personaJuridica->razonSocial;
+
+			if (!is_null($personaJuridica)){
+				$consorcioDemandado = DB::table('consorcio_persona_detalle')->where('idPersonaJuridica',$personaJuridica->idPersonaJuridica)->first();
+				$nombreConsorcioPersona = DB::table('consorcio_persona')->where('idConsorcioPersona',$consorcioDemandado->idConsorcioPersona)->first();
+				$instance->consorcioDemandado = $nombreConsorcioPersona->nombre;
+				$miembrosConsorcio = DB::table('consorcio_persona_detalle')->where('idConsorcioPersona',$consorcioDemandado->idConsorcioPersona)->get()->all();
+				$listaNombreMiembros = [];
+				foreach($miembrosConsorcio as $miembro){
+					$miembroJuridico = DB::table('persona_juridica')->where('idPersonaJuridica',$miembro->idPersonaJuridica)->first();
+					array_push($listaNombreMiembros,$miembroJuridico->razonSocial);
+				}
+				$instance->miembrosDemandado = $listaNombreMiembros;
+			}
+		} else if ($demandado->flgTipoPersona == 'N'){
+			$personaNatural = DB::table('persona_natural')->where('idPersonaNatural',$demandado->idPersonaNatural)->first();
+			$instance->demandado = ($personaNatural->nombre).' '.($personaNatural->apellidoPaterno).' '.($personaNatural->apellidoMaterno);
+
+			if (!is_null($personaNatural)){
+				$consorcioDemandado = DB::table('consorcio_persona_detalle')->where('idPersonaNatural',$personaNatural->idPersonaNatural)->first();
+				$nombreConsorcioPersona = DB::table('consorcio_persona')->where('idConsorcioPersona',$consorcioDemandado->idConsorcioPersona)->first();
+				$instance->consorcioDemandado = $nombreConsorcioPersona->nombre;
+				$miembrosConsorcio = DB::table('consorcio_persona_detalle')->where('idConsorcioPersona',$consorcioDemandado->idConsorcioPersona)->get()->all();
+				$listaNombreMiembros = [];
+				foreach($miembrosConsorcio as $miembro){
+					$miembroNatural = DB::table('persona_natural')->where('idPersonaNatural',$miembro->idPersonaNatural)->first();
+					$nombre = ($miembroNatural.nombre).' '.($miembroNatural.apellidoPaterno).' '.($miembroNatural.apellidoMaterno);
+					array_push($listaNombreMiembros,$nombre);
+				}
+				$instance->miembrosDemandado = $listaNombreMiembros;
+			}
+		}
+
+		$instance->tipoDemandante = $demandante->flgSector;
+		$instance->tipoDemandado = $demandado->flgSector;
+		$instance->origenArbitraje = $expediente->idArbitrajeOrigen;
+		$instance->montoContrato = $expediente->idArbitrajeMontoContrato;
+		$instance->anhoContrato = $expediente->arbitrajeAnhoContrato;
+
+		$regionesControversia = DB::table('region_controversia')->where('idExpediente',$expediente->idExpediente)->get()->all();
+		$listaregiones = [];
+		foreach($regionesControversia as $regionControversia){
+			$region = DB::table('region')->where('idRegion',$regionControversia->idRegion)->first();
+			array_push($listaregiones,$region->nombre);
+		}	
+		$instance->regiones = $listaregiones;
+
+		if(!is_null($equipoLegal->idArbitroUnico)){
+			$arbitroUnico = DB::table('usuario_legal')->where('idUsuario_legal',$equipoLegal->idArbitroUnico)->first(); 
+			$instance->arbitroUnico = ($arbitroUnico->nombre).' '.($arbitroUnico->apellidoPaterno).' '.($arbitroUnico->apellidoMaterno);
+		}
+
+		if(!is_null($equipoLegal->tipDesArbitroUnico)){
+			$tipDesArbitroUnico = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroUnico)->first();
+			$instance->designacionArbitroUnico = $tipDesArbitroUnico->nombre;
+		}
+
+		if(!is_null($equipoLegal->idPresidenteTribunal)){
+			$presidenteTribunal = DB::table('usuario_legal')->where('idUsuario_legal',$equipoLegal->idPresidenteTribunal)->first(); 
+			$instance->presidenteTribunal = ($presidenteTribunal->nombre).' '.($presidenteTribunal->apellidoPaterno).' '.($presidenteTribunal->apellidoMaterno);
+		}
+
+		if(!is_null($equipoLegal->tipDesPresidenteTribunal)){
+			$tipDesPresidenteTribunal = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesPresidenteTribunal)->first();
+			$instance->designacionPresidenteTribunal = $tipDesPresidenteTribunal->nombre;
+		}
+
+		if(!is_null($equipoLegal->idArbitroDemandante)){
+			$arbitroDemandante = DB::table('usuario_legal')->where('idUsuario_legal',$equipoLegal->idArbitroDemandante)->first(); 
+			$instance->arbitroDemandante = ($arbitroDemandante->nombre).' '.($arbitroDemandante->apellidoPaterno).' '.($arbitroDemandante->apellidoMaterno);
+		}
+
+		if(!is_null($equipoLegal->tipDesArbitroDemandante)){
+			$tipDesArbitroDemandante = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroDemandante)->first();
+			$instance->designacionDemandante= $tipDesArbitroDemandante->nombre;
+		}
+
+		if(!is_null($equipoLegal->idArbitroDemandado)){
+			$arbitroDemandado = DB::table('usuario_legal')->where('idUsuario_legal',$equipoLegal->idArbitroDemandado)->first(); 
+			$instance->arbitroDemandado = ($arbitroDemandado->nombre).' '.($arbitroDemandado->apellidoPaterno).' '.($arbitroDemandado->apellidoMaterno);
+		}
+
+		if(!is_null($equipoLegal->tipDesArbitroDemandado)){
+			$tipDesArbitroDemandado = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroDemandado)->first();
+			$instance->designacionDemandado = $tipDesArbitroDemandado->nombre;
+		}
+
+		$instance->fechaLaudo = (explode(" ",$expediente->laudofecha))[0];
+		$instance->resultadoLaudo = $expediente->idLaudoResultado;
+		$instance->resultadoEnSoles = $expediente->laudoMontoResultado;
+		$instance->ejecucionLaudo = $expediente->idLaudoEjecucion;
+		$instance->laudadoAFavor= $expediente->idLaudoAFavor;
+
+		$listaRecursos = [];
+		foreach ($recursosLaudo as $recurso){
+			$fechaPresentacion = (explode(" ",$recurso->fechaPresentacion))[0];
+			$fechaResultado = (explode(" ",$recurso->fechaResultado))[0];
+			$recursoTemporal = RecursoTemporal::withData(
+				$recurso->idLaudoRecurso,$fechaPresentacion,
+				$recurso->idLaudoRecursoResultado,$fechaResultado);
+			array_push($listaRecursos,$recursoTemporal);
+		}
+		$instance->recursos = $listaRecursos;
+
+		return $instance;
+	}
 
     public static function guardarEnSesion(Request $request){
 

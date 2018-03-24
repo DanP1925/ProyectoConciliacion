@@ -46,7 +46,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="date" class="site-input" id="fechaSolicitud" name="fechaSolicitud" @if (!is_null($expedienteTemporal->fechaSolicitud)) value="{{$expedienteTemporal->fechaSolicitud}}" @endif//>
+                                <input type="date" class="site-input" id="fechaSolicitud" name="fechaSolicitud" @if (!is_null($expedienteTemporal->fechaSolicitud)) value="{{$expedienteTemporal->fechaSolicitud}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -203,10 +203,8 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretario" class="site-label-button float-right">
-                                    <div class="site-label-button float-right">
-                                        buscar
-                                    </div>
+								<button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretario" class="site-label-button float-right">
+									buscar
                                 </button>
                                 <div style="clear:both;"></div>
                             </div>

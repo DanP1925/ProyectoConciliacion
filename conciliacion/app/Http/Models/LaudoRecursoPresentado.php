@@ -28,8 +28,6 @@ class LaudoRecursoPresentado extends Model {
 
 	public static function insertarRecursos($idExpediente, Request $request){
 
-		$recursos = [];
-
 		$recursosPresentados = $request->input('recursoPresentado');
 		$fechasPresentacion = $request->input('fechaPresentacion');
 		$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');

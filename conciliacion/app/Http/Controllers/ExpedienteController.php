@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Library\ExpedienteTemporal;
 use App\Http\Models\Expediente;
+use App\Http\Models\RegionControversia;
 use App\Http\Models\ExpedienteEquipoLegal;
 use App\Http\Models\LaudoRecursoPresentado;
 use App\Http\Models\UsuarioLegal;
@@ -41,7 +42,7 @@ class ExpedienteController extends Controller
 
     public function nuevo(Request $request)
     {
-        $expedienteTemporal = new ExpedienteTemporal($request);
+        $expedienteTemporal = ExpedienteTemporal::withRequest($request);
         ExpedienteTemporal::quitarDeSesion($request);
 
         if (!is_null($request->input('accion'))){
@@ -93,7 +94,22 @@ class ExpedienteController extends Controller
 
     public function info($id)
     {
-        return view('expediente.info');
+        $estadosExpediente = DB::table('expediente_estado')->get()->all();
+        $tipos = DB::table('expediente_tipo_caso')->get()->all();
+        $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
+        $tiposCuantia = DB::table('cuantia_tipo')->get()->all();
+        $escalasDePago  = DB::table('cuantia_escala_pago')->get()->all();
+		$origenesArbitraje = DB::table('arbitraje_origen')->get()->all();
+		$montosContrato = DB::table('arbitraje_monto_contrato')->get()->all();
+		$resultadosLaudo = DB::table('laudo_resultado')->get()->all();
+        $expedienteTemporal = ExpedienteTemporal::withId($id);
+		$ejecucionesLaudo = DB::table('laudo_ejecucion')->get()->all();
+		$favorLaudo = DB::table('laudo_a_favor')->get()->all();
+		return view('expediente.info',
+			compact('expedienteTemporal',
+					'estadosExpediente','tipos','subtipos','tiposCuantia',
+					'escalasDePago','origenesArbitraje','montosContrato',
+					'resultadosLaudo','ejecucionesLaudo','favorLaudo'));
     }
 
     public function editar()
@@ -148,6 +164,7 @@ class ExpedienteController extends Controller
         ]);
 
 		$idExpediente = Expediente::insertarExpediente($request);
+		RegionControversia::insertarRegiones($idExpediente, $request);
 		ExpedienteEquipoLegal::insertarEquipo($idExpediente, $request);
 		LaudoRecursoPresentado::insertarRecursos($idExpediente, $request);
 
