@@ -11,12 +11,19 @@ class ClienteLegalController extends Controller
     public function buscarCliente(Request $request)
     {
         $accion = $request->input('accion');
+		$tipoAccion = (explode(" ",$accion))[0];
+		$id = 0;
+		if ($tipoAccion == "buscarDemandanteId" || $tipoAccion == "buscarDemandadoId")
+			$id = (explode(" ",$accion))[1];
+
         $clientes = ExpedienteClienteLegal::buscarCliente($request); 
         ExpedienteTemporal::guardarEnSesion($request);
 
         return view('clientelegal.directorio',
 			compact('clientes',
-					'accion'));
+					'accion',
+					'tipoAccion',
+					'id'));
     }
 
     public function index()

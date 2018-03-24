@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="right-div">
-                        <button type="submit" class="site-title-button float-right">
+                        <button type="submit" name="accion" value="nuevoExpediente" class="site-title-button float-right">
                             Registrar Expediente
                         </button>
                         <div style="clear:both;"></div>

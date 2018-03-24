@@ -28,6 +28,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/expediente/info/{idExpediente}','ExpedienteController@info');
 
+    Route::post('/expediente/info/{idExpediente}','ExpedienteController@infoActualizado');
+
     Route::get('/expediente/editar/{idExpediente}','ExpedienteController@editar');
 
     Route::get('/mantenimiento/personaNatural/nuevo','PersonaNaturalController@nuevo');

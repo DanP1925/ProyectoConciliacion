@@ -6,7 +6,11 @@
 <div class="grid-container">
 	<div class="grid-x">
 		<div class="cell small-12">
+		@if ($tipoAccion == "agregarRecursoId")
+		<form method="POST" action="/expediente/info/{{$id}}">
+		@else
 		<form method="POST" action="/expediente/nuevo">
+		@endif
 			{{ csrf_field() }}
 			<div class="table-2cells-div padding-top-30 padding-bottom-40">
 				<div class="left-div">

@@ -38,7 +38,11 @@
 			</div>
 			<div class="cell small-6 padding-bottom-50">
 				@foreach ($regiones as $region)
+				@if ($tipoAccion == "buscarRegionId")
+				<form method="POST" action="/expediente/info/{{$id}}">
+				@else
 				<form method="POST" action="/expediente/nuevo">
+				@endif
 					{{ csrf_field() }}
 					@if ($loop->index % 2 == 0)
 					<div class="site-list-item-div background-color-F5F5F5">

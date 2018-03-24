@@ -98,6 +98,33 @@ class Expediente extends Model {
 		return $idExpediente;
 	}
 
+	public static function actualizarExpediente($idExpediente, Request $request){
+		DB::table('expediente')->where('idExpediente',$idExpediente)->update
+			(['idExpedienteEstado' => $request->input('estadoExpediente'),
+			'idExpedienteTipoCaso' => $request->input('tipoCaso'),
+			'idExpedienteSubtipoCaso' => $request->input('subtipoCaso'),
+			'idDemandante' => $request->input('idDemandante'),
+			'idDemandado' => $request->input('idDemandado'),
+			'idCuantiaTipo' => $request->input('tipoCuantia'),
+			'idCuantiaEscalaPago' => $request->input('escalaPago'),
+			'idArbitrajeOrigen' => $request->input('origenArbitraje'),
+			'idArbitrajeMontoContrato' => $request->input('montoContrato'),
+			'idLaudoResultado' => $request->input('resultadoLaudo'),
+			'idLaudoEjecucion' => $request->input('ejecucionLaudo'),
+			'idLaudoAFavor' => $request->input('laudadoAFavor'),
+			'idSecretarioLider' => $request->input('idSecretarioLider'),
+			'idSecretarioResponsable' => $request->input('idSecretarioResponsable'),
+			'numeroExpediente' => $request->input('numeroExpediente'),
+			'numeroExpedienteAsociado' => $request->input('numeroExpedienteAsociado'),
+			'fechaSolicitud' => $request->input('fechaSolicitud'),
+			'cuantiaMontoInicial' => $request->input('cuantiaControversiaInicial'),
+			'cuantiaMontoFinal' => $request->input('cuantiaControversiaFinal'),
+			'arbitrajeAnhoContrato' => $request->input('anhoContrato'),
+			'laudofecha' => $request->input('fechaLaudo'),
+			'laudoMontoResultado' => $request->input('resultadoEnSoles')]
+		);
+	}
+
 	public static function buscarExpediente(Request $request){
 		$numeroExpediente = $request->input('numeroExpediente');
 		$resultadoJuridico = Expediente::where('numeroExpediente','LIKE','%'.$numeroExpediente.'%');

@@ -5,6 +5,8 @@
 @section('content')
 
 <div class="grid-container">
+    <form method="POST" action="/expediente/lista">
+		{{csrf_field() }}
 	<div class="grid-x">
     	<div class="cell small-12">
             <div class="table-2cells-div padding-top-30 padding-bottom-40">
@@ -14,7 +16,7 @@
                     </div>
                 </div>
                 <div class="right-div">
-					<button type="submit" class="site-title-button float-right">
+					<button type="submit" name="accion" value="editarExpediente {{$id}}" class="site-title-button float-right">
 						Editar Expediente
 					</button>
                     <div style="clear:both;"></div>
@@ -202,10 +204,8 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button type="submit" class="site-label-button float-right">
-								<div class="site-label-button float-right">
+							<button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretarioId {{$id}}" class="site-label-button float-right">
 									buscar
-								</div>
 							</button>
 							<div style="clear:both;"></div>
 						</div>
@@ -225,7 +225,7 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretarioInfo" class="site-label-button float-right">
+							<button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarLiderId {{$id}}" class="site-label-button float-right">
 								buscar
 							</button>
 							<div style="clear:both;"></div>
@@ -259,7 +259,7 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button class="site-label-button float-right">
+							<button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandanteId {{$id}}" class="site-label-button float-right">
 								buscar
 							</button>
 							<div style="clear:both;"></div>
@@ -267,6 +267,7 @@
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
+							<input type="hidden" name="idDemandante" value="{{$expedienteTemporal->idDemandante}}" />
 							<input type="text" class="site-input" id="demandante" name="demandante" @if (!is_null($expedienteTemporal->demandante)) value="{{$expedienteTemporal->demandante}}" @endif/>
 						</div>
 					</div>
@@ -279,7 +280,7 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button type="submit" class="site-label-button float-right">
+							<button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandadoId {{$id}}" class="site-label-button float-right">
 								buscar
 							</button>
 							<div style="clear:both;"></div>
@@ -468,7 +469,7 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button class="site-label-button float-right">
+							<button type="submit" formaction="/region/directorio" name="accion" value="buscarRegionId {{$id}}" class="site-label-button float-right">
 								AGREGAR REGIONES
 							</button>
 							<div style="clear:both;"></div>
@@ -715,7 +716,7 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button class="site-label-button float-right">
+							<button type="submit" formaction="/recurso/nuevo" name="accion" value="agregarRecursoId {{$id}}" class="site-label-button float-right">
 								AGREGAR RECURSOS
 							</button>
 							<div style="clear:both;"></div>
@@ -774,7 +775,7 @@
 							</div>
 						</div>
 						<div class="cell small-1">
-							<button type="submit" formaction="/recurso/editar" name="accion" value="editarRecurso {{$loop->index}}" class="site-label-button float-right">
+							<button type="submit" formaction="/recurso/editar" name="accion" value="editarRecursoId {{$id}} {{$loop->index}}" class="site-label-button float-right">
 								<i class="fa fa-edit" style="font-size:36px;"></i>
 							</button>
 						</div>
@@ -787,8 +788,23 @@
 				</div>
 				@endforeach
 				@endif
+				@if ($errors->any())
+				<div class="cell small-12 padding-bottom-50 error">
+					<div class="site-list-item-text padding-bottom-5">
+						Los siguientes errores fueron encontraros cuando registrabamos el expediente:
+					</div>
+					<div class="site-list-item-label">
+						<ul>
+							@foreach ($errors->all() as $error)
+							<li>{{$error}}</li>
+							@endforeach
+						</ul>
+					</div>
+				</div>
+				@endif
         </div>
     </div>
+	</form>
 </div>
 @endsection
 

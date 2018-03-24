@@ -20,12 +20,19 @@ class RecursoController extends Controller
 		$resultadoRecursos = DB::table('laudo_recurso_resultado')->get()->all();
 
         $accion = $request->input('accion');
+		$tipoAccion = (explode(" ",$accion))[0];
+		$id = 0;
+		if ($tipoAccion == "agregarRecursoId")
+			$id = (explode(" ",$accion))[1];
+
         ExpedienteTemporal::guardarEnSesion($request);
 
 		return view('recurso.nuevo',
 			compact('recursosPresentados',
 					'resultadoRecursos',
-					'accion'));
+					'accion',
+					'tipoAccion',
+					'id'));
     }
 
     public function editar(Request $request)
@@ -39,10 +46,16 @@ class RecursoController extends Controller
 		$fechasResultado = $request->input('fechaResultado');
 
 		$accion = explode(" ",$request->input('accion'));
-		$id = $accion[1];
+		$tipoAccion = $accion[0];
+		$id = 0;
+		if ($tipoAccion == "editarRecursoId"){
+			$id = $accion[1];
+			$idRecurso = $accion[2];
+		} else
+			$idRecurso = $accion[1];
 
-		$nuevoRecurso = RecursoTemporal::withData($recursos[$id],$fechasPresentacion[$id],
-			$resultadosRecursosPresentado[$id],$fechasResultado[$id]);
+		$nuevoRecurso = RecursoTemporal::withData($recursos[$idRecurso],$fechasPresentacion[$idRecurso],
+			$resultadosRecursosPresentado[$idRecurso],$fechasResultado[$idRecurso]);
 
         $accion = $request->input('accion');
         ExpedienteTemporal::guardarEnSesion($request);
@@ -50,7 +63,9 @@ class RecursoController extends Controller
 			compact('recursosPresentados',
 					'resultadoRecursos',
 					'accion',
-					'nuevoRecurso'));
+					'nuevoRecurso',
+					'tipoAccion',
+					'id'));
     }
 
     public function guardar(Request $request)

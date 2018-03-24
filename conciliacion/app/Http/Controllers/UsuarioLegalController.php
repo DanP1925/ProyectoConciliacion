@@ -23,6 +23,11 @@ class UsuarioLegalController extends Controller
         $perfiles = DB::table('usuario_legal_tipo')->get()->all();
 
         $accion = $request->input('accion');
+		$tipoAccion = (explode(" ",$accion))[0];
+		$id = 0;
+		if ($tipoAccion == "buscarSecretarioId" || $tipoAccion == "buscarLiderId")
+			$id = (explode(" ",$accion))[1];
+		
         $secretarios = UsuarioLegal::buscarPersonal($request);
         ExpedienteTemporal::guardarEnSesion($request);
 
@@ -31,7 +36,9 @@ class UsuarioLegalController extends Controller
                     'paises',
                     'perfiles',
                     'secretarios',
-                    'accion'));
+					'accion',
+					'tipoAccion',
+					'id'));
     }
 
     public function lista()

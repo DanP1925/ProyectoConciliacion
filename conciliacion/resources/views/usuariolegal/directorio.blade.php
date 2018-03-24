@@ -153,7 +153,11 @@
         <div class="cell small-12 padding-bottom-50">
 
             @foreach ($secretarios as $secretario)
+			@if ($tipoAccion == "buscarSecretarioId" || $tipoAccion == "buscarLiderId")
+			<form method="POST" action="/expediente/info/{{$id}}">
+			@else
             <form method="POST" action="/expediente/nuevo">
+			@endif
 				{{ csrf_field() }}
                 @if ($loop->index % 2 == 0)
                 <div class="site-list-item-div background-color-F5F5F5">

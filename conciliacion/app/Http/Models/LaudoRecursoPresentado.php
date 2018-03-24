@@ -45,4 +45,24 @@ class LaudoRecursoPresentado extends Model {
 		}
 	}
 
+	public static function actualizarRecursos($idExpediente, Request $request){
+
+		DB::table('laudo_recurso_presentado')->where('idExpediente',$idExpediente)->delete();
+
+		$recursosPresentados = $request->input('recursoPresentado');
+		$fechasPresentacion = $request->input('fechaPresentacion');
+		$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');
+		$fechasResultado = $request->input('fechaResultado');
+
+		$length = count($recursosPresentados);
+		for($i=0;$i<$length;$i++){
+			DB::table('laudo_recurso_presentado')->insert(
+				['idExpediente' => $idExpediente,
+				'idLaudoRecurso' => $recursosPresentados[$i],
+				'idLaudoRecursoResultado' => $resultadosRecursosPresentado[$i],
+				'fechaPresentacion' => $fechasPresentacion[$i],
+				'fechaResultado' => $fechasResultado[$i]]
+			);
+		}
+	}
 }

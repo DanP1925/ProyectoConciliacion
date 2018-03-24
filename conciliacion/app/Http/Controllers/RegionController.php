@@ -11,12 +11,19 @@ class RegionController extends Controller
 	public function buscarRegion(Request $request)
 	{
         $accion = $request->input('accion');
+		$tipoAccion = (explode(" ",$accion))[0];
+		$id = 0;
+		if ($tipoAccion == "buscarRegionId")
+			$id = (explode(" ",$accion))[1];
+
         $regiones = Region::buscarRegion($request); 
         ExpedienteTemporal::guardarEnSesion($request);
 
 		return view('region.directorio',
 			compact('regiones',
-					'accion'));
+					'accion',
+					'tipoAccion',
+					'id'));
 	}
 
     public function lista()
