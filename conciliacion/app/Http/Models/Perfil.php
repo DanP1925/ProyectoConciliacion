@@ -20,5 +20,9 @@ class Perfil extends Model {
         return $this->hasMany(\App\Http\Models\Usuario::class, 'idPerfil', 'idPerfil');
     }
 
+    public function usuarioInvitacions() {
+        return $this->hasMany(\App\Http\Models\UsuarioInvitacion::class, 'idPerfil', 'idPerfil');
+    }
+
 
 }

@@ -9,72 +9,76 @@ class Expediente extends Model {
      */
 
     protected $table = 'expediente';
-    protected $fillable = ['idExpediente', 'idSecretarioResponsable', 'idSecretarioLider', 'idDemandante', 'idDemandado', 'idCuantiaDeterminada', 'idCuantiaTipo', 'idTipoCaso', 'idTipoCasoForma', 'idArbitraje', 'numero', 'fechaSolicitud', 'cuantiaControversia'];
+    protected $fillable = ['idExpediente', 'idExpedienteEstado', 'idExpedienteTipoCaso', 'idExpedienteSubtipoCaso', 'idDemandante', 'idDemandado', 'idCuantiaTipo', 'idCuantiaEscalaPago', 'idArbitrajeOrigen', 'idArbitrajeMontoContrato', 'idLaudoResultado', 'idLaudoEjecucion', 'idLaudoAFavor', 'numero', 'fechaSolicitud', 'cuantiaMontoInicial', 'cuantiaMontoFinal', 'arbitrajeAnhoContrato', 'laudofecha', 'laudoMontoResultado'];
 
 
-    public function arbitraje() {
-        return $this->belongsTo(\App\Http\Models\Arbitraje::class, 'idArbitraje', 'idArbitraje');
+    public function arbitrajeMontoContrato() {
+        return $this->belongsTo(\App\Http\Models\ArbitrajeMontoContrato::class, 'idArbitrajeMontoContrato', 'idArbitrajeMontoContrato');
     }
 
-    public function demandante() {
-        return $this->belongsTo(\App\Http\Models\ClienteLegal::class, 'idDemandante', 'idClienteLegal');
+    public function arbitrajeOrigen() {
+        return $this->belongsTo(\App\Http\Models\ArbitrajeOrigen::class, 'idArbitrajeOrigen', 'idArbitrajeOrigen');
     }
 
-    public function demandado() {
-        return $this->belongsTo(\App\Http\Models\ClienteLegal::class, 'idDemandado', 'idClienteLegal');
+    public function expedienteDemandante() {
+        return $this->belongsTo(\App\Http\Models\ExpedienteClienteLegal::class, 'idDemandante', 'idExpedienteClienteLegal');
     }
 
-    public function cuantiaDeterminada() {
-        return $this->belongsTo(\App\Http\Models\CuantiaDeterminada::class, 'idCuantiaDeterminada', 'idCuantiaDeterminada');
+    public function expedienteDemandado() {
+        return $this->belongsTo(\App\Http\Models\ExpedienteClienteLegal::class, 'idDemandado', 'idExpedienteClienteLegal');
+    }
+
+    public function cuantiaEscalaPago() {
+        return $this->belongsTo(\App\Http\Models\CuantiaEscalaPago::class, 'idCuantiaEscalaPago', 'idCuantiaEscalaPago');
     }
 
     public function cuantiaTipo() {
         return $this->belongsTo(\App\Http\Models\CuantiaTipo::class, 'idCuantiaTipo', 'idCuantiaTipo');
     }
 
-    public function tipoCaso() {
-        return $this->belongsTo(\App\Http\Models\TipoCaso::class, 'idTipoCaso', 'idTipoCaso');
+    public function expedienteEstado() {
+        return $this->belongsTo(\App\Http\Models\ExpedienteEstado::class, 'idExpedienteEstado', 'idExpedienteEstado');
     }
 
-    public function tipoCasoForma() {
-        return $this->belongsTo(\App\Http\Models\TipoCasoForma::class, 'idTipoCasoForma', 'idTipoCasoForma');
+    public function expedienteSubtipoCaso() {
+        return $this->belongsTo(\App\Http\Models\ExpedienteSubtipoCaso::class, 'idExpedienteSubtipoCaso', 'idExpedienteSubtipoCaso');
     }
 
-    public function secretarioResponsable() {
-        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idSecretarioResponsable', 'idUsuario_legal');
+    public function expedienteTipoCaso() {
+        return $this->belongsTo(\App\Http\Models\ExpedienteTipoCaso::class, 'idExpedienteTipoCaso', 'idExpedienteTipoCaso');
     }
 
-    public function secretarioLider() {
-        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idSecretarioLider', 'idUsuario_legal');
+    public function laudoAFavor() {
+        return $this->belongsTo(\App\Http\Models\LaudoAFavor::class, 'idLaudoAFavor', 'idLaudoAFavor');
     }
 
-    /*public function jerarquiaExpediente() {
-        return $this->belongsToMany(\App\Http\Models\Expediente::class, 'jerarquia_expedientes', 'idExpediente', 'idExpedienteAsociado');
+    public function laudoEjecucion() {
+        return $this->belongsTo(\App\Http\Models\LaudoEjecucion::class, 'idLaudoEjecucion', 'idLaudoEjecucion');
     }
 
-    public function jerarquiaExpedienteAsociado() {
-        return $this->belongsToMany(\App\Http\Models\Expediente::class, 'jerarquia_expedientes', 'idExpedienteAsociado', 'idExpediente');
-    }
-    */
-    public function designacionPropuesta() {
-        return $this->hasMany(\App\Http\Models\DesignacionPropuesta::class, 'idExpediente', 'idExpediente');
+    public function laudoResultado() {
+        return $this->belongsTo(\App\Http\Models\LaudoResultado::class, 'idLaudoResultado', 'idLaudoResultado');
     }
 
-    public function facturas() {
-        return $this->hasMany(\App\Http\Models\Factura::class, 'idExpediente', 'idExpediente');
+    public function regions() {
+        return $this->belongsToMany(\App\Http\Models\Region::class, 'region_controversia', 'idExpediente', 'idRegion');
+    }
+
+    public function expedienteEquipoLegals() {
+        return $this->hasMany(\App\Http\Models\ExpedienteEquipoLegal::class, 'idExpediente', 'idExpediente');
     }
 
     public function incidentes() {
         return $this->hasMany(\App\Http\Models\Incidente::class, 'idExpediente', 'idExpediente');
     }
-    /*
-    public function jerarquiaExpedientes() {
-        return $this->hasMany(\App\Http\Models\JerarquiaExpediente::class, 'idExpediente', 'idExpediente');
+
+    public function laudoRecursoPresentados() {
+        return $this->hasMany(\App\Http\Models\LaudoRecursoPresentado::class, 'idExpediente', 'idExpediente');
     }
 
-    public function jerarquiaExpedientes() {
-        return $this->hasMany(\App\Http\Models\JerarquiaExpediente::class, 'idExpedienteAsociado', 'idExpediente');
+    public function regionControversia() {
+        return $this->hasMany(\App\Http\Models\RegionControversium::class, 'idExpediente', 'idExpediente');
     }
-    */
+
 
 }

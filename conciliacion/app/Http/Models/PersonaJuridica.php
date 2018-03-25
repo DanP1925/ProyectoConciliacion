@@ -9,15 +9,19 @@ class PersonaJuridica extends Model {
      */
 
     protected $table = 'persona_juridica';
-    protected $fillable = ['idPersonaJuridica', 'nombreComercial', 'razonSocial', 'ruc', 'direccion', 'telefono', 'sitioWeb'];
+    protected $fillable = ['idPersonaJuridica', 'nombreComercial', 'razonSocial', 'ruc', 'direccion', 'email', 'telefono', 'sitioWeb'];
 
 
-    public function clienteLegals() {
-        return $this->hasMany(\App\Http\Models\ClienteLegal::class, 'idPersonaJuridica', 'idPersonaJuridica');
+    public function consorcioPersonaDetalles() {
+        return $this->hasMany(\App\Http\Models\ConsorcioPersonaDetalle::class, 'idPersonaJuridica', 'idPersonaJuridica');
     }
 
-    public function consorcioClienteDetalles() {
-        return $this->hasMany(\App\Http\Models\ConsorcioClienteDetalle::class, 'idPersonaJuridica', 'idPersonaJuridica');
+    public function expedienteClienteLegals() {
+        return $this->hasMany(\App\Http\Models\ExpedienteClienteLegal::class, 'idPersonaJuridica', 'idPersonaJuridica');
+    }
+
+    public function facturas() {
+        return $this->hasMany(\App\Http\Models\Factura::class, 'idClientePersonaJuridica', 'idPersonaJuridica');
     }
 
 

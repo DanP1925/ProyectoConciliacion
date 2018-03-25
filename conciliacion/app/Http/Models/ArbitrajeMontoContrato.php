@@ -12,8 +12,8 @@ class ArbitrajeMontoContrato extends Model {
     protected $fillable = ['idArbitrajeMontoContrato', 'nombre'];
 
 
-    public function arbitrajes() {
-        return $this->hasMany(\App\Http\Models\Arbitraje::class, 'idArbitrajeMontoContrato', 'idArbitrajeMontoContrato');
+    public function expedientes() {
+        return $this->hasMany(\App\Http\Models\Expediente::class, 'idArbitrajeMontoContrato', 'idArbitrajeMontoContrato');
     }
 
 

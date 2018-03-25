@@ -20,9 +20,10 @@
             @endforeach
         </div>
         <div class="cell small-8 header-text-div text-align-right">
-            <a href="{{ url('/expediente/lista',[]) }}"><strong>Expedientes</strong></a> | 
-            <strong>Designaciones</strong> | 
-            <strong>Facturas</strong> | 
+            <a href="{{ url('/expediente/lista',[]) }}"><strong>Expedientes</strong></a> |
+            <strong>Designaciones</strong> |
+            <a href="{{ url('/incidente/lista',[]) }}"><strong>Incidentes</strong></a> |
+            <a href="{{ url('/facturacion/lista',[]) }}"><strong>Facturas</strong></a> |
             <strong>Mantenimientos</strong> | 
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <strong>Cerrar Sesión</strong>
@@ -30,6 +31,8 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
+            
+            
         </div>
       </div>
     </div>

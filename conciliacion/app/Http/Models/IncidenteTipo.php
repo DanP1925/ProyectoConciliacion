@@ -4,9 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class IncidenteTipo extends Model {
 
-    /**
-     * Generated
-     */
+    // FIX FOR : "Unknown column 'updated_at'"
+    public $timestamps = false;
 
     protected $table = 'incidente_tipo';
     protected $fillable = ['idIncidenteTipo', 'nombre'];

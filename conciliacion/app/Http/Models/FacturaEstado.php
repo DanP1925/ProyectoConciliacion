@@ -4,9 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class FacturaEstado extends Model {
 
-    /**
-     * Generated
-     */
+    // FIX FOR : "Unknown column 'updated_at'"
+    public $timestamps = false;
 
     protected $table = 'factura_estado';
     protected $fillable = ['idFacturaEstado', 'nombre'];

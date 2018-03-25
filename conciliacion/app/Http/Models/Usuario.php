@@ -1,13 +1,11 @@
 <?php namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Usuario extends Model {
 
-    /**
-     * Generated
-     */
+    // FIX FOR : "Unknown column 'updated_at'"
+    public $timestamps = false;
 
     protected $table = 'usuario';
     protected $fillable = ['idUsuario', 'idPerfil', 'nombre', 'apellidoPaterno', 'apellidoMaterno', 'idUser'];
@@ -22,7 +20,16 @@ class Usuario extends Model {
     }
 
     public static function crearUsuario($idPerfil,$nombre,$apPaterno,$apMaterno,$idUser){
-        $results = DB::select("call crear_usuario(?,?,?,?,?)",array($idPerfil,$nombre,$apPaterno,$apMaterno,$idUser));
-        return $results;
+
+        $usuario = new Usuario;
+
+        $usuario->idPerfil = $idPerfil;
+        $usuario->nombre = $nombre;
+        $usuario->apellidoPaterno = $apPaterno;
+        $usuario->apellidoMaterno = $apMaterno;
+        $usuario->idUser = $idUser;
+
+        $usuario->save();
     }
+
 }

@@ -4,12 +4,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class IncidenteDetalle extends Model {
 
-    /**
-     * Generated
-     */
+    // FIX FOR : "Unknown column 'updated_at'"
+    public $timestamps = false;
 
     protected $table = 'Incidente_detalle';
-    protected $fillable = ['idIncidenteSeguimiento', 'idIncidente', 'idIncidenteFecha', 'fecha'];
+    protected $fillable = ['idIncidenteDetalle', 'idIncidente', 'idIncidenteFecha', 'fecha'];
 
 
     public function incidente() {

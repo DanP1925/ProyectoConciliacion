@@ -17,7 +17,7 @@ class UsuarioLegalEspecialidad extends Model {
     }
 
     public function usuarioLegal() {
-        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idUsuarioLegal', 'idUsuario_legal');
+        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idUsuarioLegal', 'idUsuarioLegal');
     }
 
 

@@ -9,15 +9,19 @@ class PersonaNatural extends Model {
      */
 
     protected $table = 'persona_natural';
-    protected $fillable = ['idPersonaNatural', 'nombre', 'apellido Paterno', 'apellido Materno', 'dni', 'email', 'telefono'];
+    protected $fillable = ['idPersonaNatural', 'nombre', 'apellidoPaterno', 'apellidoMaterno', 'dni', 'email', 'telefono'];
 
 
-    public function clienteLegals() {
-        return $this->hasMany(\App\Http\Models\ClienteLegal::class, 'idPersonaNatural', 'idPersonaNatural');
+    public function consorcioPersonaDetalles() {
+        return $this->hasMany(\App\Http\Models\ConsorcioPersonaDetalle::class, 'idPersonaNatural', 'idPersonaNatural');
     }
 
-    public function consorcioClienteDetalles() {
-        return $this->hasMany(\App\Http\Models\ConsorcioClienteDetalle::class, 'idPersonaNatural', 'idPersonaNatural');
+    public function expedienteClienteLegals() {
+        return $this->hasMany(\App\Http\Models\ExpedienteClienteLegal::class, 'idPersonaNatural', 'idPersonaNatural');
+    }
+
+    public function facturas() {
+        return $this->hasMany(\App\Http\Models\Factura::class, 'idClientePersonaNatural', 'idPersonaNatural');
     }
 
 

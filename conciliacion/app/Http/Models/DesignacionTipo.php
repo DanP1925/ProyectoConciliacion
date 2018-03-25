@@ -12,12 +12,20 @@ class DesignacionTipo extends Model {
     protected $fillable = ['idDesignacionTipo', 'nombre'];
 
 
-    public function designacionPropuesta() {
-        return $this->belongsToMany(\App\Http\Models\DesignacionPropuestum::class, 'designacion', 'idDesignacionTipo', 'idDesignacionPropuesta');
+    public function expedienteEquipoLegals() {
+        return $this->hasMany(\App\Http\Models\ExpedienteEquipoLegal::class, 'tipDesArbitroUnico', 'idDesignacionTipo');
     }
 
-    public function designacions() {
-        return $this->hasMany(\App\Http\Models\Designacion::class, 'idDesignacionTipo', 'idDesignacionTipo');
+    public function expedienteEquipoLegals() {
+        return $this->hasMany(\App\Http\Models\ExpedienteEquipoLegal::class, 'tipDesPresidenteTribunal', 'idDesignacionTipo');
+    }
+
+    public function expedienteEquipoLegals() {
+        return $this->hasMany(\App\Http\Models\ExpedienteEquipoLegal::class, 'tipDesArbitroDemandante', 'idDesignacionTipo');
+    }
+
+    public function expedienteEquipoLegals() {
+        return $this->hasMany(\App\Http\Models\ExpedienteEquipoLegal::class, 'tipDesArbitroDemandado', 'idDesignacionTipo');
     }
 
 

@@ -12,12 +12,12 @@ class Region extends Model {
     protected $fillable = ['idRegion', 'nombre'];
 
 
-    public function arbitrajes() {
-        return $this->belongsToMany(\App\Http\Models\Arbitraje::class, 'arbitraje_region', 'idRegion', 'idArbitraje');
+    public function expedientes() {
+        return $this->belongsToMany(\App\Http\Models\Expediente::class, 'region_controversia', 'idRegion', 'idExpediente');
     }
 
-    public function arbitrajeRegions() {
-        return $this->hasMany(\App\Http\Models\ArbitrajeRegion::class, 'idRegion', 'idRegion');
+    public function regionControversia() {
+        return $this->hasMany(\App\Http\Models\RegionControversium::class, 'idRegion', 'idRegion');
     }
 
 

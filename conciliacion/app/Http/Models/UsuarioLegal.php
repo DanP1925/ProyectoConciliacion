@@ -9,11 +9,11 @@ class UsuarioLegal extends Model {
      */
 
     protected $table = 'usuario_legal';
-    protected $fillable = ['idUsuario_legal', 'idUsuarioLegalTipo', 'idUsuarioLegalProfesion', 'idUsuarioLegalPais', 'nombre', 'apellidoPaterno', 'apellidoMaterno', 'dni', 'email', 'telefono', 'rutaCv'];
+    protected $fillable = ['idUsuarioLegal', 'idUsuarioLegalTipo', 'idUsuarioLegalProfesion', 'idUsuarioLegalPais', 'apellidoPaterno', 'apellidoMaterno', 'nombre', 'dni', 'email', 'telefono', 'rutaCv'];
 
 
-    public function usuarioLegalPai() {
-        return $this->belongsTo(\App\Http\Models\UsuarioLegalPai::class, 'idUsuarioLegalPais', 'idUsuarioLegalPais');
+    public function usuarioLegalPais() {
+        return $this->belongsTo(\App\Http\Models\UsuarioLegalPais::class, 'idUsuarioLegalPais', 'idUsuarioLegalPais');
     }
 
     public function usuarioLegalProfesion() {
@@ -24,56 +24,48 @@ class UsuarioLegal extends Model {
         return $this->belongsTo(\App\Http\Models\UsuarioLegalTipo::class, 'idUsuarioLegalTipo', 'idUsuarioLegalTipo');
     }
 
+    public function incidentes() {
+        return $this->belongsToMany(\App\Http\Models\Incidente::class, 'incidente_usuario', 'idUsuarioIncidente', 'idIncidente');
+    }
+
     public function legalEspecialidads() {
         return $this->belongsToMany(\App\Http\Models\LegalEspecialidad::class, 'usuario_legal_especialidad', 'idUsuarioLegal', 'idLegalEspecialidad');
     }
 
-    public function arbitrajes() {
-        return $this->hasMany(\App\Http\Models\Arbitraje::class, 'idCorteArbitraje', 'idUsuario_legal');
+    public function expedienteRepresentanteLegals() {
+        return $this->hasMany(\App\Http\Models\ExpedienteClienteLegal::class, 'idRepresentanteLegal', 'idUsuarioLegal');
     }
 
-    public function arbitrajeEquipos() {
-        return $this->hasMany(\App\Http\Models\ArbitrajeEquipo::class, 'idArbitroDemandante', 'idUsuario_legal');
+    public function expedienteArbitroUnicos() {
+        return $this->hasMany(\App\Http\Models\ExpedienteEquipoLegal::class, 'idArbitroUnico', 'idUsuarioLegal');
     }
 
-    public function arbitroDemandado() {
-        return $this->hasMany(\App\Http\Models\ArbitrajeEquipo::class, 'idArbitroDemandado', 'idUsuario_legal');
+    public function expedientePresidenteTribunals() {
+        return $this->hasMany(\App\Http\Models\ExpedienteEquipoLegal::class, 'idPresidenteTribunal', 'idUsuarioLegal');
     }
 
-    public function presidenteTribunal() {
-        return $this->hasMany(\App\Http\Models\ArbitrajeEquipo::class, 'idPresidenteTribunal', 'idUsuario_legal');
+    public function expedienteArbitroDemandantes() {
+        return $this->hasMany(\App\Http\Models\ExpedienteEquipoLegal::class, 'idArbitroDemandante', 'idUsuarioLegal');
     }
 
-    public function arbitroUnico() {
-        return $this->hasMany(\App\Http\Models\ArbitrajeEquipo::class, 'idArbitroUnico', 'idUsuario_legal');
-    }
-
-    public function clienteLegals() {
-        return $this->hasMany(\App\Http\Models\ClienteLegal::class, 'idUsuarioLegal', 'idUsuario_legal');
-    }
-
-    public function designacionPropuesta() {
-        return $this->hasMany(\App\Http\Models\DesignacionPropuesta::class, 'idUsuario_legal', 'idUsuario_legal');
-    }
-
-    public function secretarioResponsable() {
-        return $this->hasMany(\App\Http\Models\Expediente::class, 'idSecretarioResponsable', 'idUsuario_legal');
-    }
-
-    public function secretarioLider() {
-        return $this->hasMany(\App\Http\Models\Expediente::class, 'idSecretarioLider', 'idUsuario_legal');
+    public function expedienteArbitroDemandados() {
+        return $this->hasMany(\App\Http\Models\ExpedienteEquipoLegal::class, 'idArbitroDemandado', 'idUsuarioLegal');
     }
 
     public function facturas() {
-        return $this->hasMany(\App\Http\Models\Factura::class, 'idSecretarioArbitral', 'idUsuario_legal');
+        return $this->hasMany(\App\Http\Models\Factura::class, 'idUsuarioCreador', 'idUsuarioLegal');
     }
 
-    public function incidentes() {
-        return $this->hasMany(\App\Http\Models\Incidente::class, 'idSecretario', 'idUsuario_legal');
+    public function incidenteSecretarios() {
+        return $this->hasMany(\App\Http\Models\Incidente::class, 'idSecretario', 'idUsuarioLegal');
+    }
+
+    public function incidenteUsuarios() {
+        return $this->hasMany(\App\Http\Models\IncidenteUsuario::class, 'idUsuarioIncidente', 'idUsuarioLegal');
     }
 
     public function usuarioLegalEspecialidads() {
-        return $this->hasMany(\App\Http\Models\UsuarioLegalEspecialidad::class, 'idUsuarioLegal', 'idUsuario_legal');
+        return $this->hasMany(\App\Http\Models\UsuarioLegalEspecialidad::class, 'idUsuarioLegal', 'idUsuarioLegal');
     }
 
 

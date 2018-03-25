@@ -4,21 +4,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Factura extends Model {
 
-    /**
-     * Generated
-     */
+    // FIX FOR : "Unknown column 'updated_at'"
+    public $timestamps = false;
 
     protected $table = 'factura';
-    protected $fillable = ['idFactura', 'idExpediente', 'idSecretarioArbitral', 'idCliente', 'idFacturaConcepto', 'idFacturaEstado', 'numeroComprobante', 'fechaNotificacion', 'fechaEmision', 'fechaVencimiento', 'importeInicial', 'importeParcial', 'importePendiente', 'observacionEstado', 'observacionPlazosPago'];
+    protected $fillable = ['idFactura', 'idExpediente', 'idUsuarioCreador', 'idFacturaConcepto', 'idFacturaEstado', 'idClientePersonaNatural', 'idClientePersonaJuridica', 'nombreCliente', 'numeroComprobante', 'fechaEmision', 'fechaVencimiento', 'importeTotal', 'flgClientePersonaTipo'];
 
-
-    public function clienteLegal() {
-        return $this->belongsTo(\App\Http\Models\ClienteLegal::class, 'idCliente', 'idClienteLegal');
-    }
-
-    public function expediente() {
-        return $this->belongsTo(\App\Http\Models\Expediente::class, 'idExpediente', 'idExpediente');
-    }
 
     public function facturaConcepto() {
         return $this->belongsTo(\App\Http\Models\FacturaConcepto::class, 'idFacturaConcepto', 'idFacturaConcepto');
@@ -28,8 +19,28 @@ class Factura extends Model {
         return $this->belongsTo(\App\Http\Models\FacturaEstado::class, 'idFacturaEstado', 'idFacturaEstado');
     }
 
+    public function personaJuridica() {
+        return $this->belongsTo(\App\Http\Models\PersonaJuridica::class, 'idClientePersonaJuridica', 'idPersonaJuridica');
+    }
+
+    public function personaNatural() {
+        return $this->belongsTo(\App\Http\Models\PersonaNatural::class, 'idClientePersonaNatural', 'idPersonaNatural');
+    }
+
     public function usuarioLegal() {
-        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idSecretarioArbitral', 'idUsuario_legal');
+        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idUsuarioCreador', 'idUsuarioLegal');
+    }
+
+    public function facturaFechaNotificacions() {
+        return $this->hasMany(\App\Http\Models\FacturaFechaNotificacion::class, 'idFactura', 'idFactura');
+    }
+
+    public function facturaImporteParcials() {
+        return $this->hasMany(\App\Http\Models\FacturaImporteParcial::class, 'idFactura', 'idFactura');
+    }
+
+    public function facturaObservacions() {
+        return $this->hasMany(\App\Http\Models\FacturaObservacion::class, 'idFactura', 'idFactura');
     }
 
 

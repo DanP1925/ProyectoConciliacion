@@ -12,8 +12,8 @@ class LaudoResultado extends Model {
     protected $fillable = ['idLaudoResultado', 'nombre'];
 
 
-    public function laudos() {
-        return $this->hasMany(\App\Http\Models\Laudo::class, 'idLaudoResultado', 'idLaudoResultado');
+    public function expedientes() {
+        return $this->hasMany(\App\Http\Models\Expediente::class, 'idLaudoResultado', 'idLaudoResultado');
     }
 
 

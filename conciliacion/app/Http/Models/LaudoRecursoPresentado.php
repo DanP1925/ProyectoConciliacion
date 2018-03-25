@@ -9,19 +9,19 @@ class LaudoRecursoPresentado extends Model {
      */
 
     protected $table = 'laudo_recurso_presentado';
-    protected $fillable = ['idLaudo', 'idLaudoRecursoEnContra', 'idLaudoRecursoPresentadoResultado', 'fechaSolicitud', 'fechaResultado'];
+    protected $fillable = ['idLaudoRecursoPresentado', 'idExpediente', 'idLaudoRecurso', 'idLaudoRecursoResultado', 'fechaPresentacion', 'fechaResultado'];
 
 
-    public function laudo() {
-        return $this->belongsTo(\App\Http\Models\Laudo::class, 'idLaudo', 'idLaudo');
+    public function expediente() {
+        return $this->belongsTo(\App\Http\Models\Expediente::class, 'idExpediente', 'idExpediente');
     }
 
-    public function laudoRecursoEnContra() {
-        return $this->belongsTo(\App\Http\Models\LaudoRecursoEnContra::class, 'idLaudoRecursoEnContra', 'idLaudoRecursoEnContra');
+    public function laudoRecurso() {
+        return $this->belongsTo(\App\Http\Models\LaudoRecurso::class, 'idLaudoRecurso', 'idLaudoRecurso');
     }
 
-    public function laudoRecursoPresentadoResultado() {
-        return $this->belongsTo(\App\Http\Models\LaudoRecursoPresentadoResultado::class, 'idLaudoRecursoPresentadoResultado', 'idLaudoRecursoPresentadoResultado');
+    public function laudoRecursoResultado() {
+        return $this->belongsTo(\App\Http\Models\LaudoRecursoResultado::class, 'idLaudoRecursoResultado', 'idLaudoRecursoResultado');
     }
 
 

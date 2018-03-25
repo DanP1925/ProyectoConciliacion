@@ -12,7 +12,24 @@ use Illuminate\Support\Facades\Input;
 class UsuarioController extends Controller
 {
 
-    // PIXELLAR: Override Auth Method
+    public function validarCredenciales(Request $request)
+    {
+        $email = Input::get('email');
+        $password = Input::get('password');
+
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            $idPerfil = Auth::user()->usuarios[0]->idPerfil;
+
+            if($idPerfil=="ADM"){
+                return "true";
+            }
+        }
+
+        return "false";
+
+    }
+
+
     public function nuevo()
     {   $perfiles = Perfil::all();
        return view('usuario.nuevo')
@@ -35,65 +52,20 @@ class UsuarioController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        $this->crearUsuario($data['idPerfil'],$data['nombre'],$data['apPaterno'],$data['apMaterno'],$user->id);
+        Usuario::crearUsuario($data['idPerfil'],$data['nombre'],$data['apPaterno'],$data['apMaterno'],$user->id);
 
         return $user;
     }
 
-    public function crearUsuario($idPerfil,$nombre,$apPaterno,$apMaterno,$idUser){
-        Usuario::crearUsuario($idPerfil,$nombre,$apPaterno,$apMaterno,$idUser);
+
+    // ==========
+    //  EXTERNAL
+    // ==========
+
+    public function nuevoExternal()
+    {   $perfiles = Perfil::all();
+        return view('usuario.nuevoExternal')
+            ->with('perfiles', $perfiles);
     }
-
-    /*public function validarUsuario(Request $request){
-        $data = $request->json()->all();
-        $email = $data['usuario'];
-        $clave = $data['clave'];
-
-        $authUser =  array();
-
-        $response = array(
-            'response' => 'ERR',
-            'authUser' => $authUser
-        );
-
-        if (Auth::attempt(['email' => $email, 'password' => $clave])) {
-            $resIdUser = Auth::user()->id;
-            $resIdUsuario = "";
-            $resEmail = Auth::user()->email;
-            $resNombre = "";
-            $resApPaterno = "";
-            $resApMaterno = "";
-            $resIdPerfil = "";
-
-
-            foreach(Auth::user()->usuarios as $usuario){
-                $resIdUsuario = $usuario->idUsuario;
-                $resNombre = $usuario->nombre;
-                $resApPaterno = $usuario->apellidoPaterno;
-                $resApMaterno = $usuario->apellidoMaterno;
-                $resIdPerfil = $usuario->idPerfil;
-            }
-
-            $authUser = array(
-                'idUser' => $resIdUser,
-                'idUsuario' => $resIdUsuario,
-                'email' => $resEmail,
-                'nombre' => $resNombre,
-                'apPaterno' => $resApPaterno,
-                'apMaterno' => $resApMaterno,
-                'idPerfil' => $resIdPerfil
-            );
-
-            $response = array(
-                'response' => 'OK',
-                'authUser' => $authUser
-            );
-
-        }
-
-        $encodedResponse = json_encode($response);
-
-        return $encodedResponse;
-    }*/
 
 }

@@ -23,10 +23,10 @@ class SesionController extends Controller
             $idPerfil = $usuario->perfil->idPerfil;
         }
 
-        if($idPerfil=="1")  // LOGUEADO COMO ADMINISTRADOR
+        if($idPerfil=="ADM")  // LOGUEADO COMO ADMINISTRADOR
         {   return redirect('/expediente/lista');   }
 
-        return redirect('/expediente/nuevo');
+        return redirect('/expediente/lista');
     }
 
 
