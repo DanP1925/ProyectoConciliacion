@@ -1,6 +1,7 @@
 <?php namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class UsuarioLegal extends Model {
 
@@ -68,5 +69,54 @@ class UsuarioLegal extends Model {
         return $this->hasMany(\App\Http\Models\UsuarioLegalEspecialidad::class, 'idUsuarioLegal', 'idUsuarioLegal');
     }
 
+    public function getNombreTipo(){
+        $nombre = UsuarioLegalTipo::all()->where('idUsuarioLegalTipo','=',$this->idUsuarioLegalTipo)->first()->nombre;
+        return $nombre; 
+    }
+
+    public function getNombreProfesion(){
+        $nombre = UsuarioLegalProfesion::all()->where('idUsuarioLegalProfesion','=',$this->idUsuarioLegalProfesion)->first()->nombre;
+        return $nombre;
+    }
+
+    public function getNombrePais(){
+        $nombre = UsuarioLegalPai::all()->where('idUsuarioLegalPais','=',$this->idUsuarioLegalPais)->first()->nombre;
+        return $nombre;
+    }
+
+    public static function buscarPersonal(Request $request){
+
+        $nombre = $request->input('nombre');
+        $resultado = UsuarioLegal::where('nombre','LIKE', '%'.$nombre.'%'); 
+
+        $apellidoPaterno = $request->input('apellidoPaterno');
+        $resultado = $resultado->where('apellidoPaterno','LIKE', '%'.$apellidoPaterno.'%');
+
+        $apellidoMaterno = $request->input('apellidoMaterno');
+        $resultado = $resultado->where('apellidoMaterno','LIKE', '%'.$apellidoMaterno.'%');
+
+        if (!is_null($request->input('profesion'))){
+            $profesion = $request->input('profesion');
+            $resultado = $resultado->where('idUsuarioLegalProfesion','=', $profesion);
+        }
+
+        if (!is_null($request->input('pais'))){
+            $pais = $request->input('pais');
+            $resultado = $resultado->where('idUsuarioLegalPais','=', $pais);
+        }
+
+        if (!is_null($request->input('perfil'))){
+            $perfil = $request->input('perfil');
+            $resultado = $resultado->where('idUsuarioLegalTipo','=', $perfil);
+        }
+
+        $telefono = $request->input('telefono');
+        $resultado = $resultado->where('telefono','LIKE', '%'.$telefono.'%'); 
+
+        $correo = $request->input('correo');
+        $resultado = $resultado->where('email','LIKE', '%'.$correo.'%'); 
+
+        return $resultado->get();
+    }
 
 }

@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DesignacionController extends Controller
+class PropuestaController extends Controller
 {
     public function lista()
     {
-        return view('designacion.lista');
+        return view('propuesta.lista');
     }
 
     public function nuevo()
     {
-        //
+        return view('propuesta.nuevo');
     }
 
     public function guardar(Request $request)
@@ -21,10 +21,9 @@ class DesignacionController extends Controller
         //
     }
 
-    //public function info($id)
-    public function info()
+    public function detalle($id)
     {
-        return view('designacion.info');
+        //
     }
 
     public function editar($id)
@@ -40,5 +39,10 @@ class DesignacionController extends Controller
     public function borrar($id)
     {
         //
+    }
+
+    public function detallearbitro()
+    {
+        return view('propuesta.detallearbitro');
     }
 }

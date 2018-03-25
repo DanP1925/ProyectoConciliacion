@@ -1,6 +1,7 @@
 <?php namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Region extends Model {
 
@@ -20,5 +21,12 @@ class Region extends Model {
         return $this->hasMany(\App\Http\Models\RegionControversium::class, 'idRegion', 'idRegion');
     }
 
+	public static function buscarRegion(Request $request){
+		$nombre = $request->input('nombre');
+
+		$resultado = Region::where('nombre','LIKE', '%'.$nombre.'%');
+
+		return $resultado->get();
+	}
 
 }

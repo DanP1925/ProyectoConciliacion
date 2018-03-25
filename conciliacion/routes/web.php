@@ -1,6 +1,5 @@
 <?php
 
-
 Route::get('/', function () {
     return view('index');
 })->name('index');
@@ -16,18 +15,9 @@ Route::post('/n7mnEtdhsPYDAxK/usuario/registrar','UsuarioController@registar')->
 
 Route::middleware(['auth'])->group(function () {
 
+	// >> TODO: Revisar si esta logica de usuarios aun se mantiene
     Route::get('/usuario/nuevo','UsuarioController@nuevo');
-
     Route::post('/usuario/registrar','UsuarioController@registar')->name('registrar');
-
-    Route::get('/expediente/lista','ExpedienteController@lista');
-
-    Route::get('/expediente/nuevo','ExpedienteController@nuevo');
-
-    Route::get('/expediente/info/{idExpediente}','ExpedienteController@info');
-
-    Route::get('/expediente/editar/{idExpediente}','ExpedienteController@editar');
-
 
     // ==============
     // DESIGNACIONES
@@ -38,8 +28,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/designacion/nuevo/{idDesignacion}','DesignacionController@nuevo');
     Route::get('/designacion/nuevo/propuesta/{idDesignacion}','DesignacionController@propuesta');
     Route::get('/designacion/nuevo/registrar','DesignacionController@registrar');
-
-
 
     // >> Incidente Editar
     Route::get('/designacion/editar/{idIncidente}/{flgInicio}','DesignacionController@editar');
@@ -125,4 +113,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/facturacion/buscar/cliente','FacturacionController@buscarCliente');
     Route::get('/facturacion/buscar/expediente','FacturacionController@buscarExpediente');
 
+    // ============
+    // EXPEDIENTE
+    // ============
+    Route::get('/expediente/lista','ExpedienteController@lista');
+	
+	// >> Expediente Nuevo
+    Route::get('/expediente/nuevo','ExpedienteController@nuevo');
+    Route::post('/expediente/nuevo','ExpedienteController@nuevo');
+    Route::post('/expediente/lista','ExpedienteController@guardar');
+
+	// >> Expediente Editar
+    Route::get('/expediente/editar/{idExpediente}','ExpedienteController@editar');
+
+	// >> Expediente Buscar
+    Route::post('/expediente/buscar','ExpedienteController@buscar');
+	Route::get('/expediente/info/{id}', 'ExpedienteController@info');
+    Route::post('/expediente/info/{idExpediente}','ExpedienteController@infoActualizado');
+
+	// >> Expediente Directorios Auxiliares
+    Route::post('/usuariolegal/directorio','UsuarioLegalController@buscarPersonal');
+    Route::post('/clientelegal/directorio','ClienteLegalController@buscarCliente');
+    Route::post('/region/directorio','RegionController@buscarRegion');
+
+	// >> Expediente Recursos Laudado
+    Route::post('/recurso/nuevo','RecursoController@nuevo');
+    Route::post('/recurso/editar','RecursoController@editar');
 });

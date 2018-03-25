@@ -22,13 +22,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>ADEX Cat&aacute;logos | Asociaci&oacute;n de Exportadores</title>
+    <title>{{ config('app.name') }} | @yield('title') </title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/site-style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/site-fonts.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/foundation.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -59,10 +60,10 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-
     <script src="{{ asset('js/vendor/jquery.js') }}"></script>
     <script src="{{ asset('js/vendor/what-input.js') }}"></script>
     <script src="{{ asset('js/vendor/foundation.min.js') }}"></script>
+	@yield('scripts')
     <script>
         $(document).foundation();
     </script>
