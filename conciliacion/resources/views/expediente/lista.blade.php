@@ -33,7 +33,7 @@
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="numeroExpediente" name="numeroExpediente" />
+                    		<input type="text" class="site-input" id="numero" name="numero" />
                     	</div>
                     </div>
                 </div>
@@ -214,7 +214,7 @@
 							{{$expediente->getFecha()}}
 						</div>
 						<div class="site-list-item-expediente-numero padding-bottom-3">
-							{{$expediente->numeroExpediente}}
+							{{$expediente->numero}}
 						</div>
 						<div class="site-list-item-label">
 							Tipo caso:

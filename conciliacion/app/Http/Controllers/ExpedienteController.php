@@ -177,7 +177,7 @@ class ExpedienteController extends Controller
     public function guardar(Request $request)
     {
         $validatedData = $request->validate([
-            'numeroExpediente' => 'required',
+            'numero' => 'required',
             'fechaSolicitud' => 'required|date',
             'estadoExpediente' => 'required',
             'numeroAsociado' => 'nullable',

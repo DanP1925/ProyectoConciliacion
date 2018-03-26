@@ -11,7 +11,7 @@ use App\Library\RecursoTemporal;
 
 class ExpedienteTemporal {
 
-    var $numeroExpediente;
+    var $numero;
     var $fechaSolicitud;
     var $estadoExpediente;
     var $numeroAsociado;
@@ -61,7 +61,7 @@ class ExpedienteTemporal {
 	public static function withRequest(Request $request)
 	{
 		$instance = new self();
-        $instance->numeroExpediente = $request->session()->get('numeroExpediente');
+        $instance->numero = $request->session()->get('numero');
         $instance->fechaSolicitud = $request->session()->get('fechaSolicitud');
         $instance->estadoExpediente = $request->session()->get('estadoExpediente');
         $instance->numeroAsociado = $request->session()->get('numeroAsociado');
@@ -157,7 +157,7 @@ class ExpedienteTemporal {
 		$equipoLegal = DB::table('expediente_equipo_legal')->where('idExpediente',$id)->first();
 		$recursosLaudo = DB::table('laudo_recurso_presentado')->where('idExpediente',$id)->get()->all();
 
-        $instance->numeroExpediente = $expediente->numeroExpediente;
+        $instance->numero= $expediente->numero;
 		$instance->fechaSolicitud = explode(" ",$expediente->fechaSolicitud)[0];
 		$instance->estadoExpediente = $expediente->idExpedienteEstado;
 		$instance->numeroAsociado = $expediente->numeroAsociado;
@@ -328,8 +328,8 @@ class ExpedienteTemporal {
 
     public static function guardarEnSesion(Request $request){
 
-        if (!is_null($request->input('numeroExpediente')))
-            $request->session()->put('numeroExpediente',$request->input('numeroExpediente'));
+        if (!is_null($request->input('numero')))
+            $request->session()->put('numero',$request->input('numero'));
 
         if (!is_null($request->input('fechaSolicitud')))
             $request->session()->put('fechaSolicitud',$request->input('fechaSolicitud'));
@@ -474,7 +474,7 @@ class ExpedienteTemporal {
 
     public static function quitarDeSesion(Request $request){
 
-        $request->session()->forget('numeroExpediente');
+        $request->session()->forget('numero');
         $request->session()->forget('fechaSolicitud');
         $request->session()->forget('estadoExpediente');
         $request->session()->forget('numeroAsociado');

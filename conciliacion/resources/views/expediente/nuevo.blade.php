@@ -32,7 +32,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="numeroExpediente" name="numeroExpediente" @if (!is_null($expedienteTemporal->numeroExpediente)) value="{{$expedienteTemporal->numeroExpediente}}" @endif/>
+                                <input type="text" class="site-input" id="numero" name="numero" @if (!is_null($expedienteTemporal->numero)) value="{{$expedienteTemporal->numero}}" @endif/>
                             </div>
                         </div>
                     </div>

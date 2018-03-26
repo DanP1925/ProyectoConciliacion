@@ -11,7 +11,7 @@ class Expediente extends Model {
      */
 
     protected $table = 'expediente';
-    protected $fillable = ['idExpediente', 'idExpedienteEstado', 'idExpedienteTipoCaso', 'idExpedienteSubtipoCaso', 'idDemandante', 'idDemandado', 'idCuantiaTipo', 'idCuantiaEscalaPago', 'idArbitrajeOrigen', 'idArbitrajeMontoContrato', 'idLaudoResultado', 'idLaudoEjecucion', 'idLaudoAFavor', 'idSecretarioLider', 'idSecretarioResponsable', 'numeroExpediente', 'numeroAsociado', 'fechaSolicitud', 'cuantiaMontoInicial', 'cuantiaMontoFinal', 'arbitrajeAnhoContrato', 'laudofecha', 'laudoMontoResultado'];
+    protected $fillable = ['idExpediente', 'idExpedienteEstado', 'idExpedienteTipoCaso', 'idExpedienteSubtipoCaso', 'idDemandante', 'idDemandado', 'idCuantiaTipo', 'idCuantiaEscalaPago', 'idArbitrajeOrigen', 'idArbitrajeMontoContrato', 'idLaudoResultado', 'idLaudoEjecucion', 'idLaudoAFavor', 'idSecretarioLider', 'idSecretarioResponsable', 'numero', 'numeroAsociado', 'fechaSolicitud', 'cuantiaMontoInicial', 'cuantiaMontoFinal', 'arbitrajeAnhoContrato', 'laudofecha', 'laudoMontoResultado'];
 
     public function arbitrajeMontoContrato() {
         return $this->belongsTo(\App\Http\Models\ArbitrajeMontoContrato::class, 'idArbitrajeMontoContrato', 'idArbitrajeMontoContrato');
@@ -105,7 +105,7 @@ class Expediente extends Model {
 			'idLaudoAFavor' => $request->input('laudadoAFavor'),
 			'idSecretarioLider' => $request->input('idSecretarioLider'),
 			'idSecretarioResponsable' => $request->input('idSecretarioResponsable'),
-			'numeroExpediente' => $request->input('numeroExpediente'),
+			'numero' => $request->input('numero'),
 			'numeroAsociado' => $request->input('numeroAsociado'),
 			'fechaSolicitud' => $request->input('fechaSolicitud'),
 			'cuantiaMontoInicial' => $request->input('cuantiaControversiaInicial'),
@@ -134,7 +134,7 @@ class Expediente extends Model {
 			'idLaudoAFavor' => $request->input('laudadoAFavor'),
 			'idSecretarioLider' => $request->input('idSecretarioLider'),
 			'idSecretarioResponsable' => $request->input('idSecretarioResponsable'),
-			'numeroExpediente' => $request->input('numeroExpediente'),
+			'numero' => $request->input('numero'),
 			'numeroAsociado' => $request->input('numeroAsociado'),
 			'fechaSolicitud' => $request->input('fechaSolicitud'),
 			'cuantiaMontoInicial' => $request->input('cuantiaControversiaInicial'),
@@ -146,9 +146,9 @@ class Expediente extends Model {
 	}
 
 	public static function buscarExpediente(Request $request){
-		$numeroExpediente = $request->input('numeroExpediente');
-		$resultadoJuridico = Expediente::where('numeroExpediente','LIKE','%'.$numeroExpediente.'%');
-		$resultadoNatural = Expediente::where('numeroExpediente','LIKE','%'.$numeroExpediente.'%');
+		$numero = $request->input('numero');
+		$resultadoJuridico = Expediente::where('numero','LIKE','%'.$numero.'%');
+		$resultadoNatural = Expediente::where('numero','LIKE','%'.$numero.'%');
 
 		if (!is_null($request->input('fechaInicio'))){
 			$fechaInicio = $request->input('fechaInicio');
