@@ -11,7 +11,7 @@ class Expediente extends Model {
      */
 
     protected $table = 'expediente';
-    protected $fillable = ['idExpediente', 'idExpedienteEstado', 'idExpedienteTipoCaso', 'idExpedienteSubtipoCaso', 'idDemandante', 'idDemandado', 'idCuantiaTipo', 'idCuantiaEscalaPago', 'idArbitrajeOrigen', 'idArbitrajeMontoContrato', 'idLaudoResultado', 'idLaudoEjecucion', 'idLaudoAFavor', 'idSecretarioLider', 'idSecretarioResponsable', 'numeroExpediente', 'numeroExpedienteAsociado', 'fechaSolicitud', 'cuantiaMontoInicial', 'cuantiaMontoFinal', 'arbitrajeAnhoContrato', 'laudofecha', 'laudoMontoResultado'];
+    protected $fillable = ['idExpediente', 'idExpedienteEstado', 'idExpedienteTipoCaso', 'idExpedienteSubtipoCaso', 'idDemandante', 'idDemandado', 'idCuantiaTipo', 'idCuantiaEscalaPago', 'idArbitrajeOrigen', 'idArbitrajeMontoContrato', 'idLaudoResultado', 'idLaudoEjecucion', 'idLaudoAFavor', 'idSecretarioLider', 'idSecretarioResponsable', 'numeroExpediente', 'numeroAsociado', 'fechaSolicitud', 'cuantiaMontoInicial', 'cuantiaMontoFinal', 'arbitrajeAnhoContrato', 'laudofecha', 'laudoMontoResultado'];
 
     public function arbitrajeMontoContrato() {
         return $this->belongsTo(\App\Http\Models\ArbitrajeMontoContrato::class, 'idArbitrajeMontoContrato', 'idArbitrajeMontoContrato');
@@ -82,11 +82,11 @@ class Expediente extends Model {
     }
 
 	public function secretarioLider(){
-        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idSecretarioLider', 'idUsuario_legal');
+        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idSecretarioLider', 'idUsuarioLegal');
 	}
 
 	public function sercretarioResponsable(){
-        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idSecretarioResponsable', 'idUsuario_legal');
+        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idSecretarioResponsable', 'idUsuarioLegal');
 	}
 
 	public static function insertarExpediente(Request $request){
@@ -106,7 +106,7 @@ class Expediente extends Model {
 			'idSecretarioLider' => $request->input('idSecretarioLider'),
 			'idSecretarioResponsable' => $request->input('idSecretarioResponsable'),
 			'numeroExpediente' => $request->input('numeroExpediente'),
-			'numeroExpedienteAsociado' => $request->input('numeroExpedienteAsociado'),
+			'numeroAsociado' => $request->input('numeroAsociado'),
 			'fechaSolicitud' => $request->input('fechaSolicitud'),
 			'cuantiaMontoInicial' => $request->input('cuantiaControversiaInicial'),
 			'cuantiaMontoFinal' => $request->input('cuantiaControversiaFinal'),
@@ -135,7 +135,7 @@ class Expediente extends Model {
 			'idSecretarioLider' => $request->input('idSecretarioLider'),
 			'idSecretarioResponsable' => $request->input('idSecretarioResponsable'),
 			'numeroExpediente' => $request->input('numeroExpediente'),
-			'numeroExpedienteAsociado' => $request->input('numeroExpedienteAsociado'),
+			'numeroAsociado' => $request->input('numeroAsociado'),
 			'fechaSolicitud' => $request->input('fechaSolicitud'),
 			'cuantiaMontoInicial' => $request->input('cuantiaControversiaInicial'),
 			'cuantiaMontoFinal' => $request->input('cuantiaControversiaFinal'),
@@ -241,12 +241,18 @@ class Expediente extends Model {
 	}
 
 	public function getSecretarioResponsable(){
-		$usuario = DB::table('usuario_legal')->where('idUsuario_legal',$this->idSecretarioResponsable)->first();
-		return ($usuario->nombre).' '.($usuario->apellidoPaterno).' '.($usuario->apellidoMaterno);
+		$usuario = DB::table('usuario_legal')->where('idUsuarioLegal',$this->idSecretarioResponsable)->first();
+		if (!is_null($usuario))
+			return ($usuario->nombre).' '.($usuario->apellidoPaterno).' '.($usuario->apellidoMaterno);
+		else
+			return "";
 	}
 
 	public function getSecretarioLider(){
-		$usuario = DB::table('usuario_legal')->where('idUsuario_legal',$this->idSecretarioLider)->first();
-		return ($usuario->nombre).' '.($usuario->apellidoPaterno).' '.($usuario->apellidoMaterno);
+		$usuario = DB::table('usuario_legal')->where('idUsuarioLegal',$this->idSecretarioLider)->first();
+		if (!is_null($usuario))
+			return ($usuario->nombre).' '.($usuario->apellidoPaterno).' '.($usuario->apellidoMaterno);
+		else
+			return "";
 	}
 }

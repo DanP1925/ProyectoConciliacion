@@ -24,7 +24,7 @@ class ExpedienteClienteLegal extends Model {
     }
 
     public function usuarioLegal() {
-        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idRepresentanteLegal', 'idUsuario_legal');
+        return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idRepresentanteLegal', 'idUsuarioLegal');
     }
 
     public function consorcioPersona() {
@@ -48,7 +48,7 @@ class ExpedienteClienteLegal extends Model {
 	}
 
 	public function getRepresentanteLegal() {
-		return DB::table('usuario_legal')->where('idUsuario_legal',$this->idRepresentanteLegal)->first();
+		return DB::table('usuario_legal')->where('idUsuarioLegal',$this->idRepresentanteLegal)->first();
 	}
 
     public static function buscarCliente(Request $request){
@@ -59,28 +59,33 @@ class ExpedienteClienteLegal extends Model {
 		$dni = $request->input('dni'); 
 		$telefono = $request->input('telefono'); 
 
-		$personasNaturales = DB::select(DB::raw("SELECT idPersonaNatural FROM px_conciliacion.persona_natural where concat(nombre,' ', apellidoPaterno, ' ', apellidoMaterno) like :nombre AND dni like :dni AND telefono like :telefono"), ['nombre' => '%'.$nombre.'%', 'dni' => '%'.$dni.'%', 'telefono' => '%'.$telefono.'%']);
+		$personasNaturales = DB::table('persona_natural')->where('nombre','LIKE', '%'.$nombre.'%');
+		$personasNaturales = $personasNaturales->where('apellidoPaterno','LIKE', '%'.$nombre.'%');
+		$personasNaturales = $personasNaturales->where('apellidoPaterno','LIKE', '%'.$nombre.'%');
+		$personasNaturales = $personasNaturales->where('dni','LIKE', '%'.$dni.'%');
+		$personasNaturales = $personasNaturales->where('telefono','LIKE', '%'.$telefono.'%');
 
 		$listaPersonasNaturales = [];
-		foreach ($personasNaturales as $personaNatural)
+		foreach ($personasNaturales->get()->all() as $personaNatural)
 			array_push($listaPersonasNaturales, $personaNatural->idPersonaNatural);
 
 		$resultadoNatural = ExpedienteClienteLegal::whereIn('idPersonaNatural', $listaPersonasNaturales);
-
 
 		//Persona Jurdica
 		$razonSocial = $request->input('razonSocial'); 
 		$ruc = $request->input('ruc'); 
 		$telefono = $request->input('telefono'); 
 
-		$personasJuridicas = DB::select(DB::raw("SELECT idPersonaJuridica FROM px_conciliacion.persona_juridica where razonSocial like :razonSocial AND ruc like :ruc AND telefono like :telefono"), ['razonSocial' => '%'.$razonSocial.'%', 'ruc' => '%'.$ruc.'%', 'telefono' => '%'.$telefono.'%']);
+		$personasJuridicas = DB::table('persona_juridica')->where('razonSocial','LIKE','%'.$razonSocial.'%');
+		$personasJuridicas = $personasJuridicas->where('razonSocial','LIKE','%'.$razonSocial.'%');
+		$personasJuridicas = $personasJuridicas->where('ruc','LIKE','%'.$ruc.'%');
+		$personasJuridicas = $personasJuridicas->where('telefono','LIKE','%'.$telefono.'%');
 
 		$listaPersonasJuridicas = [];
-		foreach($personasJuridicas as $personaJuridica)
+		foreach($personasJuridicas->get()->all() as $personaJuridica)
 			array_push($listaPersonasJuridicas, $personaJuridica->idPersonaJuridica);
 
 		$resultadoJuridico = ExpedienteClienteLegal::whereIn('idPersonaJuridica', $listaPersonasJuridicas);
-
 
 		$email = $request->input('email');
 		$resultadoNatural = $resultadoNatural->where('emailClienteLegal','LIKE', '%'.$email.'%');

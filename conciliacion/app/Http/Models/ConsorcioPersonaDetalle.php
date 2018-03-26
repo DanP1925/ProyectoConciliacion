@@ -1,6 +1,7 @@
 <?php namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ConsorcioPersonaDetalle extends Model {
 
@@ -24,5 +25,23 @@ class ConsorcioPersonaDetalle extends Model {
         return $this->belongsTo(\App\Http\Models\ConsorcioPersona::class, 'idConsorcioPersona', 'idConsorcioPersona');
     }
 
+	public function getConsorcioPersona() {
+		return DB::table('consorcio_persona')->where('idConsorcioPersona',$this->idConsorcioPersona)->first();
+	}
+
+	public function getMiembros(){
+		$resultado = [];
+		if ($this->flgTipoPersona=='J'){
+			$listaMiembros = DB::table('consorcio_persona_detalle')->select('idPersonaJuridica')->where('idConsorcioPersona',$this->idConsorcioPersona)->get();
+			foreach ($listaMiembros as $miembro)
+				array_push($resultado,$miembro->idPersonaJuridica);
+		}
+		else if ($this->flgTipoPersona=='N'){
+			$listaMiembros = DB::table('consorcio_persona_detalle')->select('idPersonaNatural')->where('idConsorcioPersona',$this->idConsorcioPersona)->get();
+			foreach ($listaMiembros as $miembro)
+				array_push($resultado,$miembro->idPersonaNatural);
+		}
+		return $resultado;
+	}	
 
 }

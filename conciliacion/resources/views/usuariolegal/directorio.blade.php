@@ -198,7 +198,7 @@
                                 </div>
                             </div>
                             <div class="cell small-1">
-                                <button type="submit" name="accion" value="{{$accion}} {{$secretario->idUsuario_legal}}">
+                                <button type="submit" name="accion" value="{{$accion}} {{$secretario->idUsuarioLegal}}">
                                     <i class="fa fa-user " style="font-size:36px;"></i>
                                 </button>
                             </div>

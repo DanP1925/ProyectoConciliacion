@@ -180,7 +180,7 @@ class ExpedienteController extends Controller
             'numeroExpediente' => 'required',
             'fechaSolicitud' => 'required|date',
             'estadoExpediente' => 'required',
-            'numeroExpedienteAsociado' => 'nullable',
+            'numeroAsociado' => 'nullable',
             'tipoCaso' => 'required',
             'subtipoCaso' => 'required',
             'cuantiaControversiaInicial' => 'required',

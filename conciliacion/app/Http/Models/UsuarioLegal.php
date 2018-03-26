@@ -80,7 +80,7 @@ class UsuarioLegal extends Model {
     }
 
     public function getNombrePais(){
-        $nombre = UsuarioLegalPai::all()->where('idUsuarioLegalPais','=',$this->idUsuarioLegalPais)->first()->nombre;
+        $nombre = UsuarioLegalPais::all()->where('idUsuarioLegalPais','=',$this->idUsuarioLegalPais)->first()->nombre;
         return $nombre;
     }
 

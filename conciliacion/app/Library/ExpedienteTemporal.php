@@ -14,7 +14,7 @@ class ExpedienteTemporal {
     var $numeroExpediente;
     var $fechaSolicitud;
     var $estadoExpediente;
-    var $numeroExpedienteAsociado;
+    var $numeroAsociado;
     var $tipoCaso;
     var $subtipoCaso;
     var $cuantiaControversiaInicial;
@@ -64,7 +64,7 @@ class ExpedienteTemporal {
         $instance->numeroExpediente = $request->session()->get('numeroExpediente');
         $instance->fechaSolicitud = $request->session()->get('fechaSolicitud');
         $instance->estadoExpediente = $request->session()->get('estadoExpediente');
-        $instance->numeroExpedienteAsociado = $request->session()->get('numeroExpedienteAsociado');
+        $instance->numeroAsociado = $request->session()->get('numeroAsociado');
         $instance->tipoCaso = $request->session()->get('tipoCaso');
         $instance->subtipoCaso = $request->session()->get('subtipoCaso');
         $instance->cuantiaControversiaInicial = $request->session()->get('cuantiaControversiaInicial');
@@ -160,7 +160,7 @@ class ExpedienteTemporal {
         $instance->numeroExpediente = $expediente->numeroExpediente;
 		$instance->fechaSolicitud = explode(" ",$expediente->fechaSolicitud)[0];
 		$instance->estadoExpediente = $expediente->idExpedienteEstado;
-		$instance->numeroExpedienteAsociado = $expediente->numeroExpedienteAsociado;
+		$instance->numeroAsociado = $expediente->numeroAsociado;
 		$instance->tipoCaso = $expediente->idExpedienteTipoCaso;
 		$instance->subtipoCaso = $expediente->idExpedienteSubtipoCaso;
 		$instance->cuantiaControversiaInicial = $expediente->cuantiaMontoInicial;
@@ -168,12 +168,12 @@ class ExpedienteTemporal {
 		$instance->tipoCuantia = $expediente->idCuantiaTipo;
 		$instance->escalaPago = $expediente->idCuantiaEscalaPago;
 
-		$secretarioResponsable = DB::table('usuario_legal')->where('idUsuario_legal',$expediente->idSecretarioResponsable)->first();
-		$instance->idSecretarioResponsable = $secretarioResponsable->idUsuario_legal;
+		$secretarioResponsable = DB::table('usuario_legal')->where('idUsuarioLegal',$expediente->idSecretarioResponsable)->first();
+		$instance->idSecretarioResponsable = $secretarioResponsable->idUsuarioLegal;
 		$instance->secretarioArbitral = ($secretarioResponsable->nombre).' '.($secretarioResponsable->apellidoPaterno).' '.($secretarioResponsable->apellidoMaterno);
 
-		$secretarioLider = DB::table('usuario_legal')->where('idUsuario_legal',$expediente->idSecretarioLider)->first();
-		$instance->idSecretarioLider = $secretarioLider->idUsuario_legal;
+		$secretarioLider = DB::table('usuario_legal')->where('idUsuarioLegal',$expediente->idSecretarioLider)->first();
+		$instance->idSecretarioLider = $secretarioLider->idUsuarioLegal;
 		$instance->secretarioArbitralLider = ($secretarioLider->nombre).' '.($secretarioLider->apellidoPaterno).' '.($secretarioLider->apellidoMaterno);
 
 		$demandante = DB::table('expediente_cliente_legal')->where('idExpedienteClienteLegal',$expediente->idDemandante)->first();
@@ -267,7 +267,7 @@ class ExpedienteTemporal {
 		$instance->regiones = $listaregiones;
 
 		if(!is_null($equipoLegal->idArbitroUnico)){
-			$arbitroUnico = DB::table('usuario_legal')->where('idUsuario_legal',$equipoLegal->idArbitroUnico)->first(); 
+			$arbitroUnico = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroUnico)->first(); 
 			$instance->arbitroUnico = ($arbitroUnico->nombre).' '.($arbitroUnico->apellidoPaterno).' '.($arbitroUnico->apellidoMaterno);
 		}
 
@@ -277,7 +277,7 @@ class ExpedienteTemporal {
 		}
 
 		if(!is_null($equipoLegal->idPresidenteTribunal)){
-			$presidenteTribunal = DB::table('usuario_legal')->where('idUsuario_legal',$equipoLegal->idPresidenteTribunal)->first(); 
+			$presidenteTribunal = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idPresidenteTribunal)->first(); 
 			$instance->presidenteTribunal = ($presidenteTribunal->nombre).' '.($presidenteTribunal->apellidoPaterno).' '.($presidenteTribunal->apellidoMaterno);
 		}
 
@@ -287,7 +287,7 @@ class ExpedienteTemporal {
 		}
 
 		if(!is_null($equipoLegal->idArbitroDemandante)){
-			$arbitroDemandante = DB::table('usuario_legal')->where('idUsuario_legal',$equipoLegal->idArbitroDemandante)->first(); 
+			$arbitroDemandante = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroDemandante)->first(); 
 			$instance->arbitroDemandante = ($arbitroDemandante->nombre).' '.($arbitroDemandante->apellidoPaterno).' '.($arbitroDemandante->apellidoMaterno);
 		}
 
@@ -297,7 +297,7 @@ class ExpedienteTemporal {
 		}
 
 		if(!is_null($equipoLegal->idArbitroDemandado)){
-			$arbitroDemandado = DB::table('usuario_legal')->where('idUsuario_legal',$equipoLegal->idArbitroDemandado)->first(); 
+			$arbitroDemandado = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroDemandado)->first(); 
 			$instance->arbitroDemandado = ($arbitroDemandado->nombre).' '.($arbitroDemandado->apellidoPaterno).' '.($arbitroDemandado->apellidoMaterno);
 		}
 
@@ -337,8 +337,8 @@ class ExpedienteTemporal {
         if (!is_null($request->input('estadoExpediente')))
             $request->session()->put('estadoExpediente',$request->input('estadoExpediente'));
 
-        if (!is_null($request->input('numeroExpedienteAsociado')))
-            $request->session()->put('numeroExpedienteAsociado',$request->input('numeroExpedienteAsociado'));
+        if (!is_null($request->input('numeroAsociado')))
+            $request->session()->put('numeroAsociado',$request->input('numeroAsociado'));
 
         if (!is_null($request->input('tipoCaso')))
             $request->session()->put('tipoCaso',$request->input('tipoCaso'));
@@ -477,7 +477,7 @@ class ExpedienteTemporal {
         $request->session()->forget('numeroExpediente');
         $request->session()->forget('fechaSolicitud');
         $request->session()->forget('estadoExpediente');
-        $request->session()->forget('numeroExpedienteAsociado');
+        $request->session()->forget('numeroAsociado');
         $request->session()->forget('tipoCaso');
         $request->session()->forget('subtipoCaso');
         $request->session()->forget('cuantiaControversiaInicial');
@@ -519,16 +519,16 @@ class ExpedienteTemporal {
     }
 
     function agregarSecretario($idUsuarioLegal){
-        $secretario = DB::table('usuario_legal')->where('idUsuario_legal',$idUsuarioLegal)->first();
-		$this->idSecretarioResponsable = $secretario->idUsuario_legal;
+        $secretario = DB::table('usuario_legal')->where('idUsuarioLegal',$idUsuarioLegal)->first();
+		$this->idSecretarioResponsable = $secretario->idUsuarioLegal;
         $this->secretarioArbitral = $secretario->nombre;
         $this->secretarioArbitral .= ' '.$secretario->apellidoPaterno;
         $this->secretarioArbitral .= ' '.$secretario->apellidoMaterno;
     }
 
     function agregarSecretarioLider($idUsuarioLegal){
-        $secretario = DB::table('usuario_legal')->where('idUsuario_legal',$idUsuarioLegal)->first();
-		$this->idSecretarioLider = $secretario->idUsuario_legal;
+        $secretario = DB::table('usuario_legal')->where('idUsuarioLegal',$idUsuarioLegal)->first();
+		$this->idSecretarioLider = $secretario->idUsuarioLegal;
         $this->secretarioArbitralLider = $secretario->nombre;
         $this->secretarioArbitralLider .= ' '.$secretario->apellidoPaterno;
         $this->secretarioArbitralLider .= ' '.$secretario->apellidoMaterno;

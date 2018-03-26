@@ -79,7 +79,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <input type="text" class="site-input" id="numeroExpedienteAsociado" name="numeroExpedienteAsociado" @if (!is_null($expedienteTemporal->numeroExpedienteAsociado)) value="{{$expedienteTemporal->numeroExpedienteAsociado}}" @endif/>
+                                <input type="text" class="site-input" id="numeroAsociado" name="numeroAsociado" @if (!is_null($expedienteTemporal->numeroAsociado)) value="{{$expedienteTemporal->numeroAsociado}}" @endif/>
                             </div>
                         </div>
                     </div>
@@ -378,7 +378,7 @@
                                 <select class="site-select" id="tipoDemandante" name="tipoDemandante">
                                     <option value="">Seleccione una opción</option>
 									<option value="PUB" @if ($expedienteTemporal->tipoDemandante == "PUB") selected @endif>Público</option>
-									<option value="PRI" @if ($expedienteTemporal->tipoDemandante == "PRI") selected @endif>Privado</option>
+									<option value="PRV" @if ($expedienteTemporal->tipoDemandante == "PRV") selected @endif>Privado</option>
                                 </select>
                             </div>
                         </div>
@@ -396,7 +396,7 @@
                                 <select class="site-select" id="tipoDemandado" name="tipoDemandado">
                                     <option value="">Seleccione una opción</option>
 									<option value="PUB" @if ($expedienteTemporal->tipoDemandado == "PUB") selected @endif>Público</option>
-									<option value="PRI" @if ($expedienteTemporal->tipoDemandado == "PRI") selected @endif>Privado</option>
+									<option value="PRV" @if ($expedienteTemporal->tipoDemandado == "PRV") selected @endif>Privado</option>
                                 </select>
                             </div>
                         </div>
@@ -557,11 +557,6 @@
                         <div class="site-control">
                             <div class="site-control-border">
                                 <input type="text" class="site-input" id="presidenteTribunal" name="presidenteTribunal" @if (!is_null($expedienteTemporal->presidenteTribunal)) value="{{$expedienteTemporal->presidenteTribunal}}" @endif/>
-                            </div>
-                            <div class="site-control">
-                                <div class="site-control-border">
-                                    <input type="text" class="site-input" id="demandante" name="demandante" placeholder="Seleccione un personal" />
-                                </div>
                             </div>
                         </div>
                     </div>

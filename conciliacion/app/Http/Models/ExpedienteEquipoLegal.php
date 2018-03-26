@@ -74,13 +74,13 @@ class ExpedienteEquipoLegal extends Model {
 
 			if ($lengthUnico >2)
 				$idArbitroUnico = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreUnico],['apellidoPaterno','=',$apellidoPaternoUnico],['apellidoMaterno','=',$apellidoMaternoUnico]])->first();
+				->where([['nombre','LIKE','%'.$nombreUnico.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoUnico.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaternoUnico.'%']])->first();
 			else if ($lengthUnico > 1)
 				$idArbitroUnico = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreUnico],['apellidoPaterno','=',$apellidoPaternoUnico]])->first();
+				->where([['nombre','LIKE','%'.$nombreUnico.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoUnico.'%']])->first();
 			else if ($lengthUnico == 1)
 				$idArbitroUnico = DB::table('usuario_legal')
-				->where('nombre','=',$nombreUnico)->first();
+				->where('nombre','LIKE', '%'.$nombreUnico.'%')->first();
 
 			if (!is_null($idArbitroUnico))
 				$idArbitroUnico = $idArbitroUnico->idUsuario_legal;
@@ -109,14 +109,13 @@ class ExpedienteEquipoLegal extends Model {
 
 			if ($lengthPresidente > 2)
 				$idPresidenteTribunal = DB::table('usuario_legal')
-				->where([['nombre','=',$nombrePresidente],['apellidoPaterno','=',$apellidoPaternoPresidente],['apellidoMaterno','=',$apellidoMaternoPresidente]])->first();
+				->where([['nombre','LIKE','%'.$nombrePresidente.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoPresidente.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaternoPresidente.'%']])->first();
 			else if ($lengthPresidente > 1)
 				$idPresidenteTribunal = DB::table('usuario_legal')
-				->where([['nombre','=',$nombrePresidente],['apellidoPaterno','=',$apellidoPaternoPresidente]])->first();
+				->where([['nombre','LIKE', '%'.$nombrePresidente.'%'],['apellidoPaterno','','%'.$apellidoPaternoPresidente.'%']])->first();
 			else if ($lengthPresidente ==1)
 				$idPresidenteTribunal = DB::table('usuario_legal')
-				->where('nombre','=',$nombrePresidente)->first();
-
+				->where('nombre','LIKE', '%'.$nombrePresidente.'%')->first();
 
 			if (!is_null($idPresidenteTribunal))
 				$idPresidenteTribunal = $idPresidenteTribunal->idUsuario_legal;
@@ -144,13 +143,13 @@ class ExpedienteEquipoLegal extends Model {
 
 			if ($lengthDemandante > 2)
 				$idDemandante= DB::table('usuario_legal')
-				->where([['nombre','=',$nombreDemandante],['apellidoPaterno','=',$apellidoPaternoDemandante],['apellidoMaterno','=',$apellidoMaternoDemandante]])->first();
+				->where([['nombre','LIKE','%'.$nombreDemandante.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoDemandante.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaternoDemandante.'%']])->first();
 			else if ($lengthDemandante > 1)
 				$idDemandante = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreDemandante],['apellidoPaterno','=',$apellidoPaternoDemandante]])->first();
+				->where([['nombre','LIKE','%'.$nombreDemandante.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoDemandante.'%']])->first();
 			else if ($lengthDemandante ==1)
 				$idDemandante = DB::table('usuario_legal')
-				->where('nombre','=',$nombreDemandante)->first();
+				->where('nombre','LIKE', '%'.$nombreDemandante.'%')->first();
 
 			if (!is_null($idDemandante))
 				$idDemandante = $idDemandante->idUsuario_legal;
@@ -179,13 +178,13 @@ class ExpedienteEquipoLegal extends Model {
 
 			if ($lengthDemandado > 2)
 				$idDemandado = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreDemandado],['apellidoPaterno','=',$apellidoPaternoDemandado],['apellidoMaterno','=',$apellidoMaternoDemandado]])->first();
+				->where([['nombre','LIKE','%'.$nombreDemandado.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoDemandado.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaternoDemandado.'%']])->first();
 			else if ($lengthDemandado > 1)
 				$idDemandado = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreDemandado],['apellidoPaterno','=',$apellidoPaternoDemandado]])->first();
+				->where([['nombre','LIKE','%'.$nombreDemandado.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoDemandado.'%']])->first();
 			else if ($lengthDemandado == 1)
 				$idDemandado = DB::table('usuario_legal')
-				->where('nombre','=',$nombreDemandado)->first();
+				->where('nombre','LIKE','%'.$nombreDemandado.'%')->first();
 
 			if (!is_null($idDemandado))
 				$idDemandado = $idDemandado->idUsuario_legal;
@@ -196,7 +195,6 @@ class ExpedienteEquipoLegal extends Model {
 			if (!is_null($tipDesArbitroDemandado))
 				$tipDesArbitroDemandado = $tipDesArbitroDemandado->idDesignacionTipo;
 		}
-
 
 		DB::table('expediente_equipo_legal')->insert(
 			['idExpediente' => $idExpediente,
@@ -218,7 +216,6 @@ class ExpedienteEquipoLegal extends Model {
 		$presidenteTribunal = explode(" ",$request->input('presidenteTribunal'));
 		$arbitroDemandante = explode(" ",$request->input('arbitroDemandante'));
 		$arbitroDemandado = explode(" ",$request->input('arbitroDemandado'));
-
 		
 		$idArbitroUnico = null;
 		$tipDesArbitroUnico = null;
@@ -236,13 +233,13 @@ class ExpedienteEquipoLegal extends Model {
 
 			if ($lengthUnico >2)
 				$idArbitroUnico = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreUnico],['apellidoPaterno','=',$apellidoPaternoUnico],['apellidoMaterno','=',$apellidoMaternoUnico]])->first();
+				->where([['nombre','LIKE','%'.$nombreUnico.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoUnico.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaternoUnico.'%']])->first();
 			else if ($lengthUnico > 1)
 				$idArbitroUnico = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreUnico],['apellidoPaterno','=',$apellidoPaternoUnico]])->first();
+				->where([['nombre','LIKE','%'.$nombreUnico.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoUnico.'%']])->first();
 			else if ($lengthUnico == 1)
 				$idArbitroUnico = DB::table('usuario_legal')
-				->where('nombre','=',$nombreUnico)->first();
+				->where('nombre','LIKE', '%'.$nombreUnico.'%')->first();
 
 			if (!is_null($idArbitroUnico))
 				$idArbitroUnico = $idArbitroUnico->idUsuario_legal;
@@ -271,13 +268,13 @@ class ExpedienteEquipoLegal extends Model {
 
 			if ($lengthPresidente > 2)
 				$idPresidenteTribunal = DB::table('usuario_legal')
-				->where([['nombre','=',$nombrePresidente],['apellidoPaterno','=',$apellidoPaternoPresidente],['apellidoMaterno','=',$apellidoMaternoPresidente]])->first();
+				->where([['nombre','LIKE','%'.$nombrePresidente.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoPresidente.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaternoPresidente.'%']])->first();
 			else if ($lengthPresidente > 1)
 				$idPresidenteTribunal = DB::table('usuario_legal')
-				->where([['nombre','=',$nombrePresidente],['apellidoPaterno','=',$apellidoPaternoPresidente]])->first();
+				->where([['nombre','LIKE', '%'.$nombrePresidente.'%'],['apellidoPaterno','','%'.$apellidoPaternoPresidente.'%']])->first();
 			else if ($lengthPresidente ==1)
 				$idPresidenteTribunal = DB::table('usuario_legal')
-				->where('nombre','=',$nombrePresidente)->first();
+				->where('nombre','LIKE', '%'.$nombrePresidente.'%')->first();
 
 
 			if (!is_null($idPresidenteTribunal))
@@ -306,13 +303,13 @@ class ExpedienteEquipoLegal extends Model {
 
 			if ($lengthDemandante > 2)
 				$idDemandante= DB::table('usuario_legal')
-				->where([['nombre','=',$nombreDemandante],['apellidoPaterno','=',$apellidoPaternoDemandante],['apellidoMaterno','=',$apellidoMaternoDemandante]])->first();
+				->where([['nombre','LIKE','%'.$nombreDemandante.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoDemandante.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaternoDemandante.'%']])->first();
 			else if ($lengthDemandante > 1)
 				$idDemandante = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreDemandante],['apellidoPaterno','=',$apellidoPaternoDemandante]])->first();
+				->where([['nombre','LIKE','%'.$nombreDemandante.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoDemandante.'%']])->first();
 			else if ($lengthDemandante ==1)
 				$idDemandante = DB::table('usuario_legal')
-				->where('nombre','=',$nombreDemandante)->first();
+				->where('nombre','LIKE', '%'.$nombreDemandante.'%')->first();
 
 			if (!is_null($idDemandante))
 				$idDemandante = $idDemandante->idUsuario_legal;
@@ -341,13 +338,13 @@ class ExpedienteEquipoLegal extends Model {
 
 			if ($lengthDemandado > 2)
 				$idDemandado = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreDemandado],['apellidoPaterno','=',$apellidoPaternoDemandado],['apellidoMaterno','=',$apellidoMaternoDemandado]])->first();
+				->where([['nombre','LIKE','%'.$nombreDemandado.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoDemandado.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaternoDemandado.'%']])->first();
 			else if ($lengthDemandado > 1)
 				$idDemandado = DB::table('usuario_legal')
-				->where([['nombre','=',$nombreDemandado],['apellidoPaterno','=',$apellidoPaternoDemandado]])->first();
+				->where([['nombre','LIKE','%'.$nombreDemandado.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaternoDemandado.'%']])->first();
 			else if ($lengthDemandado == 1)
 				$idDemandado = DB::table('usuario_legal')
-				->where('nombre','=',$nombreDemandado)->first();
+				->where('nombre','LIKE','%'.$nombreDemandado.'%')->first();
 
 			if (!is_null($idDemandado))
 				$idDemandado = $idDemandado->idUsuario_legal;
