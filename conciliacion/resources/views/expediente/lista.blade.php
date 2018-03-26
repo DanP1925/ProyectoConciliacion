@@ -33,7 +33,7 @@
                     </div>
                     <div class="site-control">
                     	<div class="site-control-border">
-                    		<input type="text" class="site-input" id="numero" name="numero" />
+                    		<input type="text" class="site-input" id="numeroExpediente" name="numeroExpediente" />
                     	</div>
                     </div>
                 </div>

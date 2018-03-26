@@ -203,8 +203,8 @@
 									</div>
 								</div>
 								<div class="cell small-1">
-									<button type="submit" name="accion" value="{{$accion}} {{$cliente->idExpedienteClienteLegal}}" onclick="retornarDatos()">
-										<i class="fa fa-user " style="font-size:36px;"></i>
+									<button type="submit" name="accion" value="{{$accion}} {{$cliente->idExpedienteClienteLegal}}" class="btn-borrar-factura list-edit-icon-div" onclick="retornarDatos()">
+										<img src="{{ asset('images/ico_pointer_blue.png') }}" />
 									</button>
 								</div>
 							</div>
