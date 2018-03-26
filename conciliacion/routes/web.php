@@ -127,16 +127,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/expediente/editar/{idExpediente}','ExpedienteController@editar');
 
 	// >> Expediente Buscar
-    Route::post('/expediente/buscar','ExpedienteController@buscar');
+    Route::get('/expediente/lista','ExpedienteController@lista');
 	Route::get('/expediente/info/{id}', 'ExpedienteController@info');
-    Route::post('/expediente/info/{idExpediente}','ExpedienteController@infoActualizado');
+    Route::post('/expediente/info/{id}','ExpedienteController@infoActualizado');
 
 	// >> Expediente Directorios Auxiliares
-    Route::post('/usuariolegal/directorio','UsuarioLegalController@buscarPersonal');
-    Route::post('/clientelegal/directorio','ClienteLegalController@buscarCliente');
-    Route::post('/region/directorio','RegionController@buscarRegion');
+    Route::post('/expediente/usuariolegal/directorio','ExpedienteController@buscarPersonal');
+    Route::post('/expediente/clientelegal/directorio','ExpedienteController@buscarCliente');
+    Route::post('/expediente/region/directorio','ExpedienteController@buscarRegion');
 
 	// >> Expediente Recursos Laudado
-    Route::post('/recurso/nuevo','RecursoController@nuevo');
-    Route::post('/recurso/editar','RecursoController@editar');
+    Route::post('/expediente/recurso/nuevo','ExpedienteController@nuevoRecurso');
+    Route::post('/expediente/recurso/editar','ExpedienteController@editarRecurso');
 });

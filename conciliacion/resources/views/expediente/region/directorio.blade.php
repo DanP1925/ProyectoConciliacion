@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="grid-container">
-	<form method="POST" action="/region/directorio">
+	<form method="POST" action="{{ url('expediente/region/directorio', []) }}">
 		{{ csrf_field() }}
 		<div class="grid-x">
 			<div class="cell small-12">
@@ -39,9 +39,9 @@
 			<div class="cell small-6 padding-bottom-50">
 				@foreach ($regiones as $region)
 				@if ($tipoAccion == "buscarRegionId")
-				<form method="POST" action="/expediente/info/{{$id}}">
+				<form method="POST" action="{{ url('expediente/info', ['id'=>$id]) }}">
 				@else
-				<form method="POST" action="/expediente/nuevo">
+				<form method="POST" action="{{ url('expediente/nuevo', []) }}">
 				@endif
 					{{ csrf_field() }}
 					@if ($loop->index % 2 == 0)

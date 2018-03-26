@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="grid-container">
-    <form method="POST" action="/expediente/lista">
+    <form method="POST" action="{{ url('expediente/lista', []) }}">
         {{ csrf_field() }}
 
         <div class="grid-x">
@@ -203,7 +203,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-								<button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretario" class="site-label-button float-right" onclick="buscarSecretario()">
+								<button type="submit" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarSecretario" class="site-label-button float-right" onclick="buscarSecretario()">
 									buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -224,7 +224,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarLider" class="site-label-button float-right" onclick="buscarSecretarioLider()">
+                                <button type="submit" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarLider" class="site-label-button float-right" onclick="buscarSecretarioLider()">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -258,7 +258,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandante" class="site-label-button float-right" onclick="buscarDemandante()">
+                                <button type="submit" formaction="{{ url('expediente/clientelegal/directorio', []) }}" name="accion" value="buscarDemandante" class="site-label-button float-right" onclick="buscarDemandante()">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -279,7 +279,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandado" class="site-label-button float-right" onclick="buscarDemandado()">
+                                <button type="submit" formaction="{{ url('expediente/clientelegal/directorio', []) }}" name="accion" value="buscarDemandado" class="site-label-button float-right" onclick="buscarDemandado()">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -466,7 +466,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/region/directorio" name="accion" value="buscarRegion" class="site-label-button float-right" onclick="buscarRegion()">
+                                <button type="submit" formaction="{{ url('expediente/region/directorio', []) }}" name="accion" value="buscarRegion" class="site-label-button float-right" onclick="buscarRegion()">
                                     AGREGAR REGIONES
                                 </button>
                                 <div style="clear:both;"></div>
@@ -719,7 +719,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/recurso/nuevo" name="accion" value="agregarRecurso" class="site-label-button float-right" onclick="buscarRecurso()">
+                                <button type="submit" formaction="{{ url('expediente/recurso/nuevo', []) }}" name="accion" value="agregarRecurso" class="site-label-button float-right" onclick="buscarRecurso()">
                                     AGREGAR RECURSOS
                                 </button>
                                 <div style="clear:both;"></div>
@@ -778,7 +778,7 @@
                             </div>
                         </div>
                         <div class="cell small-1">
-							<button type="submit" formaction="/recurso/editar" name="accion" value="editarRecurso {{$loop->index}}" class="btn-borrar-factura list-edit-icon-div" onclick="buscarRecurso()">
+							<button type="submit" formaction="{{ url('expediente/recurso/editar', []) }}" name="accion" value="editarRecurso {{$loop->index}}" class="btn-borrar-factura list-edit-icon-div" onclick="buscarRecurso()">
 								<img src="{{ asset('images/ico_pointer_blue.png') }}" />
 							</button>
 						</div>

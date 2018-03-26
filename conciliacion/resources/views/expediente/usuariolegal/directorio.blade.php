@@ -6,7 +6,7 @@
 <div class="grid-container">
     <div class="grid-x">
         <div class="cell small-12">
-            <form method="POST" action="/usuariolegal/directorio">
+            <form method="POST" action="{{ url('expediente/usuariolegal/directorio', []) }}">
                 {{ csrf_field() }}
                 <div class="table-2cells-div padding-top-30 padding-bottom-40">
                     <div class="left-div">
@@ -154,9 +154,9 @@
 
             @foreach ($secretarios as $secretario)
 			@if ($tipoAccion == "buscarSecretarioId" || $tipoAccion == "buscarLiderId")
-			<form method="POST" action="/expediente/info/{{$id}}">
+			<form method="POST" action="{{ url('expediente/info', ['id'=>$id]) }}">
 			@else
-            <form method="POST" action="/expediente/nuevo">
+            <form method="POST" action="{{ url('expediente/nuevo', []) }}">
 			@endif
 				{{ csrf_field() }}
                 @if ($loop->index % 2 == 0)
