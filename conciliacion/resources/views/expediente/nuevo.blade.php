@@ -203,7 +203,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-								<button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretario" class="site-label-button float-right">
+								<button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarSecretario" class="site-label-button float-right" onclick="buscarSecretario()">
 									buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -224,7 +224,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarLider" class="site-label-button float-right">
+                                <button type="submit" formaction="/usuariolegal/directorio" name="accion" value="buscarLider" class="site-label-button float-right" onclick="buscarSecretarioLider()">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -258,7 +258,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandante" class="site-label-button float-right">
+                                <button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandante" class="site-label-button float-right" onclick="buscarDemandante()">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -279,7 +279,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandado" class="site-label-button float-right">
+                                <button type="submit" formaction="/clientelegal/directorio" name="accion" value="buscarDemandado" class="site-label-button float-right" onclick="buscarDemandado()">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -466,7 +466,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/region/directorio" name="accion" value="buscarRegion" class="site-label-button float-right">
+                                <button type="submit" formaction="/region/directorio" name="accion" value="buscarRegion" class="site-label-button float-right" onclick="buscarRegion()">
                                     AGREGAR REGIONES
                                 </button>
                                 <div style="clear:both;"></div>
@@ -494,8 +494,8 @@
                             </div>
                         </div>
                         <div class="cell small-2">
-							<button type="button" onclick="quitarRegion({{$loop->index + 1}});" >
-								<i class="fa fa-trash" style="font-size:36px;"></i>
+							<button type="button" onclick="quitarRegion({{$loop->index + 1}});" class="btn-borrar-factura list-edit-icon-div">
+								<img src="{{ asset('images/ico_delete_red.png') }}" />
 							</button>
                         </div>
                     </div>
@@ -535,8 +535,8 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="designacionArbitroUnico" name="designacionArbitroUnico">
                                     <option value="">Seleccione una opción</option>
-									<option value="Parte" @if ($expedienteTemporal->designacionArbitroUnico == "Parte") selected @endif>Designado por la Parte</option>
-									<option value="Corte" @if ($expedienteTemporal->designacionArbitroUnico == "Corte") selected @endif>Designado por la Corte</option>
+									<option value="Por la parte" @if ($expedienteTemporal->designacionArbitroUnico == "Por la parte") selected @endif>Designado por la Parte</option>
+									<option value="Por la corte" @if ($expedienteTemporal->designacionArbitroUnico == "Por la corte") selected @endif>Designado por la Corte</option>
                                 </select>
                             </div>
                         </div>
@@ -595,8 +595,8 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="designacionPresidenteTribunal" name="designacionPresidenteTribunal">
                                     <option value="">Seleccione una opción</option>
-									<option value="Parte" @if ($expedienteTemporal->designacionPresidenteTribunal == "Parte") selected @endif>Designado por la Parte</option>
-									<option value="Corte" @if ($expedienteTemporal->designacionPresidenteTribunal == "Corte") selected @endif>Designado por la Corte</option>
+									<option value="Por la parte" @if ($expedienteTemporal->designacionPresidenteTribunal == "Por la parte") selected @endif>Designado por la Parte</option>
+									<option value="Por la corte" @if ($expedienteTemporal->designacionPresidenteTribunal == "Por la corte") selected @endif>Designado por la Corte</option>
                                 </select>
                             </div>
                         </div>
@@ -609,8 +609,8 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="designacionDemandante" name="designacionDemandante">
                                     <option value="">Seleccione una opción</option>
-									<option value="Parte" @if ($expedienteTemporal->designacionDemandante == "Parte") selected @endif>Designado por la Parte</option>
-									<option value="Corte" @if ($expedienteTemporal->designacionDemandante == "Corte") selected @endif>Designado por la Corte</option>
+									<option value="Por la parte" @if ($expedienteTemporal->designacionDemandante == "Por la parte") selected @endif>Designado por la Parte</option>
+									<option value="Por la corte" @if ($expedienteTemporal->designacionDemandante == "Por la corte") selected @endif>Designado por la Corte</option>
                                 </select>
                             </div>
                         </div>
@@ -623,8 +623,8 @@
                             <div class="site-control-border">
                                 <select class="site-select" id="designacionDemandado" name="designacionDemandado">
                                     <option value="">Seleccione una opción</option>
-									<option value="Parte" @if ($expedienteTemporal->designacionDemandado == "Parte") selected @endif>Designado por la Parte</option>
-									<option value="Corte" @if ($expedienteTemporal->designacionDemandado == "Corte") selected @endif>Designado por la Corte</option>
+									<option value="Por la parte" @if ($expedienteTemporal->designacionDemandado == "Por la parte") selected @endif>Designado por la Parte</option>
+									<option value="Por la corte" @if ($expedienteTemporal->designacionDemandado == "Por la corte") selected @endif>Designado por la Corte</option>
                                 </select>
                             </div>
                         </div>
@@ -719,7 +719,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="/recurso/nuevo" name="accion" value="agregarRecurso" class="site-label-button float-right">
+                                <button type="submit" formaction="/recurso/nuevo" name="accion" value="agregarRecurso" class="site-label-button float-right" onclick="buscarRecurso()">
                                     AGREGAR RECURSOS
                                 </button>
                                 <div style="clear:both;"></div>
@@ -778,13 +778,13 @@
                             </div>
                         </div>
                         <div class="cell small-1">
-							<button type="submit" formaction="/recurso/editar" name="accion" value="editarRecurso {{$loop->index}}" class="site-label-button float-right">
-								<i class="fa fa-edit" style="font-size:36px;"></i>
+							<button type="submit" formaction="/recurso/editar" name="accion" value="editarRecurso {{$loop->index}}" class="btn-borrar-factura list-edit-icon-div" onclick="buscarRecurso()">
+								<img src="{{ asset('images/ico_pointer_blue.png') }}" />
 							</button>
 						</div>
                         <div class="cell small-1">
-							<button type="button" onclick="quitarRecurso({{$loop->index + 1}});" >
-								<i class="fa fa-trash" style="font-size:36px;"></i>
+							<button type="button" onclick="quitarRecurso({{$loop->index + 1}});" class="btn-borrar-factura list-edit-icon-div">
+								<img src="{{ asset('images/ico_delete_red.png') }}" />
 							</button>
                         </div>
                     </div>
@@ -809,17 +809,44 @@
         </div>
     </form>
 </div>
+
+@include('shared.modals')
+
 @endsection
 
 @section('scripts')
 <script>
+
+function buscarSecretario() {
+	$('#modalRegistrarMensaje').foundation('open');
+}
+
+function buscarSecretarioLider() {
+	$('#modalRegistrarMensaje').foundation('open');
+}
+
+function buscarDemandante() {
+	$('#modalRegistrarMensaje').foundation('open');
+}
+
+function buscarDemandado() {
+	$('#modalRegistrarMensaje').foundation('open');
+}
+
+function buscarRegion() {
+	$('#modalRegistrarMensaje').foundation('open');
+}
+
+function buscarRecurso() {
+	$('#modalRegistrarMensaje').foundation('open');
+}
+
 function quitarRegion(indexRegion) {
 	var region = document.getElementById('region ' + indexRegion);
 	region.parentNode.removeChild(region);
 	var outputRegion = document.getElementById('outputRegion ' + indexRegion);
 	outputRegion.parentNode.removeChild(outputRegion);
 };
-
 
 function quitarRecurso(indexRecurso) {
 	var recursoPresentado = document.getElementById('recursoPresentado ' + indexRecurso);

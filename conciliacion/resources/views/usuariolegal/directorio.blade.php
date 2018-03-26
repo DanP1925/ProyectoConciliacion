@@ -198,7 +198,7 @@
                                 </div>
                             </div>
                             <div class="cell small-1">
-                                <button type="submit" name="accion" value="{{$accion}} {{$secretario->idUsuarioLegal}}">
+                                <button type="submit" name="accion" value="{{$accion}} {{$secretario->idUsuarioLegal}}" onclick="retornarDatos()">
                                     <i class="fa fa-user " style="font-size:36px;"></i>
                                 </button>
                             </div>
@@ -210,4 +210,17 @@
         </div>
     </div>
 </div>
+
+@include('shared.modals')
+
+@endsection
+
+@section ('scripts')
+<script>
+
+function retornarDatos() {
+	$('#modalRegistrarMensaje').foundation('open');
+}
+
+</script>
 @endsection

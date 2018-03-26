@@ -56,7 +56,6 @@ class ExpedienteEquipoLegal extends Model {
 		$presidenteTribunal = explode(" ",$request->input('presidenteTribunal'));
 		$arbitroDemandante = explode(" ",$request->input('arbitroDemandante'));
 		$arbitroDemandado = explode(" ",$request->input('arbitroDemandado'));
-
 		
 		$idArbitroUnico = null;
 		$tipDesArbitroUnico = null;
@@ -83,7 +82,7 @@ class ExpedienteEquipoLegal extends Model {
 				->where('nombre','LIKE', '%'.$nombreUnico.'%')->first();
 
 			if (!is_null($idArbitroUnico))
-				$idArbitroUnico = $idArbitroUnico->idUsuario_legal;
+				$idArbitroUnico = $idArbitroUnico->idUsuarioLegal;
 
 			if (!is_null($request->input('designacionArbitroUnico')))
 				$tipDesArbitroUnico = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionArbitroUnico'))->first();
@@ -118,7 +117,7 @@ class ExpedienteEquipoLegal extends Model {
 				->where('nombre','LIKE', '%'.$nombrePresidente.'%')->first();
 
 			if (!is_null($idPresidenteTribunal))
-				$idPresidenteTribunal = $idPresidenteTribunal->idUsuario_legal;
+				$idPresidenteTribunal = $idPresidenteTribunal->idUsuarioLegal;
 
 			if (!is_null($request->input('designacionPresidenteTribunal')))
 				$tipDesPresidenteTribunal = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionPresidenteTribunal'))->first();
@@ -152,7 +151,7 @@ class ExpedienteEquipoLegal extends Model {
 				->where('nombre','LIKE', '%'.$nombreDemandante.'%')->first();
 
 			if (!is_null($idDemandante))
-				$idDemandante = $idDemandante->idUsuario_legal;
+				$idDemandante = $idDemandante->idUsuarioLegal;
 
 			if (!is_null($request->input('designacionDemandante')))
 				$tipDesArbitroDemandante = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandante'))->first();
@@ -187,7 +186,7 @@ class ExpedienteEquipoLegal extends Model {
 				->where('nombre','LIKE','%'.$nombreDemandado.'%')->first();
 
 			if (!is_null($idDemandado))
-				$idDemandado = $idDemandado->idUsuario_legal;
+				$idDemandado = $idDemandado->idUsuarioLegal;
 
 			if (!is_null($request->input('designacionDemandado')))
 				$tipDesArbitroDemandado = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandado'))->first();
@@ -242,7 +241,7 @@ class ExpedienteEquipoLegal extends Model {
 				->where('nombre','LIKE', '%'.$nombreUnico.'%')->first();
 
 			if (!is_null($idArbitroUnico))
-				$idArbitroUnico = $idArbitroUnico->idUsuario_legal;
+				$idArbitroUnico = $idArbitroUnico->idUsuarioLegal;
 
 			if (!is_null($request->input('designacionArbitroUnico')))
 				$tipDesArbitroUnico = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionArbitroUnico'))->first();
@@ -278,7 +277,7 @@ class ExpedienteEquipoLegal extends Model {
 
 
 			if (!is_null($idPresidenteTribunal))
-				$idPresidenteTribunal = $idPresidenteTribunal->idUsuario_legal;
+				$idPresidenteTribunal = $idPresidenteTribunal->idUsuarioLegal;
 
 			if (!is_null($request->input('designacionPresidenteTribunal')))
 				$tipDesPresidenteTribunal = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionPresidenteTribunal'))->first();
@@ -312,7 +311,7 @@ class ExpedienteEquipoLegal extends Model {
 				->where('nombre','LIKE', '%'.$nombreDemandante.'%')->first();
 
 			if (!is_null($idDemandante))
-				$idDemandante = $idDemandante->idUsuario_legal;
+				$idDemandante = $idDemandante->idUsuarioLegal;
 
 			if (!is_null($request->input('designacionDemandante')))
 				$tipDesArbitroDemandante = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandante'))->first();
@@ -347,7 +346,7 @@ class ExpedienteEquipoLegal extends Model {
 				->where('nombre','LIKE','%'.$nombreDemandado.'%')->first();
 
 			if (!is_null($idDemandado))
-				$idDemandado = $idDemandado->idUsuario_legal;
+				$idDemandado = $idDemandado->idUsuarioLegal;
 
 			if (!is_null($request->input('designacionDemandado')))
 				$tipDesArbitroDemandado = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandado'))->first();

@@ -87,7 +87,7 @@
 			</div>
 		</div>
 		<div class="cell small-12 padding-bottom-50">
-			<button type="submit" name="accion" value="{{$accion}}" class="site-form-button float-left">
+			<button type="submit" name="accion" value="{{$accion}}" class="site-form-button float-left" onclick="retornarDatos()">
 				registrar
 			</button>
 			<div style="clear:both;"></div>
@@ -95,4 +95,17 @@
 		</form>
 	</div>
 </div>
+
+@include('shared.modals')
+
+@endsection
+
+@section ('scripts')
+<script>
+
+function retornarDatos() {
+	$('#modalRegistrarMensaje').foundation('open');
+}
+
+</script>
 @endsection
