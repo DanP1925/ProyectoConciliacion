@@ -29,7 +29,7 @@
         
 		<div class="cell small-12 padding-bottom-50">
 			@foreach ($expedientes as $expediente)
-				<a href="/expediente/info/{{$expediente->idExpediente}}">
+				<a href="{{ url('expediente/info',['id'=>$expediente->idExpediente])}}">
 				@if ($loop->index % 2 == 0)
 					<div class="site-list-item-div background-color-F5F5F5">
 				@else

@@ -1,4 +1,4 @@
-<form method="GET" action="/expediente/lista">
+<form method="GET" action="{{ url('expediente/lista', []) }}">
 	{{ csrf_field() }}
 	<div class="cell small-12 padding-bottom-20">
 		<div class="grid-x grid-margin-x">

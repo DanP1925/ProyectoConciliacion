@@ -7,9 +7,9 @@
 	<div class="grid-x">
 		<div class="cell small-12">
 		@if ($tipoAccion == "editarRecursoId")
-		<form method="POST" action="/expediente/info/{{$id}}">
+		<form method="POST" action="{{ url('expediente/info', ['id'=>$id]) }}">
 		@else
-		<form method="POST" action="/expediente/nuevo">
+		<form method="POST" action="{{ url('expediente/nuevo', []) }}">
 		@endif
 			{{ csrf_field() }}
 			<div class="table-2cells-div padding-top-30 padding-bottom-40">

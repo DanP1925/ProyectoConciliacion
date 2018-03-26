@@ -10,9 +10,11 @@ use App\Http\Models\DesignacionTipo;
 use App\Http\Models\ExpedienteEstado;
 use App\Http\Models\ExpedienteSubtipoCaso;
 use App\Http\Models\ExpedienteTipoCaso;
+use App\Http\Models\ExpedienteClienteLegal;
 use App\Http\Models\LaudoAFavor;
 use App\Http\Models\LaudoEjecucion;
 use App\Http\Models\LaudoResultado;
+use App\Http\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Library\ExpedienteTemporal;
@@ -230,5 +232,121 @@ class ExpedienteController extends Controller
 
 		return view('expediente.lista', compact('estadosExpediente',
 					'tipos', 'subtipos', 'expedientes' ));
+    }
+
+	public function buscarCliente(Request $request)
+	{
+		$accion = $request->input('accion');
+		$tipoAccion = (explode(" ",$accion))[0];
+		$id = 0;
+		if ($tipoAccion == "buscarDemandanteId" || $tipoAccion == "buscarDemandadoId")
+			$id = (explode(" ",$accion))[1];
+
+		$clientes = ExpedienteClienteLegal::buscarCliente($request); 
+		ExpedienteTemporal::guardarEnSesion($request);
+
+		return view('expediente.clientelegal.directorio',
+			compact('clientes',
+			'accion',
+			'tipoAccion',
+			'id'));
+	}
+
+
+    public function buscarPersonal(Request $request)
+    {
+        $profesiones = DB::table('usuario_legal_profesion')->get()->all();
+        $paises = DB::table('usuario_legal_pais')->get()->all();
+        $perfiles = DB::table('usuario_legal_tipo')->get()->all();
+
+        $accion = $request->input('accion');
+		$tipoAccion = (explode(" ",$accion))[0];
+		$id = 0;
+		if ($tipoAccion == "buscarSecretarioId" || $tipoAccion == "buscarLiderId")
+			$id = (explode(" ",$accion))[1];
+		
+        $secretarios = UsuarioLegal::buscarPersonal($request);
+        ExpedienteTemporal::guardarEnSesion($request);
+
+        return view('expediente.usuariolegal.directorio',
+            compact('profesiones',
+                    'paises',
+                    'perfiles',
+                    'secretarios',
+					'accion',
+					'tipoAccion',
+					'id'));
+    }
+
+	public function buscarRegion(Request $request)
+	{
+        $accion = $request->input('accion');
+		$tipoAccion = (explode(" ",$accion))[0];
+		$id = 0;
+		if ($tipoAccion == "buscarRegionId")
+			$id = (explode(" ",$accion))[1];
+
+        $regiones = Region::buscarRegion($request); 
+        ExpedienteTemporal::guardarEnSesion($request);
+
+		return view('expediente.region.directorio',
+			compact('regiones',
+					'accion',
+					'tipoAccion',
+					'id'));
+	}
+
+    public function nuevoRecurso(Request $request)
+    {
+		$recursosPresentados = DB::table('laudo_recurso')->get()->all();
+		$resultadoRecursos = DB::table('laudo_recurso_resultado')->get()->all();
+
+        $accion = $request->input('accion');
+		$tipoAccion = (explode(" ",$accion))[0];
+		$id = 0;
+		if ($tipoAccion == "agregarRecursoId")
+			$id = (explode(" ",$accion))[1];
+
+        ExpedienteTemporal::guardarEnSesion($request);
+
+		return view('expediente.recurso.nuevo',
+			compact('recursosPresentados',
+					'resultadoRecursos',
+					'accion',
+					'tipoAccion',
+					'id'));
+    }
+
+    public function editarRecurso(Request $request)
+    {
+		$recursosPresentados = DB::table('laudo_recurso')->get()->all();
+		$resultadoRecursos = DB::table('laudo_recurso_resultado')->get()->all();
+
+		$recursos = $request->input('recursoPresentado');
+		$fechasPresentacion = $request->input('fechaPresentacion');
+		$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');
+		$fechasResultado = $request->input('fechaResultado');
+
+		$accion = explode(" ",$request->input('accion'));
+		$tipoAccion = $accion[0];
+		$id = 0;
+		if ($tipoAccion == "editarRecursoId"){
+			$id = $accion[1];
+			$idRecurso = $accion[2];
+		} else
+			$idRecurso = $accion[1];
+
+		$nuevoRecurso = RecursoTemporal::withData($recursos[$idRecurso],$fechasPresentacion[$idRecurso],
+			$resultadosRecursosPresentado[$idRecurso],$fechasResultado[$idRecurso]);
+
+        $accion = $request->input('accion');
+        ExpedienteTemporal::guardarEnSesion($request);
+		return view('expediente.recurso.editar',
+			compact('recursosPresentados',
+					'resultadoRecursos',
+					'accion',
+					'nuevoRecurso',
+					'tipoAccion',
+					'id'));
     }
 }
