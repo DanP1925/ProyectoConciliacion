@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UsuarioLegal extends Model {
 
@@ -118,5 +119,20 @@ class UsuarioLegal extends Model {
 
         return $resultado->get();
     }
+
+	public static function getListaIdUsandoNombre($nombre){
+		$usuariosNombre = DB::table('usuario_legal')->where('nombre','LIKE','%'.$nombre.'%')->get();
+		$usuariosPaterno = DB::table('usuario_legal')->where('apellidoPaterno','LIKE','%'.$nombre.'%')->get();
+		$usuariosMaterno = DB::table('usuario_legal')->where('apellidoMaterno','LIKE','%'.$nombre.'%')->get();
+
+		$usuarios = $usuariosNombre->merge($usuariosPaterno);
+		$usuarios = $usuarios->merge($usuariosMaterno);
+
+		$resultado = [];
+		foreach($usuarios as $usuario)
+			array_push($resultado,$usuario->idUsuarioLegal);
+
+		return $resultado;
+	}
 
 }

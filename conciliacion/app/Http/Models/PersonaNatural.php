@@ -1,6 +1,7 @@
 <?php namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class PersonaNatural extends Model {
 
@@ -24,5 +25,18 @@ class PersonaNatural extends Model {
         return $this->hasMany(\App\Http\Models\Factura::class, 'idClientePersonaNatural', 'idPersonaNatural');
     }
 
+	public static function getListaIdUsandoNombre($nombre){
+		$personasNombre = DB::table('persona_natural')->where('nombre','LIKE','%'.$nombre.'%')->get();
+		$personasPaterno = DB::table('persona_natural')->where('apellidoPaterno','LIKE','%'.$nombre.'%')->get();
+		$personasMaterno = DB::table('persona_natural')->where('apellidoMaterno','LIKE','%'.$nombre.'%')->get();
 
+		$personas = $personasNombre->merge($personasPaterno);
+		$personas = $personas->merge($personasMaterno);
+
+		$lista = [];
+		foreach($personas as $persona){
+			array_push($lista, $persona->idPersonaNatural);
+		}
+		return $lista;
+	}
 }

@@ -51,8 +51,29 @@ class ExpedienteClienteLegal extends Model {
 		return DB::table('usuario_legal')->where('idUsuarioLegal',$this->idRepresentanteLegal)->first();
 	}
 
-    public static function buscarCliente(Request $request){
+	public static function getListaIdUsandoIdPersonaJuridica($listaPersonasJuridicas){
+		$clientesJuridicos = DB::table('expediente_cliente_legal')->whereIn('idPersonaJuridica',$listaPersonasJuridicas)->get();
 
+		$lista= [];
+		foreach($clientesJuridicos as $clienteJuridico){
+			array_push($lista, $clienteJuridico->idExpedienteClienteLegal);
+		}
+
+		return $lista;
+	}
+
+	public static function getListaIdUsandoIdPersonaNatural($listaPersonasNatural){
+		$clientesNaturales = DB::table('expediente_cliente_legal')->whereIn('idPersonaNatural',$listaPersonasNatural)->get();
+
+		$lista= [];
+		foreach($clientesNaturales as $clienteNatural){
+			array_push($lista, $clienteNatural->idExpedienteClienteLegal);
+		}
+
+		return $lista;
+	}
+
+    public static function buscarCliente(Request $request){
 
 		//Persona Natural
 		$nombre = $request->input('nombre'); 
