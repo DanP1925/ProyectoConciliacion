@@ -169,12 +169,16 @@ class ExpedienteTemporal {
 		$instance->escalaPago = $expediente->idCuantiaEscalaPago;
 
 		$secretarioResponsable = DB::table('usuario_legal')->where('idUsuarioLegal',$expediente->idSecretarioResponsable)->first();
-		$instance->idSecretarioResponsable = $secretarioResponsable->idUsuarioLegal;
-		$instance->secretarioArbitral = ($secretarioResponsable->nombre).' '.($secretarioResponsable->apellidoPaterno).' '.($secretarioResponsable->apellidoMaterno);
+		if (!is_null($secretarioResponsable)){
+			$instance->idSecretarioResponsable = $secretarioResponsable->idUsuarioLegal;
+			$instance->secretarioArbitral = ($secretarioResponsable->nombre).' '.($secretarioResponsable->apellidoPaterno).' '.($secretarioResponsable->apellidoMaterno);
+		}
 
 		$secretarioLider = DB::table('usuario_legal')->where('idUsuarioLegal',$expediente->idSecretarioLider)->first();
-		$instance->idSecretarioLider = $secretarioLider->idUsuarioLegal;
-		$instance->secretarioArbitralLider = ($secretarioLider->nombre).' '.($secretarioLider->apellidoPaterno).' '.($secretarioLider->apellidoMaterno);
+		if (!is_null($secretarioLider)){
+			$instance->idSecretarioLider = $secretarioLider->idUsuarioLegal;
+			$instance->secretarioArbitralLider = ($secretarioLider->nombre).' '.($secretarioLider->apellidoPaterno).' '.($secretarioLider->apellidoMaterno);
+		}
 
 		$demandante = DB::table('expediente_cliente_legal')->where('idExpedienteClienteLegal',$expediente->idDemandante)->first();
 
@@ -266,44 +270,46 @@ class ExpedienteTemporal {
 		}	
 		$instance->regiones = $listaregiones;
 
-		if(!is_null($equipoLegal->idArbitroUnico)){
-			$arbitroUnico = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroUnico)->first(); 
-			$instance->arbitroUnico = ($arbitroUnico->nombre).' '.($arbitroUnico->apellidoPaterno).' '.($arbitroUnico->apellidoMaterno);
-		}
+		if (!is_null($equipoLegal)){
+			if(!is_null($equipoLegal->idArbitroUnico)){
+				$arbitroUnico = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroUnico)->first(); 
+				$instance->arbitroUnico = ($arbitroUnico->nombre).' '.($arbitroUnico->apellidoPaterno).' '.($arbitroUnico->apellidoMaterno);
+			}
 
-		if(!is_null($equipoLegal->tipDesArbitroUnico)){
-			$tipDesArbitroUnico = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroUnico)->first();
-			$instance->designacionArbitroUnico = $tipDesArbitroUnico->nombre;
-		}
+			if(!is_null($equipoLegal->tipDesArbitroUnico)){
+				$tipDesArbitroUnico = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroUnico)->first();
+				$instance->designacionArbitroUnico = $tipDesArbitroUnico->nombre;
+			}
 
-		if(!is_null($equipoLegal->idPresidenteTribunal)){
-			$presidenteTribunal = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idPresidenteTribunal)->first(); 
-			$instance->presidenteTribunal = ($presidenteTribunal->nombre).' '.($presidenteTribunal->apellidoPaterno).' '.($presidenteTribunal->apellidoMaterno);
-		}
+			if(!is_null($equipoLegal->idPresidenteTribunal)){
+				$presidenteTribunal = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idPresidenteTribunal)->first(); 
+				$instance->presidenteTribunal = ($presidenteTribunal->nombre).' '.($presidenteTribunal->apellidoPaterno).' '.($presidenteTribunal->apellidoMaterno);
+			}
 
-		if(!is_null($equipoLegal->tipDesPresidenteTribunal)){
-			$tipDesPresidenteTribunal = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesPresidenteTribunal)->first();
-			$instance->designacionPresidenteTribunal = $tipDesPresidenteTribunal->nombre;
-		}
+			if(!is_null($equipoLegal->tipDesPresidenteTribunal)){
+				$tipDesPresidenteTribunal = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesPresidenteTribunal)->first();
+				$instance->designacionPresidenteTribunal = $tipDesPresidenteTribunal->nombre;
+			}
 
-		if(!is_null($equipoLegal->idArbitroDemandante)){
-			$arbitroDemandante = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroDemandante)->first(); 
-			$instance->arbitroDemandante = ($arbitroDemandante->nombre).' '.($arbitroDemandante->apellidoPaterno).' '.($arbitroDemandante->apellidoMaterno);
-		}
+			if(!is_null($equipoLegal->idArbitroDemandante)){
+				$arbitroDemandante = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroDemandante)->first(); 
+				$instance->arbitroDemandante = ($arbitroDemandante->nombre).' '.($arbitroDemandante->apellidoPaterno).' '.($arbitroDemandante->apellidoMaterno);
+			}
 
-		if(!is_null($equipoLegal->tipDesArbitroDemandante)){
-			$tipDesArbitroDemandante = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroDemandante)->first();
-			$instance->designacionDemandante= $tipDesArbitroDemandante->nombre;
-		}
+			if(!is_null($equipoLegal->tipDesArbitroDemandante)){
+				$tipDesArbitroDemandante = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroDemandante)->first();
+				$instance->designacionDemandante= $tipDesArbitroDemandante->nombre;
+			}
 
-		if(!is_null($equipoLegal->idArbitroDemandado)){
-			$arbitroDemandado = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroDemandado)->first(); 
-			$instance->arbitroDemandado = ($arbitroDemandado->nombre).' '.($arbitroDemandado->apellidoPaterno).' '.($arbitroDemandado->apellidoMaterno);
-		}
+			if(!is_null($equipoLegal->idArbitroDemandado)){
+				$arbitroDemandado = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroDemandado)->first(); 
+				$instance->arbitroDemandado = ($arbitroDemandado->nombre).' '.($arbitroDemandado->apellidoPaterno).' '.($arbitroDemandado->apellidoMaterno);
+			}
 
-		if(!is_null($equipoLegal->tipDesArbitroDemandado)){
-			$tipDesArbitroDemandado = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroDemandado)->first();
-			$instance->designacionDemandado = $tipDesArbitroDemandado->nombre;
+			if(!is_null($equipoLegal->tipDesArbitroDemandado)){
+				$tipDesArbitroDemandado = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroDemandado)->first();
+				$instance->designacionDemandado = $tipDesArbitroDemandado->nombre;
+			}
 		}
 
 		$instance->fechaLaudo = (explode(" ",$expediente->laudofecha))[0];

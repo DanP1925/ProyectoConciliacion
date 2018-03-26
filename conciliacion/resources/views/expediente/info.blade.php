@@ -399,7 +399,7 @@
 							<select class="site-select" id="tipoDemandado" name="tipoDemandado">
 								<option value="">Seleccione una opción</option>
 									<option value="PUB" @if ($expedienteTemporal->tipoDemandado == "PUB") selected @endif>Público</option>
-									<option value="PRV" @if ($expedienteTemporal->tipoDemandado == "PRv") selected @endif>Privado</option>
+									<option value="PRV" @if ($expedienteTemporal->tipoDemandado == "PRV") selected @endif>Privado</option>
 							</select>
 						</div>
 					</div>

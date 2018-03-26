@@ -33,15 +33,17 @@ class LaudoRecursoPresentado extends Model {
 		$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');
 		$fechasResultado = $request->input('fechaResultado');
 
-		$length = count($recursosPresentados);
-		for($i=0;$i<$length;$i++){
-			DB::table('laudo_recurso_presentado')->insert(
-				['idExpediente' => $idExpediente,
-				'idLaudoRecurso' => $recursosPresentados[$i],
-				'idLaudoRecursoResultado' => $resultadosRecursosPresentado[$i],
-				'fechaPresentacion' => $fechasPresentacion[$i],
-				'fechaResultado' => $fechasResultado[$i]]
-			);
+		if (!is_null($recursosPresentados)){
+			$length = count($recursosPresentados);
+			for($i=0;$i<$length;$i++){
+				DB::table('laudo_recurso_presentado')->insert(
+					['idExpediente' => $idExpediente,
+					'idLaudoRecurso' => $recursosPresentados[$i],
+					'idLaudoRecursoResultado' => $resultadosRecursosPresentado[$i],
+					'fechaPresentacion' => $fechasPresentacion[$i],
+					'fechaResultado' => $fechasResultado[$i]]
+				);
+			}
 		}
 	}
 
@@ -54,15 +56,17 @@ class LaudoRecursoPresentado extends Model {
 		$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');
 		$fechasResultado = $request->input('fechaResultado');
 
-		$length = count($recursosPresentados);
-		for($i=0;$i<$length;$i++){
-			DB::table('laudo_recurso_presentado')->insert(
-				['idExpediente' => $idExpediente,
-				'idLaudoRecurso' => $recursosPresentados[$i],
-				'idLaudoRecursoResultado' => $resultadosRecursosPresentado[$i],
-				'fechaPresentacion' => $fechasPresentacion[$i],
-				'fechaResultado' => $fechasResultado[$i]]
-			);
+		if (!is_null($recursosPresentados)){
+			$length = count($recursosPresentados);
+			for($i=0;$i<$length;$i++){
+				DB::table('laudo_recurso_presentado')->insert(
+					['idExpediente' => $idExpediente,
+					'idLaudoRecurso' => $recursosPresentados[$i],
+					'idLaudoRecursoResultado' => $resultadosRecursosPresentado[$i],
+					'fechaPresentacion' => $fechasPresentacion[$i],
+					'fechaResultado' => $fechasResultado[$i]]
+				);
+			}
 		}
 	}
 }
