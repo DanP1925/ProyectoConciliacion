@@ -192,61 +192,139 @@ class Expediente extends Model {
 			$resultado = Expediente::buscarDemandado($demandado, $resultado);
 
 		$miembroDemandante = $request->input('miembroDemandante');
+		if (!is_null($miembroDemandante))
+			$resultado = Expediente::buscarMiembroDemandante($miembroDemandante, $resultado);
+
 		$miembroDemandado = $request->input('miembroDemandado');
+		if (!is_null($miembroDemandado))
+			$resultado = Expediente::buscarMiembroDemandado($miembroDemandado, $resultado);
+
 
 		return $resultado->get();
 	}
 
 	private static function buscarDemandante($demandante,$resultado){
 
-			//Persona Juridica
-			$listaPersonasJuridicas = PersonaJuridica::getListaIdUsandoNombre($demandante);
-			$listaClientesJuridicos = ExpedienteClienteLegal::getListaIdUsandoIdPersonaJuridica($listaPersonasJuridicas);
-			$resultadoJuridico = DB::table('expediente')->whereIn('idDemandante',$listaClientesJuridicos); 
-			$listaJuridica = [];
-			foreach ($resultadoJuridico->get()->all() as $expedienteJuridico)
-				array_push($listaJuridica,$expedienteJuridico->idExpediente);
+		//Persona Juridica
+		$listaPersonasJuridicas = PersonaJuridica::getListaIdUsandoNombre($demandante);
+		$listaClientesJuridicos = ExpedienteClienteLegal::getListaIdUsandoIdPersonaJuridica($listaPersonasJuridicas);
+		$resultadoJuridico = DB::table('expediente')->whereIn('idDemandante',$listaClientesJuridicos); 
+		$listaJuridica = [];
+		foreach ($resultadoJuridico->get()->all() as $expedienteJuridico)
+			array_push($listaJuridica,$expedienteJuridico->idExpediente);
 
-			//Persona Natural
-			$listaPersonasNaturales = PersonaNatural::getListaIdUsandoNombre($demandante);
-			$listaClientesNaturales = ExpedienteClienteLegal::getListaIdUsandoIdPersonaNatural($listaPersonasNaturales);
-			$resultadoNatural = DB::table('expediente')->whereIn('idDemandante',$listaClientesNaturales); 
-			$listaNatural = [];
-			foreach ($resultadoNatural->get()->all() as $expedienteNatural)
-				array_push($listaNatural,$expedienteNatural->idExpediente);
+		//Persona Natural
+		$listaPersonasNaturales = PersonaNatural::getListaIdUsandoNombre($demandante);
+		$listaClientesNaturales = ExpedienteClienteLegal::getListaIdUsandoIdPersonaNatural($listaPersonasNaturales);
+		$resultadoNatural = DB::table('expediente')->whereIn('idDemandante',$listaClientesNaturales); 
+		$listaNatural = [];
+		foreach ($resultadoNatural->get()->all() as $expedienteNatural)
+			array_push($listaNatural,$expedienteNatural->idExpediente);
 
-			if (count($listaJuridica) != 0)
-				$resultado = $resultado->whereIn('idExpediente',$listaJuridica);
-			if (count($listaNatural) != 0)
-				$resultado = $resultado->whereIn('idExpediente',$listaNatural);
+		if (count($listaJuridica) != 0)
+			$resultado = $resultado->whereIn('idExpediente',$listaJuridica);
+		if (count($listaNatural) != 0)
+			$resultado = $resultado->whereIn('idExpediente',$listaNatural);
 
-			return $resultado;
+		return $resultado;
 	}
 
 	private static function buscarDemandado($demandado,$resultado){
 
-			//Persona Juridica
-			$listaPersonasJuridicas = PersonaJuridica::getListaIdUsandoNombre($demandado);
-			$listaClientesJuridicos = ExpedienteClienteLegal::getListaIdUsandoIdPersonaJuridica($listaPersonasJuridicas);
-			$resultadoJuridico = DB::table('expediente')->whereIn('idDemandado',$listaClientesJuridicos); 
-			$listaJuridica = [];
-			foreach ($resultadoJuridico->get()->all() as $expedienteJuridico)
-				array_push($listaJuridica,$expedienteJuridico->idExpediente);
+		//Persona Juridica
+		$listaPersonasJuridicas = PersonaJuridica::getListaIdUsandoNombre($demandado);
+		$listaClientesJuridicos = ExpedienteClienteLegal::getListaIdUsandoIdPersonaJuridica($listaPersonasJuridicas);
+		$resultadoJuridico = DB::table('expediente')->whereIn('idDemandado',$listaClientesJuridicos); 
+		$listaJuridica = [];
+		foreach ($resultadoJuridico->get()->all() as $expedienteJuridico)
+			array_push($listaJuridica,$expedienteJuridico->idExpediente);
 
-			//Persona Natural
-			$listaPersonasNaturales = PersonaNatural::getListaIdUsandoNombre($demandado);
-			$listaClientesNaturales = ExpedienteClienteLegal::getListaIdUsandoIdPersonaNatural($listaPersonasNaturales);
-			$resultadoNatural = DB::table('expediente')->whereIn('idDemandado',$listaClientesNaturales); 
-			$listaNatural = [];
-			foreach ($resultadoNatural->get()->all() as $expedienteNatural)
-				array_push($listaNatural,$expedienteNatural->idExpediente);
+		//Persona Natural
+		$listaPersonasNaturales = PersonaNatural::getListaIdUsandoNombre($demandado);
+		$listaClientesNaturales = ExpedienteClienteLegal::getListaIdUsandoIdPersonaNatural($listaPersonasNaturales);
+		$resultadoNatural = DB::table('expediente')->whereIn('idDemandado',$listaClientesNaturales); 
+		$listaNatural = [];
+		foreach ($resultadoNatural->get()->all() as $expedienteNatural)
+			array_push($listaNatural,$expedienteNatural->idExpediente);
 
-			if (count($listaJuridica) != 0)
-				$resultado = $resultado->whereIn('idExpediente',$listaJuridica);
-			if (count($listaNatural) != 0)
-				$resultado = $resultado->whereIn('idExpediente',$listaNatural);
+		if (count($listaJuridica) != 0)
+			$resultado = $resultado->whereIn('idExpediente',$listaJuridica);
+		if (count($listaNatural) != 0)
+			$resultado = $resultado->whereIn('idExpediente',$listaNatural);
 
-			return $resultado;
+		return $resultado;
+	}
+
+	public static function buscarMiembroDemandante($miembroDemandante, $resultado){
+
+		//Persona Juridica
+		$listaPersonasJuridicas = PersonaJuridica::getListaIdUsandoNombre($miembroDemandante);
+		$listaConsorciosPersonaJuridicas = 
+			ConsorcioPersonaDetalle::getListaIdConsorcioUsandoPersonaJuridica($listaPersonasJuridicas);
+		$listaPersonasDeConsorciosJuridicos = 
+			ConsorcioPersonaDetalle::getListaIdConsorcioUsandoConsorcioPersona($listaConsorciosPersonaJuridicas);
+		$listaClientesJuridicos = 
+			ExpedienteClienteLegal::getListaIdUsandoIdPersonaJuridica($listaPersonasDeConsorciosJuridicos);
+		$resultadoJuridico = DB::table('expediente')->whereIn('idDemandante',$listaClientesJuridicos); 
+		$listaJuridica = [];
+		foreach ($resultadoJuridico->get()->all() as $expedienteJuridico)
+			array_push($listaJuridica,$expedienteJuridico->idExpediente);
+		
+		//Persona Natural
+		$listaPersonasNaturales = PersonaNatural::getListaIdUsandoNombre($miembroDemandante);
+		$listaConsorciosPersonaNaturales =
+			ConsorcioPersonaDetalle::getListaIdConsorcioUsandoPersonaNatural($listaPersonasNaturales);
+		$listaPersonasDeConsorciosNaturales = 
+			ConsorcioPersonaDetalle::getListaIdConsorcioUsandoConsorcioPersona($listaConsorciosPersonaNaturales);
+		$listaClientesNaturales = 
+			ExpedienteClienteLegal::getListaIdUsandoIdPersonaNatural($listaPersonasDeConsorciosNaturales);
+		$resultadoNatural = DB::table('expediente')->whereIn('idDemandante',$listaClientesNaturales); 
+		$listaNatural = [];
+		foreach ($resultadoNatural->get()->all() as $expedienteNatural)
+			array_push($listaNatural,$expedienteNatural->idExpediente);
+
+		if (count($listaJuridica) != 0)
+			$resultado = $resultado->whereIn('idExpediente',$listaJuridica);
+		if (count($listaNatural) != 0)
+			$resultado = $resultado->whereIn('idExpediente',$listaNatural);
+
+		return $resultado;
+	}
+
+	public static function buscarMiembroDemandado($miembroDemandado, $resultado){
+
+		//Persona Juridica
+		$listaPersonasJuridicas = PersonaJuridica::getListaIdUsandoNombre($miembroDemandado);
+		$listaConsorciosPersonaJuridicas = 
+			ConsorcioPersonaDetalle::getListaIdConsorcioUsandoPersonaJuridica($listaPersonasJuridicas);
+		$listaPersonasDeConsorciosJuridicos = 
+			ConsorcioPersonaDetalle::getListaIdConsorcioUsandoConsorcioPersona($listaConsorciosPersonaJuridicas);
+		$listaClientesJuridicos = 
+			ExpedienteClienteLegal::getListaIdUsandoIdPersonaJuridica($listaPersonasDeConsorciosJuridicos);
+		$resultadoJuridico = DB::table('expediente')->whereIn('idDemandado',$listaClientesJuridicos); 
+		$listaJuridica = [];
+		foreach ($resultadoJuridico->get()->all() as $expedienteJuridico)
+			array_push($listaJuridica,$expedienteJuridico->idExpediente);
+		
+		//Persona Natural
+		$listaPersonasNaturales = PersonaNatural::getListaIdUsandoNombre($miembroDemandado);
+		$listaConsorciosPersonaNaturales =
+			ConsorcioPersonaDetalle::getListaIdConsorcioUsandoPersonaNatural($listaPersonasNaturales);
+		$listaPersonasDeConsorciosNaturales = 
+			ConsorcioPersonaDetalle::getListaIdConsorcioUsandoConsorcioPersona($listaConsorciosPersonaNaturales);
+		$listaClientesNaturales = 
+			ExpedienteClienteLegal::getListaIdUsandoIdPersonaNatural($listaPersonasDeConsorciosNaturales);
+		$resultadoNatural = DB::table('expediente')->whereIn('idDemandado',$listaClientesNaturales); 
+		$listaNatural = [];
+		foreach ($resultadoNatural->get()->all() as $expedienteNatural)
+			array_push($listaNatural,$expedienteNatural->idExpediente);
+
+		if (count($listaJuridica) != 0)
+			$resultado = $resultado->whereIn('idExpediente',$listaJuridica);
+		if (count($listaNatural) != 0)
+			$resultado = $resultado->whereIn('idExpediente',$listaNatural);
+
+		return $resultado;
 	}
 
 	public function getFecha(){
