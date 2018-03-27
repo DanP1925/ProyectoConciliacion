@@ -501,6 +501,16 @@
                     </div>
                 </div>
 				@endforeach
+				@else
+				<div class="cell small-12 large-8">
+					<div class="list-edit-no-items-div">
+						<div class="list-edit-text-div">
+							<div class="list-avant-garde-regular color-9B9B9B">
+								NO HAY REGIONES REGISTRADAS
+							</div>
+						</div>
+					</div>
+				</div>
 				@endif
             </div>
             <div class="cell small-12 padding-bottom-40">
@@ -790,6 +800,16 @@
                     </div>
                 </div>
 				@endforeach
+				@else
+				<div class="cell small-12 large-8">
+					<div class="list-edit-no-items-div">
+						<div class="list-edit-text-div">
+							<div class="list-avant-garde-regular color-9B9B9B">
+								NO HAY RECURSOS REGISTRADOS
+							</div>
+						</div>
+					</div>
+				</div>
 				@endif
             </div>
             @if ($errors->any())

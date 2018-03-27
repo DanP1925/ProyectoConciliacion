@@ -19,24 +19,28 @@ class RegionControversia extends Model
 	}
 
 	public static function insertarRegiones($idExpediente,Request $request){
-		foreach($request->regiones as $nombreRegion)
-			$region = DB::table('region')->where('nombre',$nombreRegion)->first();
-			DB::table('region_controversia')->insert(
-				['idExpediente' => $idExpediente,
-				'idRegion' => $region->idRegion
-				]
-			);
+
+		if (!is_null($request->input('regiones'))){
+			foreach($request->input('regiones') as $nombreRegion){
+				$region = DB::table('region')->where('nombre',$nombreRegion)->first();
+				DB::table('region_controversia')->insert(
+					['idExpediente' => $idExpediente,
+					'idRegion' => $region->idRegion]);
+			}
+		}
 	}	
 
 	public static function actualizarRegiones($idExpediente, Request $request){
+
 		DB::table('region_controversia')->where('idExpediente',$idExpediente)->delete();
 
-		foreach($request->regiones as $nombreRegion)
-			$region = DB::table('region')->where('nombre',$nombreRegion)->first();
-			DB::table('region_controversia')->insert(
-				['idExpediente' => $idExpediente,
-				'idRegion' => $region->idRegion
-				]
-			);
+		if (!is_null($request->input('regiones'))){
+			foreach($request->input('regiones') as $nombreRegion){
+				$region = DB::table('region')->where('nombre',$nombreRegion)->first();
+				DB::table('region_controversia')->insert(
+					['idExpediente' => $idExpediente,
+					'idRegion' => $region->idRegion]);
+			}
+		}
 	}
 }

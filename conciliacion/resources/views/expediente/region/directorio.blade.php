@@ -4,17 +4,17 @@
 
 @section('content')
 <div class="grid-container">
-	<form method="POST" action="{{ url('expediente/region/directorio', []) }}">
-		{{ csrf_field() }}
 		<div class="grid-x">
 			<div class="cell small-12">
-				<div class="table-2cells-div padding-top-30 padding-bottom-40">
-					<div class="left-div">
-						<div class="site-title">
-							DIRECTORIO DE REGIONES
+				<form method="POST" action="{{ url('expediente/region/directorio', []) }}">
+					{{ csrf_field() }}
+					<div class="table-2cells-div padding-top-30 padding-bottom-40">
+						<div class="left-div">
+							<div class="site-title">
+								DIRECTORIO DE REGIONES
+							</div>
 						</div>
 					</div>
-				</div>
 			</div>
 			<div class="cell small-12 padding-bottom-20">
 				<div class="grid-x grid-margin-x">
@@ -36,6 +36,7 @@
 				</button>
 				<div style="clear:both;"></div>
 			</div>
+				</form>
 			<div class="cell small-6 padding-bottom-50">
 				@foreach ($regiones as $region)
 				@if ($tipoAccion == "buscarRegionId")
@@ -69,7 +70,6 @@
 				@endforeach
 			</div>
 		</div>
-	</form>
 </div>
 
 @include('shared.modals')

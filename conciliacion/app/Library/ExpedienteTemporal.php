@@ -268,7 +268,10 @@ class ExpedienteTemporal {
 			$region = DB::table('region')->where('idRegion',$regionControversia->idRegion)->first();
 			array_push($listaregiones,$region->nombre);
 		}	
-		$instance->regiones = $listaregiones;
+		if ($listaregiones != [])
+			$instance->regiones = $listaregiones;
+		else
+			$instance->regiones = null;
 
 		if (!is_null($equipoLegal)){
 			if(!is_null($equipoLegal->idArbitroUnico)){
@@ -327,7 +330,10 @@ class ExpedienteTemporal {
 				$recurso->idLaudoRecursoResultado,$fechaResultado);
 			array_push($listaRecursos,$recursoTemporal);
 		}
-		$instance->recursos = $listaRecursos;
+		if($listaRecursos != [])
+			$instance->recursos = $listaRecursos;
+		else
+			$instance->recursos = null;
 
 		return $instance;
 	}
