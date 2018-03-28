@@ -865,7 +865,69 @@ function buscarRecurso() {
 }
 
 $("#btn-registrar-expediente").click(function() {
-	$('#modalRegistrarConfirmar').foundation('open');
+	var cont = 0;
+
+	if ($('#numero').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#fechaSolicitud').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#estadoExpediente').val()==""){
+		cont = cont + 1;
+	}
+	
+	if ($('#tipoCaso').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#subtipoCaso').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#cuantiaControversiaInicial').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#tipoCuantia').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#escalaPago').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#idDemandante').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#demandante').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#idDemandado').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#demandado').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#tipoDemandante').val()==""){
+		cont = cont + 1;
+	}
+
+	if ($('#tipoDemandado').val()==""){
+		cont = cont + 1;
+	}
+
+	if(cont>0){
+		$('#modalFaltanDatos').foundation('open');
+	} else{
+		$('#modalRegistrarConfirmar').foundation('open');
+	}
 });
 
 $("#btn-registrar").click(function() {
