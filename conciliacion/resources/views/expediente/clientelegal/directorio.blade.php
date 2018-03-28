@@ -156,30 +156,32 @@
 						<div class="site-list-item-div background-color-FFFFFF">
 							@endif
 							<div class="grid-x grid-margin-x">
-								<div class="cell small-3">
+								<div class="cell small-2">
 									<div class="site-list-item-label padding-bottom-3">
 										Nombre/Razon Social
 									</div>
 									<div class="site-list-item-text">
 										@if ($cliente->flgTipoPersona == "J")
-										<div class="site-list-item-text">
-											{{$cliente->getPersonaJuridica()->razonSocial}}
-										</div>
+										{{$cliente->getPersonaJuridica()->razonSocial}}
 										@else
-										<div class="site-list-item-text">
-											{{$cliente->getPersonaNatural()->nombre}} {{$cliente->getPersonaNatural()->apellidoPaterno}} {{$cliente->getPersonaNatural()->apellidoMaterno}}
-										</div>
+										{{$cliente->getPersonaNatural()->nombre}} {{$cliente->getPersonaNatural()->apellidoPaterno}} {{$cliente->getPersonaNatural()->apellidoMaterno}}
 										@endif
 									</div>
 								</div>
-								<div class="cell small-3">
+								<div class="cell small-2">
 									<div class="site-list-item-label padding-bottom-3">
 										Nombre Representante
 									</div>
 									<div class="site-list-item-text">
-										<div class="site-list-item-text">
-											{{$cliente->getRepresentanteLegal()->nombre}} {{$cliente->getRepresentanteLegal()->apellidoPaterno}} {{$cliente->getRepresentanteLegal()->apellidoMaterno}}
-										</div>
+										{{$cliente->getRepresentanteLegal()->nombre}} {{$cliente->getRepresentanteLegal()->apellidoPaterno}} {{$cliente->getRepresentanteLegal()->apellidoMaterno}}
+									</div>
+								</div>
+								<div class="cell small-2">
+									<div class="site-list-item-label padding-bottom-3">
+										Nombre Consorcio
+									</div>
+									<div class="site-list-item-text">
+										{{$cliente->getConsorcioPersona()->nombre}}
 									</div>
 								</div>
 								<div class="cell small-2">
@@ -187,9 +189,7 @@
 										Teléfono
 									</div>
 									<div class="site-list-item-text">
-										<div class="site-list-item-text">
-											{{$cliente->getRepresentanteLegal()->telefono}}
-										</div>
+										{{$cliente->getRepresentanteLegal()->telefono}}
 									</div>
 								</div>
 								<div class="cell small-3">
@@ -197,9 +197,7 @@
 										Correo Electrónico
 									</div>
 									<div class="site-list-item-text">
-										<div class="site-list-item-text">
-											{{$cliente->emailClienteLegal}}
-										</div>
+										{{$cliente->emailClienteLegal}}
 									</div>
 								</div>
 								<div class="cell small-1">

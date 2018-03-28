@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="grid-container">
-    <form method="POST" action="{{ url('expediente/lista', []) }}">
+    <form id="form-registrar-expediente" method="POST" action="{{ url('expediente/lista', []) }}">
 		{{csrf_field() }}
 	<div class="grid-x">
     	<div class="cell small-12">
@@ -16,9 +16,10 @@
                     </div>
                 </div>
                 <div class="right-div">
-					<button type="submit" name="accion" value="editarExpediente {{$id}}" class="site-title-button float-right">
+					<input type="hidden" name="accionRegistrar" value="editarExpediente {{$id}}"/>
+					<div id="btn-registrar-expediente" class="site-title-button float-right">
 						Editar Expediente
-					</button>
+					</div>
                     <div style="clear:both;"></div>
                 </div>
             </div>
@@ -497,9 +498,9 @@
 						</div>
 					</div>
 					<div class="cell small-2">
-						<button type="button" onclick="quitarRegion({{$loop->index + 1}});" class="btn-borrar-factura list-edit-icon-div" >
+						<div idBorrarRegion="{{$loop->index+1}}" class="btn-borrar-region list-edit-icon-div">
 							<img src="{{ asset('images/ico_delete_red.png') }}" />
-						</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -790,9 +791,9 @@
 							</button>
 						</div>
 						<div class="cell small-1">
-							<button type="button" onclick="quitarRecurso({{$loop->index + 1}});" class="btn-borrar-factura list-edit-icon-div">
+							<div idBorrarRecurso="{{$loop->index + 1}}" class="btn-borrar-recurso list-edit-icon-div">
 								<img src="{{ asset('images/ico_delete_red.png') }}" />
-							</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -827,6 +828,8 @@
 	</form>
 </div>
 
+<input type="hidden" id="borrarItem" name="borrarItem" value="" />
+
 @include('shared.modals')
 
 @endsection
@@ -858,14 +861,50 @@ function buscarRecurso() {
 	$('#modalRegistrarMensaje').foundation('open');
 }
 
-function quitarRegion(indexRegion) {
+$("#btn-registrar-expediente").click(function() {
+	$('#modalRegistrarConfirmar').foundation('open');
+});
+
+$("#btn-registrar").click(function() {
+	$('#modalRegistrarConfirmar').foundation('close');
+	$('#modalRegistrarMensaje').foundation('open');
+	var form = document.getElementById("form-registrar-expediente");
+	form.submit()
+	$('#modalRegistrarMensaje').foundation('close');
+});
+
+$(".btn-borrar-region").click(function() {
+    var idBorrarRegion = $(this).attr("idBorrarRegion");
+	$("#borrarItem").val(idBorrarRegion);
+	$('#modalBorrarConfirmar01').foundation('open');
+});
+
+$("#btn-borrar-01").click(function(){
+	$('#modalBorrarConfirmar01').foundation('close');
+	$('#modalBorrarMensaje').foundation('open');
+
+	var indexRegion = $("#borrarItem").val();
+
 	var region = document.getElementById('region ' + indexRegion);
 	region.parentNode.removeChild(region);
 	var outputRegion = document.getElementById('outputRegion ' + indexRegion);
 	outputRegion.parentNode.removeChild(outputRegion);
-};
 
-function quitarRecurso(indexRecurso) {
+	$('#modalBorrarMensaje').foundation('close');
+});
+
+$(".btn-borrar-recurso").click(function() {
+    var idBorrarRecurso = $(this).attr("idBorrarRecurso");
+	$("#borrarItem").val(idBorrarRecurso);
+	$('#modalBorrarConfirmar02').foundation('open');
+});
+
+$("#btn-borrar-02").click(function(){
+	$('#modalBorrarConfirmar02').foundation('close');
+	$('#modalBorrarMensaje').foundation('open');
+
+	var indexRecurso = $("#borrarItem").val();
+
 	var recursoPresentado = document.getElementById('recursoPresentado ' + indexRecurso);
 	recursoPresentado.parentNode.removeChild(recursoPresentado);
 	var fechaPresentacion = document.getElementById('fechaPresentacion ' + indexRecurso);
@@ -876,6 +915,9 @@ function quitarRecurso(indexRecurso) {
 	fechaResultado.parentNode.removeChild(fechaResultado);
 	var outputRecurso = document.getElementById('outputRecurso ' + indexRecurso);
 	outputRecurso.parentNode.removeChild(outputRecurso);
-};
+
+	$('#modalBorrarMensaje').foundation('close');
+});
+
 </script>
 @endsection

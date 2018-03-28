@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="grid-container">
-    <form method="POST" action="{{ url('expediente/lista', []) }}">
+    <form id="form-registrar-expediente" method="POST" action="{{ url('expediente/lista', []) }}">
         {{ csrf_field() }}
 
         <div class="grid-x">
@@ -17,9 +17,10 @@
                         </div>
                     </div>
                     <div class="right-div">
-                        <button type="submit" name="accion" value="nuevoExpediente" class="site-title-button float-right">
+						<input type="hidden" name="accionRegistrar" value="nuevoExpediente"/>
+                        <div id="btn-registrar-expediente" class="site-title-button float-right">
                             Registrar Expediente
-                        </button>
+                        </div>
                         <div style="clear:both;"></div>
                     </div>
                 </div>
@@ -494,9 +495,9 @@
                             </div>
                         </div>
                         <div class="cell small-2">
-							<button type="button" onclick="quitarRegion({{$loop->index + 1}});" class="btn-borrar-factura list-edit-icon-div">
+							<div idBorrarRegion="{{$loop->index+1}}" class="btn-borrar-region list-edit-icon-div">
 								<img src="{{ asset('images/ico_delete_red.png') }}" />
-							</button>
+							</div>
                         </div>
                     </div>
                 </div>
@@ -788,14 +789,14 @@
                             </div>
                         </div>
                         <div class="cell small-1">
-							<button type="submit" formaction="{{ url('expediente/recurso/editar', []) }}" name="accion" value="editarRecurso {{$loop->index}}" class="btn-borrar-factura list-edit-icon-div" onclick="buscarRecurso()">
+							<button type="submit" formaction="{{ url('expediente/recurso/editar', []) }}" name="accion" value="editarRecurso {{$loop->index}}" class="list-edit-icon-div" onclick="buscarRecurso()">
 								<img src="{{ asset('images/ico_pointer_blue.png') }}" />
 							</button>
 						</div>
                         <div class="cell small-1">
-							<button type="button" onclick="quitarRecurso({{$loop->index + 1}});" class="btn-borrar-factura list-edit-icon-div">
+							<div idBorrarRecurso="{{$loop->index + 1}}" class="btn-borrar-recurso list-edit-icon-div">
 								<img src="{{ asset('images/ico_delete_red.png') }}" />
-							</button>
+							</div>
                         </div>
                     </div>
                 </div>
@@ -830,12 +831,16 @@
     </form>
 </div>
 
+<input type="hidden" id="borrarItem" name="borrarItem" value="" />
+
 @include('shared.modals')
 
 @endsection
 
 @section('scripts')
 <script>
+
+var _token = "{{ csrf_token() }}";
 
 function buscarSecretario() {
 	$('#modalRegistrarMensaje').foundation('open');
@@ -861,14 +866,50 @@ function buscarRecurso() {
 	$('#modalRegistrarMensaje').foundation('open');
 }
 
-function quitarRegion(indexRegion) {
+$("#btn-registrar-expediente").click(function() {
+	$('#modalRegistrarConfirmar').foundation('open');
+});
+
+$("#btn-registrar").click(function() {
+	$('#modalRegistrarConfirmar').foundation('close');
+	$('#modalRegistrarMensaje').foundation('open');
+	var form = document.getElementById("form-registrar-expediente");
+	form.submit()
+	$('#modalRegistrarMensaje').foundation('close');
+});
+
+$(".btn-borrar-region").click(function() {
+    var idBorrarRegion = $(this).attr("idBorrarRegion");
+	$("#borrarItem").val(idBorrarRegion);
+	$('#modalBorrarConfirmar01').foundation('open');
+});
+
+$("#btn-borrar-01").click(function(){
+	$('#modalBorrarConfirmar01').foundation('close');
+	$('#modalBorrarMensaje').foundation('open');
+
+	var indexRegion = $("#borrarItem").val();
+
 	var region = document.getElementById('region ' + indexRegion);
 	region.parentNode.removeChild(region);
 	var outputRegion = document.getElementById('outputRegion ' + indexRegion);
 	outputRegion.parentNode.removeChild(outputRegion);
-};
 
-function quitarRecurso(indexRecurso) {
+	$('#modalBorrarMensaje').foundation('close');
+});
+
+$(".btn-borrar-recurso").click(function() {
+    var idBorrarRecurso = $(this).attr("idBorrarRecurso");
+	$("#borrarItem").val(idBorrarRecurso);
+	$('#modalBorrarConfirmar02').foundation('open');
+});
+
+$("#btn-borrar-02").click(function(){
+	$('#modalBorrarConfirmar02').foundation('close');
+	$('#modalBorrarMensaje').foundation('open');
+
+	var indexRecurso = $("#borrarItem").val();
+
 	var recursoPresentado = document.getElementById('recursoPresentado ' + indexRecurso);
 	recursoPresentado.parentNode.removeChild(recursoPresentado);
 	var fechaPresentacion = document.getElementById('fechaPresentacion ' + indexRecurso);
@@ -879,6 +920,9 @@ function quitarRecurso(indexRecurso) {
 	fechaResultado.parentNode.removeChild(fechaResultado);
 	var outputRecurso = document.getElementById('outputRecurso ' + indexRecurso);
 	outputRecurso.parentNode.removeChild(outputRecurso);
-};
+
+	$('#modalBorrarMensaje').foundation('close');
+});
+
 </script>
 @endsection

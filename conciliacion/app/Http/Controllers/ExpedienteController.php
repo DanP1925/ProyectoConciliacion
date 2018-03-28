@@ -212,13 +212,13 @@ class ExpedienteController extends Controller
 			'fechaResultado' => 'nullable',
         ]);
 
-		if ($request->input('accion') == 'nuevoExpediente'){
+		if ($request->input('accionRegistrar') == 'nuevoExpediente'){
 			$idExpediente = Expediente::insertarExpediente($request);
 			RegionControversia::insertarRegiones($idExpediente, $request);
 			ExpedienteEquipoLegal::insertarEquipo($idExpediente, $request);
 			LaudoRecursoPresentado::insertarRecursos($idExpediente, $request);
 		} else {
-			$idExpediente = explode(" ",$request->input('accion'))[1];
+			$idExpediente = explode(" ",$request->input('accionRegistrar'))[1];
 			Expediente::actualizarExpediente($idExpediente, $request);
 			RegionControversia::actualizarRegiones($idExpediente, $request);
 			ExpedienteEquipoLegal::actualizarEquipo($idExpediente, $request);

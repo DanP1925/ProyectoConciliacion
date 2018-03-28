@@ -51,6 +51,10 @@ class ExpedienteClienteLegal extends Model {
 		return DB::table('usuario_legal')->where('idUsuarioLegal',$this->idRepresentanteLegal)->first();
 	}
 
+	public function getConsorcioPersona() {
+		return DB::table('consorcio_persona')->where('idConsorcioPersona',$this->idConsorcioPersona)->first();
+	}
+
 	public static function getListaIdUsandoIdPersonaJuridica($listaPersonasJuridicas){
 		$clientesJuridicos = DB::table('expediente_cliente_legal')->whereIn('idPersonaJuridica',$listaPersonasJuridicas)->get();
 
