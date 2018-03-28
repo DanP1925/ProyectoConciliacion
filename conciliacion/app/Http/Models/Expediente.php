@@ -200,7 +200,7 @@ class Expediente extends Model {
 			$resultado = Expediente::buscarMiembroDemandado($miembroDemandado, $resultado);
 
 
-		return $resultado->get();
+		return $resultado->paginate(5);
 	}
 
 	private static function buscarDemandante($demandante,$resultado){

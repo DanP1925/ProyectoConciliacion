@@ -555,7 +555,7 @@ class ExpedienteTemporal {
 			$personaJuridica = $demandante->getPersonaJuridica();
 			$this->demandante = $personaJuridica->razonSocial;
 
-			$consorcio = ConsorcioPersonaDetalle::where('idPersonaJuridica',$personaJuridica->idPersonaJuridica)->first();
+			$consorcio = ConsorcioPersonaDetalle::where('idConsorcioPersona',$demandante->idConsorcioPersona)->first();
 
 			if(!is_null($consorcio)){
 				$this->consorcioDemandante = $consorcio->getConsorcioPersona()->nombre;
@@ -578,7 +578,7 @@ class ExpedienteTemporal {
 			$this->demandante .= ' '.$personaNatural->apellidoPaterno;
 			$this->demandante .= ' '.$personaNatural->apellidoMaterno;
 
-			$consorcio = ConsorcioPersonaDetalle::where('idPersonaNatural',$personaNatural->idPersonaNatural)->first();
+			$consorcio = ConsorcioPersonaDetalle::where('idConsorcioPersona',$demandante->idConsorcioPersona)->first();
 
 			if (!is_null($consorcio)){
 				$this->consorcioDemandante = $consorcio->getConsorcioPersona()->nombre;
@@ -611,7 +611,7 @@ class ExpedienteTemporal {
 			$personaJuridica = $demandado->getPersonaJuridica();
 			$this->demandado= $personaJuridica->razonSocial;
 
-			$consorcio = ConsorcioPersonaDetalle::where('idPersonaJuridica',$personaJuridica->idPersonaJuridica)->first();
+			$consorcio = ConsorcioPersonaDetalle::where('idConsorcioPersona',$demandado->idConsorcioPersona)->first();
 			if(!is_null($consorcio)){
 				$this->consorcioDemandado = $consorcio->getConsorcioPersona()->nombre;
 
@@ -633,7 +633,7 @@ class ExpedienteTemporal {
 			$this->demandado .= ' '.$personaNatural->apellidoPaterno;
 			$this->demandado .= ' '.$personaNatural->apellidoMaterno;
 
-			$consorcio = ConsorcioPersonaDetalle::where('idPersonaNatural',$personaNatural->idPersonaNatural)->first();
+			$consorcio = ConsorcioPersonaDetalle::where('idConsorcioPersona',$demandado->idConsorcioPersona)->first();
 
 			if (!is_null($consorcio)){
 				$this->consorcioDemandado = $consorcio->getConsorcioPersona()->nombre;

@@ -209,7 +209,16 @@
 						</div>
 				</form>
 				@endforeach
+				</div>
+		<div class="small-12 cell">
+			<div class="site-section-padding">
+				<div class="div-pagination">
+					<div class="pagination">
+						{{$clientes->links() }}
 					</div>
+				</div>
+			</div>
+		</div>
 			</div>
 		</div>
 	</div>

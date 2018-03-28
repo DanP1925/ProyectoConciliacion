@@ -147,11 +147,26 @@ class ExpedienteClienteLegal extends Model {
 			else
 				$resultadoNatural = $resultadoNatural->whereNotIn('idPersonaNatural',$listaConsorciosNaturales);
 
+
+
+			dd($array4);
 		}	
 
-		$resultado = $resultadoJuridico->union($resultadoNatural);
+		$listaJuridica = [];
+		foreach($resultadoJuridico->get()->all() as $resultadoJur){
+			array_push($listaJuridica, $resultadoJur->idExpedienteClienteLegal);
+		}
+
+		$listaNatural = [];
+		foreach($resultadoNatural->get()->all() as $resultadoNat){
+			array_push($listaNatural, $resultadoNat->idExpedienteClienteLegal);
+		}
+
+		$lista = array_merge($listaJuridica ,$listaNatural);
+
+		$resultado = ExpedienteClienteLegal::whereIn('idExpedienteClienteLegal',$lista);
 		
-        return $resultado->get();
+        return $resultado->paginate(5);
     }
 
 }
