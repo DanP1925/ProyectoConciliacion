@@ -26,9 +26,9 @@
 				<div style="clear:both;"></div>
 			</div>
 			@if ($tipoAccion == "agregarRecursoId")
-			<form method="POST" action="{{ url('expediente/info', ['id'=>$id]) }}">
+			<form id="form-registrar-recurso" method="POST" action="{{ url('expediente/info', ['id'=>$id]) }}">
 			@else
-			<form method="POST" action="{{ url('expediente/nuevo', []) }}">
+			<form id="form-registrar-recurso" method="POST" action="{{ url('expediente/nuevo', []) }}">
 			@endif
 			{{ csrf_field() }}
 				<div class="cell small-12 padding-bottom-20">
@@ -98,7 +98,8 @@
 					</div>
 				</div>
 				<div class="cell small-12 padding-bottom-50">
-					<button type="submit" name="accion" value="{{$accion}}" class="site-form-button float-left" onclick="retornarDatos()">
+					<input type="hidden" id="accion" name="accion" value="{{$accion}}"/>
+					<button id="btn-registrar-recurso" type="button" class="site-form-button float-left" onclick="retornarDatos()">
 						registrar
 					</button>
 					<div style="clear:both;"></div>
@@ -116,8 +117,30 @@
 <script>
 
 function retornarDatos() {
-	$('#modalRegistrarMensaje').foundation('open');
+	var cont = 0;
+
+	if($('#recursoPresentado').val()==""){
+		cont = cont + 1;
+	}
+
+	if($('#fechaPresentacion').val()==""){
+		cont = cont + 1;
+	}
+
+	if(cont>0){
+		$('#modalFaltanDatos').foundation('open');
+	} else{
+		$('#modalRegistrarConfirmar').foundation('open');
+	}
 }
+
+$("#btn-registrar").click(function() {
+	$('#modalRegistrarConfirmar').foundation('close');
+	$('#modalRegistrarMensaje').foundation('open');
+	var form = document.getElementById("form-registrar-recurso");
+	form.submit()
+	$('#modalRegistrarMensaje').foundation('close');
+});
 
 </script>
 @endsection
