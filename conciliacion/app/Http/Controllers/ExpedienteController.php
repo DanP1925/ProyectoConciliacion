@@ -18,6 +18,7 @@ use App\Http\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Library\ExpedienteTemporal;
+use App\Library\RecursoTemporal;
 use App\Http\Models\Expediente;
 use App\Http\Models\RegionControversia;
 use App\Http\Models\ExpedienteEquipoLegal;
@@ -49,6 +50,7 @@ class ExpedienteController extends Controller
         ExpedienteTemporal::quitarDeSesion($request);
 
         if (!is_null($request->input('accion'))){
+
             $accion = explode(" ",$request->input('accion'));
             $tipoAccion = $accion[0];
 			if ($tipoAccion != "agregarRecurso")
@@ -82,16 +84,9 @@ class ExpedienteController extends Controller
 		$favorLaudo = DB::table('laudo_a_favor')->get()->all();
 
         return view('expediente.nuevo',
-            compact('estadosExpediente',
-                    'tipos',
-                    'subtipos',
-                    'tiposCuantia',
-                    'escalasDePago',
-					'expedienteTemporal',
-					'origenesArbitraje',
-					'montosContrato',
-					'resultadosLaudo',
-					'ejecucionesLaudo',
+            compact('estadosExpediente', 'tipos', 'subtipos', 'tiposCuantia',
+                    'escalasDePago', 'expedienteTemporal', 'origenesArbitraje',
+					'montosContrato', 'resultadosLaudo', 'ejecucionesLaudo',
 					'favorLaudo'));
     }
 
@@ -212,13 +207,13 @@ class ExpedienteController extends Controller
 			'fechaResultado' => 'nullable',
         ]);
 
-		if ($request->input('accion') == 'nuevoExpediente'){
+		if ($request->input('accionRegistrar') == 'nuevoExpediente'){
 			$idExpediente = Expediente::insertarExpediente($request);
 			RegionControversia::insertarRegiones($idExpediente, $request);
 			ExpedienteEquipoLegal::insertarEquipo($idExpediente, $request);
 			LaudoRecursoPresentado::insertarRecursos($idExpediente, $request);
 		} else {
-			$idExpediente = explode(" ",$request->input('accion'))[1];
+			$idExpediente = explode(" ",$request->input('accionRegistrar'))[1];
 			Expediente::actualizarExpediente($idExpediente, $request);
 			RegionControversia::actualizarRegiones($idExpediente, $request);
 			ExpedienteEquipoLegal::actualizarEquipo($idExpediente, $request);
@@ -228,30 +223,11 @@ class ExpedienteController extends Controller
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
         $tipos = DB::table('expediente_tipo_caso')->get()->all();
         $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
-		$expedientes = Expediente::get()->all();
+		$expedientes = Expediente::paginate(5);
 
 		return view('expediente.lista', compact('estadosExpediente',
 					'tipos', 'subtipos', 'expedientes' ));
     }
-
-	public function buscarCliente(Request $request)
-	{
-		$accion = $request->input('accion');
-		$tipoAccion = (explode(" ",$accion))[0];
-		$id = 0;
-		if ($tipoAccion == "buscarDemandanteId" || $tipoAccion == "buscarDemandadoId")
-			$id = (explode(" ",$accion))[1];
-
-		$clientes = ExpedienteClienteLegal::buscarCliente($request); 
-		ExpedienteTemporal::guardarEnSesion($request);
-
-		return view('expediente.clientelegal.directorio',
-			compact('clientes',
-			'accion',
-			'tipoAccion',
-			'id'));
-	}
-
 
     public function buscarPersonal(Request $request)
     {
@@ -269,14 +245,25 @@ class ExpedienteController extends Controller
         ExpedienteTemporal::guardarEnSesion($request);
 
         return view('expediente.usuariolegal.directorio',
-            compact('profesiones',
-                    'paises',
-                    'perfiles',
-                    'secretarios',
-					'accion',
-					'tipoAccion',
-					'id'));
+            compact('profesiones', 'paises', 'perfiles', 'secretarios',
+					'accion', 'tipoAccion', 'id'));
     }
+
+	public function buscarCliente(Request $request)
+	{
+		$accion = $request->input('accion');
+		$tipoAccion = (explode(" ",$accion))[0];
+		$id = 0;
+		if ($tipoAccion == "buscarDemandanteId" || $tipoAccion == "buscarDemandadoId")
+			$id = (explode(" ",$accion))[1];
+
+		$clientes = ExpedienteClienteLegal::buscarCliente($request); 
+
+		ExpedienteTemporal::guardarEnSesion($request);
+
+		return view('expediente.clientelegal.directorio',
+			compact('clientes', 'accion', 'tipoAccion', 'id'));
+	}
 
 	public function buscarRegion(Request $request)
 	{
@@ -290,10 +277,7 @@ class ExpedienteController extends Controller
         ExpedienteTemporal::guardarEnSesion($request);
 
 		return view('expediente.region.directorio',
-			compact('regiones',
-					'accion',
-					'tipoAccion',
-					'id'));
+			compact('regiones', 'accion', 'tipoAccion', 'id'));
 	}
 
     public function nuevoRecurso(Request $request)
@@ -310,11 +294,8 @@ class ExpedienteController extends Controller
         ExpedienteTemporal::guardarEnSesion($request);
 
 		return view('expediente.recurso.nuevo',
-			compact('recursosPresentados',
-					'resultadoRecursos',
-					'accion',
-					'tipoAccion',
-					'id'));
+			compact('recursosPresentados', 'resultadoRecursos', 'accion',
+					'tipoAccion', 'id'));
     }
 
     public function editarRecurso(Request $request)
@@ -342,11 +323,7 @@ class ExpedienteController extends Controller
         $accion = $request->input('accion');
         ExpedienteTemporal::guardarEnSesion($request);
 		return view('expediente.recurso.editar',
-			compact('recursosPresentados',
-					'resultadoRecursos',
-					'accion',
-					'nuevoRecurso',
-					'tipoAccion',
-					'id'));
+			compact('recursosPresentados', 'resultadoRecursos', 'accion',
+					'nuevoRecurso', 'tipoAccion', 'id'));
     }
 }

@@ -44,4 +44,28 @@ class ConsorcioPersonaDetalle extends Model {
 		return $resultado;
 	}	
 
+	public static function getListaIdConsorcioUsandoPersonaJuridica($listaId){
+		$consorcios = DB::table('consorcio_persona_detalle')->whereIn('idPersonaJuridica',$listaId);
+		$lista = [];
+		foreach($consorcios->get()->all() as $consorcio)
+			array_push($lista,$consorcio->idConsorcioPersona);
+		return $lista;
+	}
+
+	public static function getListaIdConsorcioUsandoConsorcioPersona($listaId){
+		$consorcios = DB::table('consorcio_persona_detalle')->whereIn('idPersonaJuridica',$listaId);
+		$lista = [];
+		foreach($consorcios->get()->all() as $consorcio)
+			array_push($lista,$consorcio->idPersonaJuridica);
+		return $lista;
+	}
+
+	public static function getListaIdConsorcioUsandoPersonaNatural($listaId){
+		$consorcios = DB::table('consorcio_persona_detalle')->whereIn('idPersonaNatural',$listaId);
+		$lista = [];
+		foreach($consorcios->get()->all() as $consorcio)
+			array_push($lista,$consorcio->idConsorcioPersona);
+		return $lista;
+	}
+
 }

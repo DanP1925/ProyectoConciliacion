@@ -26,7 +26,7 @@ class Region extends Model {
 
 		$resultado = Region::where('nombre','LIKE', '%'.$nombre.'%');
 
-		return $resultado->get();
+		return $resultado->paginate(5);
 	}
 
 }

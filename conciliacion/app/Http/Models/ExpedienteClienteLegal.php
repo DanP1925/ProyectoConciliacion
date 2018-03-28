@@ -51,6 +51,10 @@ class ExpedienteClienteLegal extends Model {
 		return DB::table('usuario_legal')->where('idUsuarioLegal',$this->idRepresentanteLegal)->first();
 	}
 
+	public function getConsorcioPersona() {
+		return DB::table('consorcio_persona')->where('idConsorcioPersona',$this->idConsorcioPersona)->first();
+	}
+
 	public static function getListaIdUsandoIdPersonaJuridica($listaPersonasJuridicas){
 		$clientesJuridicos = DB::table('expediente_cliente_legal')->whereIn('idPersonaJuridica',$listaPersonasJuridicas)->get();
 
@@ -143,11 +147,26 @@ class ExpedienteClienteLegal extends Model {
 			else
 				$resultadoNatural = $resultadoNatural->whereNotIn('idPersonaNatural',$listaConsorciosNaturales);
 
+
+
+			dd($array4);
 		}	
 
-		$resultado = $resultadoJuridico->union($resultadoNatural);
+		$listaJuridica = [];
+		foreach($resultadoJuridico->get()->all() as $resultadoJur){
+			array_push($listaJuridica, $resultadoJur->idExpedienteClienteLegal);
+		}
+
+		$listaNatural = [];
+		foreach($resultadoNatural->get()->all() as $resultadoNat){
+			array_push($listaNatural, $resultadoNat->idExpedienteClienteLegal);
+		}
+
+		$lista = array_merge($listaJuridica ,$listaNatural);
+
+		$resultado = ExpedienteClienteLegal::whereIn('idExpedienteClienteLegal',$lista);
 		
-        return $resultado->get();
+        return $resultado->paginate(5);
     }
 
 }

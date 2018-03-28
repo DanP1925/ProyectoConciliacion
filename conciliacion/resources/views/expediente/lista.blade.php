@@ -27,7 +27,7 @@
 
 		@include('expediente.buscar')
         
-		<div class="cell small-12 padding-bottom-50">
+		<div class="cell small-12 padding-bottom-20">
 			@foreach ($expedientes as $expediente)
 				<a href="{{ url('expediente/info',['id'=>$expediente->idExpediente])}}">
 				@if ($loop->index % 2 == 0)
@@ -40,6 +40,16 @@
 				</a>
 			@endforeach
         </div>
+		
+		<div class="small-12 cell">
+			<div class="site-section-padding">
+				<div class="div-pagination">
+					<div class="pagination">
+						{{$expedientes->links() }}
+					</div>
+				</div>
+			</div>
+		</div>
         
     </div>
 </div>
