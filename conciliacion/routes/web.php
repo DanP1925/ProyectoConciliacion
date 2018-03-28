@@ -133,8 +133,8 @@ Route::middleware(['auth'])->group(function () {
 
 	// >> Expediente Directorios Auxiliares
     Route::get('/expediente/usuariolegal/directorio','ExpedienteController@buscarPersonal');
-    Route::post('/expediente/clientelegal/directorio','ExpedienteController@buscarCliente');
-    Route::post('/expediente/region/directorio','ExpedienteController@buscarRegion');
+    Route::get('/expediente/clientelegal/directorio','ExpedienteController@buscarCliente');
+    Route::get('/expediente/region/directorio','ExpedienteController@buscarRegion');
 
 	// >> Expediente Recursos Laudado
     Route::post('/expediente/recurso/nuevo','ExpedienteController@nuevoRecurso');

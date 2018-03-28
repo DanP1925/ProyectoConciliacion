@@ -12,14 +12,28 @@
 						DIRECTORIO
 					</div>
 				</div>
-			</div>
-			@include('expediente.usuariolegal.buscar')
-			<div class="cell small-12 padding-bottom-50">
-				@foreach ($secretarios as $secretario)
-					@include('expediente.usuariolegal.elemento')
-				@endforeach
+				<div class="right-div">
+					@if ($tipoAccion == "buscarSecretarioId" || $tipoAccion == "buscarLiderId")
+					<form method="GET" action="{{ url('expediente/info', ['id'=>$id]) }}">
+					@else
+					<form method="GET" action="{{ url('expediente/nuevo', []) }}">
+					@endif
+						<button class="site-title-button float-right">
+							Regresar
+						</button>
+					</form>
+					<div style="clear:both;"></div>
+				</div>
 			</div>
         </div>
+
+		@include('expediente.usuariolegal.buscar')
+
+		<div class="cell small-12 padding-bottom-50">
+			@foreach ($secretarios as $secretario)
+				@include('expediente.usuariolegal.elemento')
+			@endforeach
+		</div>
 
 		<div class="small-12 cell">
 			<div class="site-section-padding">

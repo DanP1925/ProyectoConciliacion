@@ -18,6 +18,7 @@ use App\Http\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Library\ExpedienteTemporal;
+use App\Library\RecursoTemporal;
 use App\Http\Models\Expediente;
 use App\Http\Models\RegionControversia;
 use App\Http\Models\ExpedienteEquipoLegal;
@@ -222,7 +223,7 @@ class ExpedienteController extends Controller
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
         $tipos = DB::table('expediente_tipo_caso')->get()->all();
         $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
-		$expedientes = Expediente::get()->all();
+		$expedientes = Expediente::paginate(5);
 
 		return view('expediente.lista', compact('estadosExpediente',
 					'tipos', 'subtipos', 'expedientes' ));

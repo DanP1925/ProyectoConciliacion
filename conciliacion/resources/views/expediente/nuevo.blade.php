@@ -225,7 +225,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarLider" class="site-label-button float-right" onclick="buscarSecretarioLider()">
+                                <button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarLider" class="site-label-button float-right" onclick="buscarSecretarioLider()">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -259,7 +259,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="{{ url('expediente/clientelegal/directorio', []) }}" name="accion" value="buscarDemandante" class="site-label-button float-right" onclick="buscarDemandante()">
+                                <button type="submit" formmethod="GET" formaction="{{ url('expediente/clientelegal/directorio', []) }}" name="accion" value="buscarDemandante" class="site-label-button float-right" onclick="buscarDemandante()">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -280,7 +280,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="{{ url('expediente/clientelegal/directorio', []) }}" name="accion" value="buscarDemandado" class="site-label-button float-right" onclick="buscarDemandado()">
+                                <button type="submit" formmethod="GET" formaction="{{ url('expediente/clientelegal/directorio', []) }}" name="accion" value="buscarDemandado" class="site-label-button float-right" onclick="buscarDemandado()">
                                     buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -467,7 +467,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-                                <button type="submit" formaction="{{ url('expediente/region/directorio', []) }}" name="accion" value="buscarRegion" class="site-label-button float-right" onclick="buscarRegion()">
+                                <button type="submit" formmethod="GET" formaction="{{ url('expediente/region/directorio', []) }}" name="accion" value="buscarRegion" class="site-label-button float-right" onclick="buscarRegion()">
                                     AGREGAR REGIONES
                                 </button>
                                 <div style="clear:both;"></div>
@@ -840,10 +840,8 @@
 @section('scripts')
 <script>
 
-var _token = "{{ csrf_token() }}";
-
 function buscarSecretario() {
-	//$('#modalRegistrarMensaje').foundation('open');
+	$('#modalRegistrarMensaje').foundation('open');
 }
 
 function buscarSecretarioLider() {

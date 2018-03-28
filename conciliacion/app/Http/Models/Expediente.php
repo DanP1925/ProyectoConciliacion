@@ -128,7 +128,7 @@ class Expediente extends Model {
 			'idCuantiaTipo' => $request->input('tipoCuantia'),
 			'idCuantiaEscalaPago' => $request->input('escalaPago'),
 			'idArbitrajeOrigen' => $request->input('origenArbitraje'),
-			'idArbitrajeMontoContrato' => $request->input('montoContrato'),
+			'idArbitrajeMontoContrato' => (float) $request->input('montoContrato'),
 			'idLaudoResultado' => $request->input('resultadoLaudo'),
 			'idLaudoEjecucion' => $request->input('ejecucionLaudo'),
 			'idLaudoAFavor' => $request->input('laudadoAFavor'),
@@ -137,11 +137,11 @@ class Expediente extends Model {
 			'numero' => $request->input('numero'),
 			'numeroAsociado' => $request->input('numeroAsociado'),
 			'fechaSolicitud' => $request->input('fechaSolicitud'),
-			'cuantiaMontoInicial' => $request->input('cuantiaControversiaInicial'),
-			'cuantiaMontoFinal' => $request->input('cuantiaControversiaFinal'),
+			'cuantiaMontoInicial' => (float) $request->input('cuantiaControversiaInicial'),
+			'cuantiaMontoFinal' => (float) $request->input('cuantiaControversiaFinal'),
 			'arbitrajeAnhoContrato' => $request->input('anhoContrato'),
 			'laudofecha' => $request->input('fechaLaudo'),
-			'laudoMontoResultado' => $request->input('resultadoEnSoles')]
+			'laudoMontoResultado' => (float) $request->input('resultadoEnSoles')]
 		);
 	}
 
