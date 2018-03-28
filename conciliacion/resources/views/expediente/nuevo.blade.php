@@ -204,7 +204,7 @@
                                 </div>
                             </div>
                             <div class="right-div">
-								<button type="submit" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarSecretario" class="site-label-button float-right" onclick="buscarSecretario()">
+								<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarSecretario" class="site-label-button float-right" onclick="buscarSecretario()">
 									buscar
                                 </button>
                                 <div style="clear:both;"></div>
@@ -843,7 +843,7 @@
 var _token = "{{ csrf_token() }}";
 
 function buscarSecretario() {
-	$('#modalRegistrarMensaje').foundation('open');
+	//$('#modalRegistrarMensaje').foundation('open');
 }
 
 function buscarSecretarioLider() {

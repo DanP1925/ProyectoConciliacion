@@ -230,13 +230,6 @@ class ExpedienteController extends Controller
 
     public function buscarPersonal(Request $request)
     {
-		if ($request->input("accionRegistrar")=="nuevoExpediente")
-			$request->request->add(["accion",$request->input("buscarSecretario")]);	
-		else{
-			$idExpediente = explode(" ",$request->input("accionRegistrar"))[1];
-			$request->request->add(["accion",$request->input("buscarSecretarioId"." ".$idExpediente)]); 
-		}
-
         $profesiones = DB::table('usuario_legal_profesion')->get()->all();
         $paises = DB::table('usuario_legal_pais')->get()->all();
         $perfiles = DB::table('usuario_legal_tipo')->get()->all();

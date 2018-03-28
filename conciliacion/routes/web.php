@@ -132,7 +132,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/expediente/info/{id}','ExpedienteController@infoActualizado');
 
 	// >> Expediente Directorios Auxiliares
-    Route::post('/expediente/usuariolegal/directorio','ExpedienteController@buscarPersonal');
+    Route::get('/expediente/usuariolegal/directorio','ExpedienteController@buscarPersonal');
     Route::post('/expediente/clientelegal/directorio','ExpedienteController@buscarCliente');
     Route::post('/expediente/region/directorio','ExpedienteController@buscarRegion');
 

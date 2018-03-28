@@ -117,7 +117,7 @@ class UsuarioLegal extends Model {
         $correo = $request->input('correo');
         $resultado = $resultado->where('email','LIKE', '%'.$correo.'%'); 
 
-        return $resultado->get();
+        return $resultado->paginate(5);
     }
 
 	public static function getListaIdUsandoNombre($nombre){
