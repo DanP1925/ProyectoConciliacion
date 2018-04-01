@@ -90,54 +90,37 @@ class ExpedienteController extends Controller
 					'favorLaudo'));
     }
 
-    public function info($id)
-    {
-        $estadosExpediente = DB::table('expediente_estado')->get()->all();
-        $tipos = DB::table('expediente_tipo_caso')->get()->all();
-        $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
-        $tiposCuantia = DB::table('cuantia_tipo')->get()->all();
-        $escalasDePago  = DB::table('cuantia_escala_pago')->get()->all();
-		$origenesArbitraje = DB::table('arbitraje_origen')->get()->all();
-		$montosContrato = DB::table('arbitraje_monto_contrato')->get()->all();
-		$resultadosLaudo = DB::table('laudo_resultado')->get()->all();
-        $expedienteTemporal = ExpedienteTemporal::withId($id);
-		$ejecucionesLaudo = DB::table('laudo_ejecucion')->get()->all();
-		$favorLaudo = DB::table('laudo_a_favor')->get()->all();
-		return view('expediente.info',
-			compact('expedienteTemporal',
-					'estadosExpediente','tipos','subtipos','tiposCuantia',
-					'escalasDePago','origenesArbitraje','montosContrato',
-					'resultadosLaudo','ejecucionesLaudo','favorLaudo', 'id'));
-    }
-
-	public function infoActualizado(Request $request, $id)
+	public function info(Request $request, $id)
 	{
-        $expedienteTemporal = ExpedienteTemporal::withRequest($request);
-        ExpedienteTemporal::quitarDeSesion($request);
+		if (count($request->request) == 0)
+			$expedienteTemporal = ExpedienteTemporal::withId($id);
+		else{
+			$expedienteTemporal = ExpedienteTemporal::withRequest($request);
+			if (!is_null($request->input('accion'))){
+				$accion = explode(" ",$request->input('accion'));
+				$tipoAccion = $accion[0];
 
-        if (!is_null($request->input('accion'))){
-            $accion = explode(" ",$request->input('accion'));
-            $tipoAccion = $accion[0];
+				if ($tipoAccion != "agregarRecursoId")
+					$resultadoAccion = $accion[2];
 
-			if ($tipoAccion != "agregarRecursoId")
-				$resultadoAccion = $accion[2];
+				if ($tipoAccion == "buscarSecretarioId")
+					$expedienteTemporal->agregarSecretario($resultadoAccion);
+				else if ($tipoAccion == "buscarLiderId")
+					$expedienteTemporal->agregarSecretarioLider($resultadoAccion);
+				else if ($tipoAccion == "buscarDemandanteId")
+					$expedienteTemporal->agregarDemandante($resultadoAccion);
+				else if ($tipoAccion == "buscarDemandadoId")
+					$expedienteTemporal->agregarDemandado($resultadoAccion);
+				else if ($tipoAccion == "buscarRegionId")
+					$expedienteTemporal->agregarRegion($resultadoAccion);
+				else if ($tipoAccion == "agregarRecursoId")
+					$expedienteTemporal->agregarRecurso($request);
+				else if ($tipoAccion == "editarRecursoId")
+					$expedienteTemporal->editarRecurso($resultadoAccion, $request);
 
-            if ($tipoAccion == "buscarSecretarioId")
-                $expedienteTemporal->agregarSecretario($resultadoAccion);
-            else if ($tipoAccion == "buscarLiderId")
-                $expedienteTemporal->agregarSecretarioLider($resultadoAccion);
-			else if ($tipoAccion == "buscarDemandanteId")
-				$expedienteTemporal->agregarDemandante($resultadoAccion);
-			else if ($tipoAccion == "buscarDemandadoId")
-				$expedienteTemporal->agregarDemandado($resultadoAccion);
-			else if ($tipoAccion == "buscarRegionId")
-				$expedienteTemporal->agregarRegion($resultadoAccion);
-			else if ($tipoAccion == "agregarRecursoId")
-				$expedienteTemporal->agregarRecurso($request);
-			else if ($tipoAccion == "editarRecursoId")
-				$expedienteTemporal->editarRecurso($resultadoAccion, $request);
-			
+			}
 		}
+        ExpedienteTemporal::quitarDeSesion($request);
 
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
         $tipos = DB::table('expediente_tipo_caso')->get()->all();
@@ -213,7 +196,8 @@ class ExpedienteController extends Controller
 			ExpedienteEquipoLegal::insertarEquipo($idExpediente, $request);
 			LaudoRecursoPresentado::insertarRecursos($idExpediente, $request);
 		} else {
-			$idExpediente = explode(" ",$request->input('accionRegistrar'))[1];
+			$tempAccionRegistrar = explode(" ",$request->input('accionRegistrar'));
+			$idExpediente = $tempAccionRegistrar[1];
 			Expediente::actualizarExpediente($idExpediente, $request);
 			RegionControversia::actualizarRegiones($idExpediente, $request);
 			ExpedienteEquipoLegal::actualizarEquipo($idExpediente, $request);
@@ -236,10 +220,11 @@ class ExpedienteController extends Controller
         $perfiles = DB::table('usuario_legal_tipo')->get()->all();
 
         $accion = $request->input('accion');
-		$tipoAccion = (explode(" ",$accion))[0];
+		$tempAccion = explode(" ",$accion);
+		$tipoAccion = $tempAccion[0];
 		$id = 0;
 		if ($tipoAccion == "buscarSecretarioId" || $tipoAccion == "buscarLiderId")
-			$id = (explode(" ",$accion))[1];
+			$id = $tempAccion[1];
 		
         $secretarios = UsuarioLegal::buscarPersonal($request);
         ExpedienteTemporal::guardarEnSesion($request);
@@ -252,10 +237,11 @@ class ExpedienteController extends Controller
 	public function buscarCliente(Request $request)
 	{
 		$accion = $request->input('accion');
-		$tipoAccion = (explode(" ",$accion))[0];
+		$tempAccion = explode(" ",$accion);
+		$tipoAccion = $tempAccion[0];
 		$id = 0;
 		if ($tipoAccion == "buscarDemandanteId" || $tipoAccion == "buscarDemandadoId")
-			$id = (explode(" ",$accion))[1];
+			$id = $tempAccion[1];
 
 		$clientes = ExpedienteClienteLegal::buscarCliente($request); 
 
@@ -268,10 +254,11 @@ class ExpedienteController extends Controller
 	public function buscarRegion(Request $request)
 	{
         $accion = $request->input('accion');
-		$tipoAccion = (explode(" ",$accion))[0];
+		$tempAccion = explode(" ",$accion);
+		$tipoAccion = $tempAccion[0];
 		$id = 0;
 		if ($tipoAccion == "buscarRegionId")
-			$id = (explode(" ",$accion))[1];
+			$id = $tempAccion[1];
 
         $regiones = Region::buscarRegion($request); 
         ExpedienteTemporal::guardarEnSesion($request);
@@ -286,10 +273,11 @@ class ExpedienteController extends Controller
 		$resultadoRecursos = DB::table('laudo_recurso_resultado')->get()->all();
 
         $accion = $request->input('accion');
-		$tipoAccion = (explode(" ",$accion))[0];
+		$tempAccion = explode(" ",$accion);
+		$tipoAccion = $tempAccion[0];
 		$id = 0;
 		if ($tipoAccion == "agregarRecursoId")
-			$id = (explode(" ",$accion))[1];
+			$id = $tempAccion[1];
 
         ExpedienteTemporal::guardarEnSesion($request);
 

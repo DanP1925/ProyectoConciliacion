@@ -129,7 +129,7 @@ Route::middleware(['auth'])->group(function () {
 	// >> Expediente Buscar
     Route::get('/expediente/lista','ExpedienteController@lista');
 	Route::get('/expediente/info/{id}', 'ExpedienteController@info');
-    Route::post('/expediente/info/{id}','ExpedienteController@infoActualizado');
+    Route::post('/expediente/info/{id}','ExpedienteController@info');
 
 	// >> Expediente Directorios Auxiliares
     Route::get('/expediente/usuariolegal/directorio','ExpedienteController@buscarPersonal');

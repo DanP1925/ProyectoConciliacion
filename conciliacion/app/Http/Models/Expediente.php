@@ -328,7 +328,8 @@ class Expediente extends Model {
 	}
 
 	public function getFecha(){
-		return explode(" ",$this->fechaSolicitud)[0];
+		$tmpFechaSolicitud = explode(" ",$this->fechaSolicitud);
+		return $tmpFechaSolicitud[0];
 	}
 
 	public function getTipoCaso(){

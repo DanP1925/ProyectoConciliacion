@@ -158,7 +158,8 @@ class ExpedienteTemporal {
 		$recursosLaudo = DB::table('laudo_recurso_presentado')->where('idExpediente',$id)->get()->all();
 
         $instance->numero= $expediente->numero;
-		$instance->fechaSolicitud = explode(" ",$expediente->fechaSolicitud)[0];
+		$tempFechaSolicitud = explode(" ",$expediente->fechaSolicitud);
+		$instance->fechaSolicitud = $tempFechaSolicitud[0];
 		$instance->estadoExpediente = $expediente->idExpedienteEstado;
 		$instance->numeroAsociado = $expediente->numeroAsociado;
 		$instance->tipoCaso = $expediente->idExpedienteTipoCaso;
@@ -315,7 +316,8 @@ class ExpedienteTemporal {
 			}
 		}
 
-		$instance->fechaLaudo = (explode(" ",$expediente->laudofecha))[0];
+		$tempLaudoFecha = explode(" ",$expediente->laudofecha);
+		$instance->fechaLaudo = $tempLaudoFecha[0];
 		$instance->resultadoLaudo = $expediente->idLaudoResultado;
 		$instance->resultadoEnSoles = $expediente->laudoMontoResultado;
 		$instance->ejecucionLaudo = $expediente->idLaudoEjecucion;
@@ -323,8 +325,10 @@ class ExpedienteTemporal {
 
 		$listaRecursos = [];
 		foreach ($recursosLaudo as $recurso){
-			$fechaPresentacion = (explode(" ",$recurso->fechaPresentacion))[0];
-			$fechaResultado = (explode(" ",$recurso->fechaResultado))[0];
+			$tempFechaPresentacion = explode(" ",$recurso->fechaPresentacion);
+			$fechaPresentacion = $tempFechaPresentacion[0];
+			$tempFechaResultado = explode(" ",$recurso->fechaResultado);
+			$fechaResultado = $tempFechaResultado[0];
 			$recursoTemporal = RecursoTemporal::withData(
 				$recurso->idLaudoRecurso,$fechaPresentacion,
 				$recurso->idLaudoRecursoResultado,$fechaResultado);
