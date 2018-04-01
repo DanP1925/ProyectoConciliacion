@@ -147,9 +147,6 @@ class ExpedienteClienteLegal extends Model {
 			else
 				$resultadoNatural = $resultadoNatural->whereNotIn('idPersonaNatural',$listaConsorciosNaturales);
 
-
-
-			dd($array4);
 		}	
 
 		$listaJuridica = [];

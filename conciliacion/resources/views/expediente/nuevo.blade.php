@@ -889,6 +889,16 @@ $("#btn-registrar-expediente").click(function() {
 
 	if ($('#cuantiaControversiaInicial').val()==""){
 		cont = cont + 1;
+	} else {
+		if (isNaN($('#cuantiaControversiaInicial').val())){
+			cont = cont + 1;
+		}
+	}
+
+	if ($('#cuantiaControversiaFinal').val()!=""){
+		if (isNaN($('#cuantiaControversiaFinal').val())){
+			cont = cont + 1;
+		}
 	}
 
 	if ($('#tipoCuantia').val()==""){
@@ -921,6 +931,18 @@ $("#btn-registrar-expediente").click(function() {
 
 	if ($('#tipoDemandado').val()==""){
 		cont = cont + 1;
+	}
+
+	if ($('#anhoContrato').val()!=""){
+		if (isNaN($('#anhoContrato').val())){
+			cont = cont + 1;
+		}
+	}
+
+	if ($('#resultadoEnSoles').val()!=""){
+		if (isNaN($('#resultadoEnSoles').val())){
+			cont = cont + 1;
+		}
 	}
 
 	if(cont>0){
