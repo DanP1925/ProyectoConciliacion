@@ -36,8 +36,8 @@ class FiltroExpediente{
 		$this->subtipoCaso = $request->session()->get('filtroSubtipoCaso');
     }
 
-	public static function guardarEnSesion(Request $request){
-
+	public static function guardarEnSesion(Request $request)
+	{
 		$request->session()->put('filtroNumeroExpediente', $request->input('numeroExpediente'));
 		$request->session()->put('filtroFechaInicio', $request->input('fechaInicio'));
 		$request->session()->put('filtroFechaFin', $request->input('fechaFin'));
@@ -52,7 +52,8 @@ class FiltroExpediente{
 		$request->session()->put('filtroSubtipoCaso', $request->input('subtipoCaso'));
 	}
 
-	public static function quitarDeSesion(Request $request){
+	public static function quitarDeSesion(Request $request)
+	{
         $request->session()->forget('filtroNumeroExpediente');
         $request->session()->forget('filtroFechaInicio');
         $request->session()->forget('filtroFechaFin');

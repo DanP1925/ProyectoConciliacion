@@ -8,7 +8,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="nombre" name="nombre" />
+						<input type="text" class="site-input" id="nombre" name="nombre" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->nombre}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="dni" name="dni" />
+						<input type="text" class="site-input" id="dni" name="dni" @if (!is_null($filtroClienteLegal->dni)) value="{{$filtroClienteLegal->dni}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -32,7 +32,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="telefono" name="telefono" />
+						<input type="text" class="site-input" id="telefono" name="telefono" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->telefono}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -46,7 +46,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="razonSocial" name="razonSocial" />
+						<input type="text" class="site-input" id="razonSocial" name="razonSocial" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->razonSocial}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="ruc" name="ruc" />
+						<input type="text" class="site-input" id="ruc" name="ruc" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->ruc}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -74,7 +74,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="email" name="email" />
+						<input type="text" class="site-input" id="email" name="email" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->email}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -94,8 +94,8 @@
 					<div class="site-control-border">
 						<select class="site-select" id="flagConsorcio" name="flagConsorcio">
 							<option value="">Seleccione una opción</option>
-							<option value="Si">Si</option>
-							<option value="No">No</option>
+							<option value="Si" @if ("Si" == $filtroClienteLegal->flagConsorcio) selected @endif >Si</option>
+							<option value="No" @if ("No" == $filtroClienteLegal->flagConsorcio) selected @endif >No</option>
 						</select>
 					</div>
 				</div>
@@ -112,8 +112,8 @@
 					<div class="site-control-border">
 						<select class="site-select" id="sector" name="sector">
 							<option value="">Seleccione una opción</option>
-							<option value="PRI">Privado</option>
-							<option value="PUB">Público</option>
+							<option value="PRI" @if ("PRI" == $filtroClienteLegal->sector) selected @endif >Privado</option>
+							<option value="PUB" @if ("PUB" == $filtroClienteLegal->sector) selected @endif >Público</option>
 						</select>
 					</div>
 				</div>

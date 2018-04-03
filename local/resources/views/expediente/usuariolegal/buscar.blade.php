@@ -8,7 +8,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="nombre" name="nombre" />
+						<input type="text" class="site-input" id="nombre" name="nombre" @if (!is_null($filtroUsuarioLegal->nombre)) value="{{$filtroUsuarioLegal->nombre}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="apellidoPaterno" name="apellidoPaterno" />
+						<input type="text" class="site-input" id="apellidoPaterno" name="apellidoPaterno" @if (!is_null($filtroUsuarioLegal->apellidoPaterno)) value="{{$filtroUsuarioLegal->apellidoPaterno}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -36,7 +36,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="apellidoMaterno" name="apellidoMaterno" />
+						<input type="text" class="site-input" id="apellidoMaterno" name="apellidoMaterno" @if (!is_null($filtroUsuarioLegal->apellidoMaterno)) value="{{$filtroUsuarioLegal->apellidoMaterno}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -53,7 +53,7 @@
 						<select class="site-select" id="profesion" name="profesion">
 							<option value="">Seleccione una opción</option>
 							@foreach ($profesiones as $profesion)
-							<option value="{{$profesion->idUsuarioLegalProfesion}}">{{$profesion->nombre}}</option>
+							<option value="{{$profesion->idUsuarioLegalProfesion}}" @if ($profesion->idUsuarioLegalProfesion == $filtroUsuarioLegal->profesion) selected @endif >{{$profesion->nombre}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -72,7 +72,7 @@
 						<select class="site-select" id="pais" name="pais">
 							<option value="">Seleccione una opción</option>
 							@foreach ($paises as $pais)
-							<option value="{{$pais->idUsuarioLegalPais}}">{{$pais->nombre}}</option>
+							<option value="{{$pais->idUsuarioLegalPais}}" @if ($pais->idUsuarioLegalPais == $filtroUsuarioLegal->pais) selected @endif >{{$pais->nombre}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -91,7 +91,7 @@
 						<select class="site-select" id="perfil" name="perfil">
 							<option value="">Seleccione una opción</option>
 							@foreach ($perfiles as $perfil)
-							<option value="{{$perfil->idUsuarioLegalTipo}}">{{$perfil->nombre}}</option>
+							<option value="{{$perfil->idUsuarioLegalTipo}}" @if ($perfil->idUsuarioLegalTipo == $filtroUsuarioLegal->perfil) selected @endif >{{$perfil->nombre}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -107,7 +107,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="telefono" name="telefono" />
+						<input type="text" class="site-input" id="telefono" name="telefono" @if (!is_null($filtroUsuarioLegal->telefono)) value="{{$filtroUsuarioLegal->telefono}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -121,7 +121,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="correo" name="correo" />
+						<input type="text" class="site-input" id="correo" name="correo" @if (!is_null($filtroUsuarioLegal->correo)) value="{{$filtroUsuarioLegal->correo}}" @endif/>
 					</div>
 				</div>
 			</div>

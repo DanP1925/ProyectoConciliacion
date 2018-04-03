@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\DB;
 use App\Library\ExpedienteTemporal;
 use App\Library\RecursoTemporal;
 use App\Library\FiltroExpediente;
+use App\Library\FiltroUsuarioLegal;
+use App\Library\FiltroClienteLegal;
 use App\Http\Models\Expediente;
 use App\Http\Models\RegionControversia;
 use App\Http\Models\ExpedienteEquipoLegal;
@@ -219,6 +221,9 @@ class ExpedienteController extends Controller
 
     public function buscarPersonal(Request $request)
     {
+		FiltroUsuarioLegal::guardarEnSesion($request);
+		$filtroUsuarioLegal = new FiltroUsuarioLegal($request);
+
         $profesiones = DB::table('usuario_legal_profesion')->get()->all();
         $paises = DB::table('usuario_legal_pais')->get()->all();
         $perfiles = DB::table('usuario_legal_tipo')->get()->all();
@@ -235,11 +240,14 @@ class ExpedienteController extends Controller
 
         return view('expediente.usuariolegal.directorio',
             compact('profesiones', 'paises', 'perfiles', 'secretarios',
-					'accion', 'tipoAccion', 'id'));
+					'accion', 'tipoAccion', 'id','filtroUsuarioLegal'));
     }
 
 	public function buscarCliente(Request $request)
 	{
+		FiltroClienteLegal::guardarEnSesion($request);
+		$filtroClienteLegal = new FiltroClienteLegal($request);
+
 		$accion = $request->input('accion');
 		$tempAccion = explode(" ",$accion);
 		$tipoAccion = $tempAccion[0];
@@ -252,7 +260,7 @@ class ExpedienteController extends Controller
 		ExpedienteTemporal::guardarEnSesion($request);
 
 		return view('expediente.clientelegal.directorio',
-			compact('clientes', 'accion', 'tipoAccion', 'id'));
+			compact('clientes', 'accion', 'tipoAccion', 'id', 'filtroClienteLegal'));
 	}
 
 	public function buscarRegion(Request $request)
