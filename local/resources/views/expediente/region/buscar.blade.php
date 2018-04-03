@@ -22,12 +22,12 @@
 			</div>
 		</div>
 	</div>
-</form>
-<div class="grid-x">
-	<div class="cell small-12">
-		<button name="accion" value="{{$accion}}" class="site-form-button float-left">
-			buscar
-		</button>
-		<div style="clear:both;"></div>
+	<div class="grid-x">
+		<div class="cell small-12">
+			<button name="accion" value="{{$accion}}" class="site-form-button float-left">
+				buscar
+			</button>
+			<div style="clear:both;"></div>
+		</div>
 	</div>
-</div>
+</form>
