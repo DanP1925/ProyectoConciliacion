@@ -102,16 +102,6 @@
 	<div class="cell small-12 padding-bottom-20">
 		<div class="grid-x grid-margin-x">
 			<div class="cell small-4">
-				<div class="site-label padding-bottom-5">
-					Teléfono
-				</div>
-				<div class="site-control">
-					<div class="site-control-border">
-						<input type="text" class="site-input" id="telefono" name="telefono" @if (!is_null($filtroUsuarioLegal->telefono)) value="{{$filtroUsuarioLegal->telefono}}" @endif/>
-					</div>
-				</div>
-			</div>
-			<div class="cell small-4">
 				<div class="table-2cells-div padding-bottom-5">
 					<div class="left-div">
 						<div class="site-label">

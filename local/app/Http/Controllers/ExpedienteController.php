@@ -257,12 +257,12 @@ class ExpedienteController extends Controller
         $paises = DB::table('usuario_legal_pais')->get()->all();
         $perfiles = DB::table('usuario_legal_tipo')->get()->all();
 
-
 		if (is_null($request->session()->get('accion'))){
 			$accion = $request->input('accion');
 			$request->session()->put('accion',$accion);
 		} else
 			$accion = $request->session()->get('accion');
+
 		$tempAccion = explode(" ",$accion);
 		$tipoAccion = $tempAccion[0];
 		$id = 0;
@@ -299,10 +299,16 @@ class ExpedienteController extends Controller
 
 	public function buscarRegion(Request $request)
 	{
-		FiltroRegion::guardarEnSesion($request);
+		if (count($request->request)!= 1)
+			FiltroRegion::guardarEnSesion($request);
 		$filtroRegion = new FiltroRegion($request);
 
-        $accion = $request->input('accion');
+		if (is_null($request->session()->get('accion'))){
+			$accion = $request->input('accion');
+			$request->session()->put('accion',$accion);
+		} else
+			$accion = $request->session()->get('accion');
+
 		$tempAccion = explode(" ",$accion);
 		$tipoAccion = $tempAccion[0];
 		$id = 0;

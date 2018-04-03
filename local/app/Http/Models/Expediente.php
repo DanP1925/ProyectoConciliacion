@@ -156,11 +156,11 @@ class Expediente extends Model {
 
 		$fechaInicio = $request->input('fechaInicio');
 		if (!is_null($fechaInicio))
-			$resultado = $resultado->where('fechaSolicitud','>', $fechaInicio);
+			$resultado = $resultado->where('fechaSolicitud','>=', $fechaInicio);
 
 		$fechaFin = $request->input('fechaFin');
 		if (!is_null($fechaFin))
-			$resultado = $resultado->where('fechaSolicitud','<', $fechaFin);
+			$resultado = $resultado->where('fechaSolicitud','<=', $fechaFin);
 
 		$estado = $request->input('estado');
 		if (!is_null($estado))

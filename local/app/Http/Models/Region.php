@@ -22,7 +22,7 @@ class Region extends Model {
     }
 
 	public static function buscarRegion(Request $request){
-		$nombre = $request->input('nombre');
+		$nombre = $request->session()->get('filtroNombre');
 
 		$resultado = Region::where('nombre','LIKE', '%'.$nombre.'%');
 

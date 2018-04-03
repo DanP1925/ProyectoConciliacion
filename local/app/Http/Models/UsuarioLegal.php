@@ -111,9 +111,6 @@ class UsuarioLegal extends Model {
             $resultado = $resultado->where('idUsuarioLegalTipo','=', $perfil);
         }
 
-        $telefono = $request->input('telefono');
-        $resultado = $resultado->where('telefono','LIKE', '%'.$telefono.'%'); 
-
         $correo = $request->input('correo');
         $resultado = $resultado->where('email','LIKE', '%'.$correo.'%'); 
 
