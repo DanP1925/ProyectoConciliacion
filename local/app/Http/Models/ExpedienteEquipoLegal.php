@@ -61,6 +61,10 @@ class ExpedienteEquipoLegal extends Model {
 		$tipDesArbitroUnico = null;
 		if (!is_null($request->input('arbitroUnico'))){
 
+			$nombreUnico = null;
+			$apellidoPaternoUnico = null;
+			$apellidoMaternoUnico = null;
+
 			$lengthUnico = count($arbitroUnico);
 			if ($lengthUnico >0){
 				$nombreUnico = $arbitroUnico[0];
@@ -83,6 +87,19 @@ class ExpedienteEquipoLegal extends Model {
 
 			if (!is_null($idArbitroUnico))
 				$idArbitroUnico = $idArbitroUnico->idUsuarioLegal;
+			else{
+				//Si no Existe el Arbitro Unico
+				$idArbitroUnico = DB::table('usuario_legal')->insertGetId(
+					['idUsuarioLegalTipo' => '1',
+					'idUsuarioLegalProfesion' => '1',
+					'idUsuarioLegalPais' => '1',
+					'nombre' => $nombreUnico,
+					'apellidoPaterno' => $apellidoPaternoUnico,
+					'apellidoMaterno' => $apellidoMaternoUnico,
+					'flagValidado' => 'N']
+				);
+
+			}
 
 			if (!is_null($request->input('designacionArbitroUnico')))
 				$tipDesArbitroUnico = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionArbitroUnico'))->first();
@@ -95,6 +112,10 @@ class ExpedienteEquipoLegal extends Model {
 		$idPresidenteTribunal = null;
 		$tipDesPresidenteTribunal = null;
 		if (!is_null($request->input('presidenteTribunal'))){
+
+			$nombrePresidente = null;
+			$apellidoPaternoPresidente = null;
+			$apellidoMaternoPresidente = null;
 
 			$lengthPresidente = count($presidenteTribunal);
 			if ($lengthPresidente >0){
@@ -118,6 +139,18 @@ class ExpedienteEquipoLegal extends Model {
 
 			if (!is_null($idPresidenteTribunal))
 				$idPresidenteTribunal = $idPresidenteTribunal->idUsuarioLegal;
+			else{
+				//Si no existe el Presidente Tribunal
+				$idPresidenteTribunal = DB::table('usuario_legal')->insertGetId(
+					['idUsuarioLegalTipo' => '1',
+					'idUsuarioLegalProfesion' => '1',
+					'idUsuarioLegalPais' => '1',
+					'nombre' => $nombrePresidente,
+					'apellidoPaterno' => $apellidoPaternoPresidente,
+					'apellidoMaterno' => $apellidoMaternoPresidente,
+					'flagValidado' => 'N']
+				);
+			}
 
 			if (!is_null($request->input('designacionPresidenteTribunal')))
 				$tipDesPresidenteTribunal = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionPresidenteTribunal'))->first();
@@ -130,6 +163,11 @@ class ExpedienteEquipoLegal extends Model {
 		$idDemandante = null;
 		$tipDesArbitroDemandante = null;
 		if (!is_null($request->input('arbitroDemandante'))){
+
+			$nombreDemandante = null;
+			$apellidoPaternoDemandante = null;
+			$apellidoMaternoDemandante = null;
+
 			$lengthDemandante = count($arbitroDemandante);
 			if ($lengthDemandante >0){
 				$nombreDemandante = $arbitroDemandante[0];
@@ -152,6 +190,19 @@ class ExpedienteEquipoLegal extends Model {
 
 			if (!is_null($idDemandante))
 				$idDemandante = $idDemandante->idUsuarioLegal;
+			else{
+				//Si no existe el Demandante
+				$idDemandante = DB::table('usuario_legal')->insertGetId(
+					['idUsuarioLegalTipo' => '1',
+					'idUsuarioLegalProfesion' => '1',
+					'idUsuarioLegalPais' => '1',
+					'nombre' => $nombreDemandante,
+					'apellidoPaterno' => $apellidoPaternoDemandante,
+					'apellidoMaterno' => $apellidoMaternoDemandante,
+					'flagValidado' => 'N']
+				);
+
+			}
 
 			if (!is_null($request->input('designacionDemandante')))
 				$tipDesArbitroDemandante = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandante'))->first();
@@ -165,6 +216,10 @@ class ExpedienteEquipoLegal extends Model {
 		$tipDesArbitroDemandado = null;
 		if (!is_null($request->input('arbitroDemandado'))){
 			
+			$nombreDemandado = null;
+			$apellidoPaternoDemandado = null;
+			$apellidoMaternoDemandado = null;
+
 			$lengthDemandado = count($arbitroDemandado);
 			if ($lengthDemandado >0){
 				$nombreDemandado = $arbitroDemandado[0];
@@ -187,6 +242,18 @@ class ExpedienteEquipoLegal extends Model {
 
 			if (!is_null($idDemandado))
 				$idDemandado = $idDemandado->idUsuarioLegal;
+			else {
+				//Si no Existe el Demandado
+				$idDemandado = DB::table('usuario_legal')->insertGetId(
+					['idUsuarioLegalTipo' => '1',
+					'idUsuarioLegalProfesion' => '1',
+					'idUsuarioLegalPais' => '1',
+					'nombre' => $nombreDemandado,
+					'apellidoPaterno' => $apellidoPaternoDemandado,
+					'apellidoMaterno' => $apellidoMaternoDemandado,
+					'flagValidado' => 'N']
+				);
+			}
 
 			if (!is_null($request->input('designacionDemandado')))
 				$tipDesArbitroDemandado = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandado'))->first();
@@ -220,6 +287,10 @@ class ExpedienteEquipoLegal extends Model {
 		$tipDesArbitroUnico = null;
 		if (!is_null($request->input('arbitroUnico'))){
 
+			$nombreUnico = null;
+			$apellidoPaternoUnico = null;
+			$apellidoMaternoUnico = null;
+
 			$lengthUnico = count($arbitroUnico);
 			if ($lengthUnico >0){
 				$nombreUnico = $arbitroUnico[0];
@@ -242,6 +313,19 @@ class ExpedienteEquipoLegal extends Model {
 
 			if (!is_null($idArbitroUnico))
 				$idArbitroUnico = $idArbitroUnico->idUsuarioLegal;
+			else{
+				//Si no Existe el Arbitro Unico
+				$idArbitroUnico = DB::table('usuario_legal')->insertGetId(
+					['idUsuarioLegalTipo' => '1',
+					'idUsuarioLegalProfesion' => '1',
+					'idUsuarioLegalPais' => '1',
+					'nombre' => $nombreUnico,
+					'apellidoPaterno' => $apellidoPaternoUnico,
+					'apellidoMaterno' => $apellidoMaternoUnico,
+					'flagValidado' => 'N']
+				);
+
+			}
 
 			if (!is_null($request->input('designacionArbitroUnico')))
 				$tipDesArbitroUnico = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionArbitroUnico'))->first();
@@ -254,6 +338,10 @@ class ExpedienteEquipoLegal extends Model {
 		$idPresidenteTribunal = null;
 		$tipDesPresidenteTribunal = null;
 		if (!is_null($request->input('presidenteTribunal'))){
+
+			$nombrePresidente = null;
+			$apellidoPaternoPresidente = null;
+			$apellidoMaternoPresidente = null;
 
 			$lengthPresidente = count($presidenteTribunal);
 			if ($lengthPresidente >0){
@@ -278,6 +366,18 @@ class ExpedienteEquipoLegal extends Model {
 
 			if (!is_null($idPresidenteTribunal))
 				$idPresidenteTribunal = $idPresidenteTribunal->idUsuarioLegal;
+			else{
+				//Si no existe el Presidente Tribunal
+				$idPresidenteTribunal = DB::table('usuario_legal')->insertGetId(
+					['idUsuarioLegalTipo' => '1',
+					'idUsuarioLegalProfesion' => '1',
+					'idUsuarioLegalPais' => '1',
+					'nombre' => $nombrePresidente,
+					'apellidoPaterno' => $apellidoPaternoPresidente,
+					'apellidoMaterno' => $apellidoMaternoPresidente,
+					'flagValidado' => 'N']
+				);
+			}
 
 			if (!is_null($request->input('designacionPresidenteTribunal')))
 				$tipDesPresidenteTribunal = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionPresidenteTribunal'))->first();
@@ -290,6 +390,11 @@ class ExpedienteEquipoLegal extends Model {
 		$idDemandante = null;
 		$tipDesArbitroDemandante = null;
 		if (!is_null($request->input('arbitroDemandante'))){
+
+			$nombreDemandante = null;
+			$apellidoPaternoDemandante = null;
+			$apellidoMaternoDemandante = null;
+
 			$lengthDemandante = count($arbitroDemandante);
 			if ($lengthDemandante >0){
 				$nombreDemandante = $arbitroDemandante[0];
@@ -312,6 +417,19 @@ class ExpedienteEquipoLegal extends Model {
 
 			if (!is_null($idDemandante))
 				$idDemandante = $idDemandante->idUsuarioLegal;
+			else{
+				//Si no existe el Demandante
+				$idDemandante = DB::table('usuario_legal')->insertGetId(
+					['idUsuarioLegalTipo' => '1',
+					'idUsuarioLegalProfesion' => '1',
+					'idUsuarioLegalPais' => '1',
+					'nombre' => $nombreDemandante,
+					'apellidoPaterno' => $apellidoPaternoDemandante,
+					'apellidoMaterno' => $apellidoMaternoDemandante,
+					'flagValidado' => 'N']
+				);
+
+			}
 
 			if (!is_null($request->input('designacionDemandante')))
 				$tipDesArbitroDemandante = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandante'))->first();
@@ -325,6 +443,10 @@ class ExpedienteEquipoLegal extends Model {
 		$tipDesArbitroDemandado = null;
 		if (!is_null($request->input('arbitroDemandado'))){
 			
+			$nombreDemandado = null;
+			$apellidoPaternoDemandado = null;
+			$apellidoMaternoDemandado = null;
+
 			$lengthDemandado = count($arbitroDemandado);
 			if ($lengthDemandado >0){
 				$nombreDemandado = $arbitroDemandado[0];
@@ -347,6 +469,18 @@ class ExpedienteEquipoLegal extends Model {
 
 			if (!is_null($idDemandado))
 				$idDemandado = $idDemandado->idUsuarioLegal;
+			else {
+				//Si no Existe el Demandado
+				$idDemandado = DB::table('usuario_legal')->insertGetId(
+					['idUsuarioLegalTipo' => '1',
+					'idUsuarioLegalProfesion' => '1',
+					'idUsuarioLegalPais' => '1',
+					'nombre' => $nombreDemandado,
+					'apellidoPaterno' => $apellidoPaternoDemandado,
+					'apellidoMaterno' => $apellidoMaternoDemandado,
+					'flagValidado' => 'N']
+				);
+			}
 
 			if (!is_null($request->input('designacionDemandado')))
 				$tipDesArbitroDemandado = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandado'))->first();
