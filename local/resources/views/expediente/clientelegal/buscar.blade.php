@@ -27,12 +27,16 @@
 				</div>
 			</div>
 			<div class="cell small-4">
-				<div class="site-label padding-bottom-5">
-					Teléfono
+				<div class="table-2cells-div padding-bottom-5">
+					<div class="left-div">
+						<div class="site-label">
+							Correo Electrónico
+						</div>
+					</div>
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="telefono" name="telefono" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->telefono}}" @endif/>
+						<input type="text" class="site-input" id="email" name="email" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->email}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -61,20 +65,6 @@
 				<div class="site-control">
 					<div class="site-control-border">
 						<input type="text" class="site-input" id="ruc" name="ruc" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->ruc}}" @endif/>
-					</div>
-				</div>
-			</div>
-			<div class="cell small-4">
-				<div class="table-2cells-div padding-bottom-5">
-					<div class="left-div">
-						<div class="site-label">
-							Correo Electrónico
-						</div>
-					</div>
-				</div>
-				<div class="site-control">
-					<div class="site-control-border">
-						<input type="text" class="site-input" id="email" name="email" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->email}}" @endif/>
 					</div>
 				</div>
 			</div>

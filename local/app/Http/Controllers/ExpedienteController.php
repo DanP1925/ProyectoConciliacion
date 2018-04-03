@@ -53,6 +53,12 @@ class ExpedienteController extends Controller
 
     public function nuevo(Request $request)
     {
+		$request->session()->forget('accion');
+		FiltroExpediente::quitarDeSesion($request);
+		FiltroUsuarioLegal::quitarDeSesion($request);
+		FiltroClienteLegal::quitarDeSesion($request);
+		FiltroRegion::quitarDeSesion($request);
+
         $expedienteTemporal = ExpedienteTemporal::withRequest($request);
         ExpedienteTemporal::quitarDeSesion($request);
 
@@ -99,6 +105,12 @@ class ExpedienteController extends Controller
 
 	public function info(Request $request, $id)
 	{
+		$request->session()->forget('accion');
+		FiltroExpediente::quitarDeSesion($request);
+		FiltroUsuarioLegal::quitarDeSesion($request);
+		FiltroClienteLegal::quitarDeSesion($request);
+		FiltroRegion::quitarDeSesion($request);
+
 		if (count($request->request) == 0)
 			$expedienteTemporal = ExpedienteTemporal::withId($id);
 		else{
@@ -229,7 +241,12 @@ class ExpedienteController extends Controller
         $paises = DB::table('usuario_legal_pais')->get()->all();
         $perfiles = DB::table('usuario_legal_tipo')->get()->all();
 
-        $accion = $request->input('accion');
+
+		if (is_null($request->session()->get('accion'))){
+			$accion = $request->input('accion');
+			$request->session()->put('accion',$accion);
+		} else
+			$accion = $request->session()->get('accion');
 		$tempAccion = explode(" ",$accion);
 		$tipoAccion = $tempAccion[0];
 		$id = 0;
