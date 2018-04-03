@@ -250,7 +250,8 @@ class ExpedienteController extends Controller
 
     public function buscarPersonal(Request $request)
     {
-		FiltroUsuarioLegal::guardarEnSesion($request);
+		if (count($request->request)!= 1)
+			FiltroUsuarioLegal::guardarEnSesion($request);
 		$filtroUsuarioLegal = new FiltroUsuarioLegal($request);
 
         $profesiones = DB::table('usuario_legal_profesion')->get()->all();

@@ -87,31 +87,31 @@ class UsuarioLegal extends Model {
 
     public static function buscarPersonal(Request $request){
 
-        $nombre = $request->input('nombre');
+        $nombre = $request->session()->get('filtroNombre');
         $resultado = UsuarioLegal::where('nombre','LIKE', '%'.$nombre.'%'); 
 
-        $apellidoPaterno = $request->input('apellidoPaterno');
+        $apellidoPaterno = $request->session()->get('filtroApellidoPaterno');
         $resultado = $resultado->where('apellidoPaterno','LIKE', '%'.$apellidoPaterno.'%');
 
-        $apellidoMaterno = $request->input('apellidoMaterno');
+        $apellidoMaterno = $request->session()->get('filtroApellidoMaterno');
         $resultado = $resultado->where('apellidoMaterno','LIKE', '%'.$apellidoMaterno.'%');
 
-        if (!is_null($request->input('profesion'))){
-            $profesion = $request->input('profesion');
+        if (!is_null($request->session()->get('filtroProfesion'))){
+            $profesion = $request->session()->get('filtroProfesion');
             $resultado = $resultado->where('idUsuarioLegalProfesion','=', $profesion);
         }
 
-        if (!is_null($request->input('pais'))){
-            $pais = $request->input('pais');
+        if (!is_null($request->session()->get('filtroPais'))){
+            $pais = $request->session()->get('filtroPais');
             $resultado = $resultado->where('idUsuarioLegalPais','=', $pais);
         }
 
-        if (!is_null($request->input('perfil'))){
-            $perfil = $request->input('perfil');
+        if (!is_null($request->session()->get('filtroPerfil'))){
+            $perfil = $request->session()->get('filtroPerfil');
             $resultado = $resultado->where('idUsuarioLegalTipo','=', $perfil);
         }
 
-        $correo = $request->input('correo');
+        $correo = $request->session()->get('filtroCorreo');
         $resultado = $resultado->where('email','LIKE', '%'.$correo.'%'); 
 
         return $resultado->paginate(5);

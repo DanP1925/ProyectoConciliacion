@@ -9,7 +9,6 @@ class FiltroClienteLegal{
 
 	var $nombre;
 	var $dni;
-	var $telefono;
 	var $razonSocial;
 	var $ruc;
 	var $email;
@@ -20,7 +19,6 @@ class FiltroClienteLegal{
     {
 		$this->nombre = $request->session()->get('filtroNombre');
 		$this->dni = $request->session()->get('filtroDni');
-		$this->telefono = $request->session()->get('filtroTelefono');
 		$this->razonSocial = $request->session()->get('filtroRazonSocial');
 		$this->ruc = $request->session()->get('filtroRuc');
 		$this->email = $request->session()->get('filtroEmail');
@@ -32,7 +30,6 @@ class FiltroClienteLegal{
 	{
 		$request->session()->put('filtroNombre', $request->input('nombre'));
 		$request->session()->put('filtroDni', $request->input('dni'));
-		$request->session()->put('filtroTelefono', $request->input('telefono'));
 		$request->session()->put('filtroRazonSocial', $request->input('razonSocial'));
 		$request->session()->put('filtroRuc', $request->input('ruc'));
 		$request->session()->put('filtroEmail', $request->input('email'));

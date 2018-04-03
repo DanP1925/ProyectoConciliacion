@@ -13,7 +13,6 @@ class FiltroUsuarioLegal{
 	var $profesion;
 	var $pais;
 	var $perfil;
-	var $telefono;
 	var $correo;
 
     function __construct(Request $request)
@@ -24,7 +23,6 @@ class FiltroUsuarioLegal{
 		$this->profesion = $request->session()->get('filtroProfesion');
 		$this->pais = $request->session()->get('filtroPais');
 		$this->perfil = $request->session()->get('filtroPerfil');
-		$this->telefono = $request->session()->get('filtroTelefono');
 		$this->correo = $request->session()->get('filtroCorreo');
 	}
 
@@ -36,7 +34,6 @@ class FiltroUsuarioLegal{
 		$request->session()->put('filtroProfesion', $request->input('profesion'));
 		$request->session()->put('filtroPais', $request->input('pais'));
 		$request->session()->put('filtroPerfil', $request->input('perfil'));
-		$request->session()->put('filtroTelefono', $request->input('telefono'));
 		$request->session()->put('filtroCorreo', $request->input('correo'));
 	}
 
