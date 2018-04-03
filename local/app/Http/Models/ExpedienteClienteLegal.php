@@ -82,13 +82,11 @@ class ExpedienteClienteLegal extends Model {
 		//Persona Natural
 		$nombre = $request->input('nombre'); 
 		$dni = $request->input('dni'); 
-		$telefono = $request->input('telefono'); 
 
 		$personasNaturales = DB::table('persona_natural')->where('nombre','LIKE', '%'.$nombre.'%');
 		$personasNaturales = $personasNaturales->where('apellidoPaterno','LIKE', '%'.$nombre.'%');
 		$personasNaturales = $personasNaturales->where('apellidoPaterno','LIKE', '%'.$nombre.'%');
 		$personasNaturales = $personasNaturales->where('dni','LIKE', '%'.$dni.'%');
-		$personasNaturales = $personasNaturales->where('telefono','LIKE', '%'.$telefono.'%');
 
 		$listaPersonasNaturales = [];
 		foreach ($personasNaturales->get()->all() as $personaNatural)
@@ -99,12 +97,10 @@ class ExpedienteClienteLegal extends Model {
 		//Persona Jurdica
 		$razonSocial = $request->input('razonSocial'); 
 		$ruc = $request->input('ruc'); 
-		$telefono = $request->input('telefono'); 
 
 		$personasJuridicas = DB::table('persona_juridica')->where('razonSocial','LIKE','%'.$razonSocial.'%');
 		$personasJuridicas = $personasJuridicas->where('razonSocial','LIKE','%'.$razonSocial.'%');
 		$personasJuridicas = $personasJuridicas->where('ruc','LIKE','%'.$ruc.'%');
-		$personasJuridicas = $personasJuridicas->where('telefono','LIKE','%'.$telefono.'%');
 
 		$listaPersonasJuridicas = [];
 		foreach($personasJuridicas->get()->all() as $personaJuridica)
