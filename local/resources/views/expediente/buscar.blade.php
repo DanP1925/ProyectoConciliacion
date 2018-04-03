@@ -8,7 +8,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="numeroExpediente" name="numeroExpediente" />
+						<input type="text" class="site-input" id="numeroExpediente" name="numeroExpediente" @if (!is_null($filtroExpediente->numeroExpediente)) value="{{$filtroExpediente->numeroExpediente}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="date" class="site-input" id="fechaInicio" name="fechaInicio" />
+						<input type="date" class="site-input" id="fechaInicio" name="fechaInicio" @if (!is_null($filtroExpediente->fechaInicio)) value="{{$filtroExpediente->fechaInicio}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -36,7 +36,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="date" class="site-input" id="fechaFin" name="fechaFin" />
+						<input type="date" class="site-input" id="fechaFin" name="fechaFin" @if (!is_null($filtroExpediente->fechaFin)) value="{{$filtroExpediente->fechaFin}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -52,7 +52,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="demandante" name="demandante" />
+						<input type="text" class="site-input" id="demandante" name="demandante" @if (!is_null($filtroExpediente->demandante)) value="{{$filtroExpediente->demandante}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -62,7 +62,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="demandado" name="demandado" />
+						<input type="text" class="site-input" id="demandado" name="demandado" @if (!is_null($filtroExpediente->demandado)) value="{{$filtroExpediente->demandado}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -76,7 +76,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="miembroDemandante" name="miembroDemandante" />
+						<input type="text" class="site-input" id="miembroDemandante" name="miembroDemandante" @if (!is_null($filtroExpediente->miembroDemandante)) value="{{$filtroExpediente->miembroDemandante}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -86,7 +86,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="miembroDemandado" name="miembroDemandado" />
+						<input type="text" class="site-input" id="miembroDemandado" name="miembroDemandado" @if (!is_null($filtroExpediente->miembroDemandado)) value="{{$filtroExpediente->miembroDemandado}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -100,7 +100,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="secretarioResponsable" name="secretarioResponsable" />
+						<input type="text" class="site-input" id="secretarioResponsable" name="secretarioResponsable" @if (!is_null($filtroExpediente->secretarioResponsable)) value="{{$filtroExpediente->secretarioResponsable}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -110,7 +110,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="secretarioLider" name="secretarioLider" />
+						<input type="text" class="site-input" id="secretarioLider" name="secretarioLider" @if (!is_null($filtroExpediente->secretarioLider)) value="{{$filtroExpediente->secretarioLider}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -127,7 +127,7 @@
 						<select class="site-select" id="estado" name="estado">
 							<option value="">Seleccione una opción</option>
 							@foreach ($estadosExpediente as $estadoExpediente)
-							<option value="{{$estadoExpediente->idExpedienteEstado}}">{{$estadoExpediente->nombre}}</option>
+							<option value="{{$estadoExpediente->idExpedienteEstado}}" @if ($estadoExpediente->idExpedienteEstado == $filtroExpediente->estado) selected @endif>{{$estadoExpediente->nombre}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -143,7 +143,7 @@
 						<select class="site-select" id="tipoCaso" name="tipoCaso">
 							<option value="">Seleccione una opción</option>
 							@foreach ($tipos as $tipo)
-							<option value="{{$tipo->idExpedienteTipoCaso}}">{{$tipo->nombre}}</option>
+							<option value="{{$tipo->idExpedienteTipoCaso}}" @if ($tipo->idExpedienteTipoCaso == $filtroExpediente->tipoCaso) selected @endif>{{$tipo->nombre}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -158,7 +158,7 @@
 						<select class="site-select" id="subtipoCaso" name="subtipoCaso">
 							<option value="">Seleccione una opción</option>
 							@foreach ($subtipos as $subtipo)
-							<option value="{{$subtipo->idExpedienteSubtipoCaso}}">{{$subtipo->nombre}}</option>
+							<option value="{{$subtipo->idExpedienteSubtipoCaso}}" @if ($subtipo->idExpedienteSubtipoCaso == $filtroExpediente->subtipoCaso) selected @endif>{{$subtipo->nombre}}</option>
 							@endforeach
 						</select>
 					</div>

@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Library\ExpedienteTemporal;
 use App\Library\RecursoTemporal;
+use App\Library\FiltroExpediente;
 use App\Http\Models\Expediente;
 use App\Http\Models\RegionControversia;
 use App\Http\Models\ExpedienteEquipoLegal;
@@ -34,6 +35,9 @@ class ExpedienteController extends Controller
 
     public function lista(Request $request)
     {
+		FiltroExpediente::guardarEnSesion($request);
+		$filtroExpediente = new FiltroExpediente($request);
+
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
         $tipos = DB::table('expediente_tipo_caso')->get()->all();
         $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
@@ -41,7 +45,7 @@ class ExpedienteController extends Controller
 		$expedientes = Expediente::buscarExpediente($request);
 
 		return view('expediente.lista', compact('estadosExpediente',
-					'tipos', 'subtipos', 'expedientes' ));
+					'tipos', 'subtipos', 'expedientes', 'filtroExpediente' ));
     }
 
     public function nuevo(Request $request)

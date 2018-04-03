@@ -13,7 +13,7 @@
 						</div>
 					</div>
 					<div class="right-div">
-						@if ($tipoAccion == "buscarSecretarioId" || $tipoAccion == "buscarLiderId")
+						@if ($tipoAccion == "buscarDemandanteId" || $tipoAccion == "buscarDemandadoId")
 							<form method="GET" action="{{ url('expediente/info', ['id'=>$id]) }}">
 						@else
 							<form method="GET" action="{{ url('expediente/nuevo', []) }}">
