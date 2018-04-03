@@ -6,11 +6,11 @@
 				<div class="cell small-12 large-4">
 					<div class="site-line">
 						<div class="site-label padding-bottom-5">
-							Nombre / Razon Social
+							Nombre
 						</div>
 						<div class="site-control">
 							<div class="site-control-border">
-								<input type="text" class="site-input" id="nombre" name="nombre" />
+								<input type="text" class="site-input" id="nombre" name="nombre" @if (!is_null($filtroRegion->nombre)) value="{{$filtroRegion->nombre}}" @endif/>
 							</div>
 						</div>
 					</div>

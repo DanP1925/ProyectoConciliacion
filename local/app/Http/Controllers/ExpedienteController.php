@@ -22,6 +22,7 @@ use App\Library\RecursoTemporal;
 use App\Library\FiltroExpediente;
 use App\Library\FiltroUsuarioLegal;
 use App\Library\FiltroClienteLegal;
+use App\Library\FiltroRegion;
 use App\Http\Models\Expediente;
 use App\Http\Models\RegionControversia;
 use App\Http\Models\ExpedienteEquipoLegal;
@@ -265,6 +266,9 @@ class ExpedienteController extends Controller
 
 	public function buscarRegion(Request $request)
 	{
+		FiltroRegion::guardarEnSesion($request);
+		$filtroRegion = new FiltroRegion($request);
+
         $accion = $request->input('accion');
 		$tempAccion = explode(" ",$accion);
 		$tipoAccion = $tempAccion[0];
@@ -276,7 +280,7 @@ class ExpedienteController extends Controller
         ExpedienteTemporal::guardarEnSesion($request);
 
 		return view('expediente.region.directorio',
-			compact('regiones', 'accion', 'tipoAccion', 'id'));
+			compact('regiones', 'accion', 'tipoAccion', 'id', 'filtroRegion'));
 	}
 
     public function nuevoRecurso(Request $request)
