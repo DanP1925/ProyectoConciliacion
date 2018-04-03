@@ -47,6 +47,11 @@
 	</a>
 </div>
 <div class="list-icon-div">
-	<img src="{{ asset('images/ico_delete_red.png') }}" />
+	<form method="POST" action="{{ url('expediente/borrar', ['idExpediente'=>$expediente->idExpediente])}}"/>
+		{{csrf_field()}}
+		<button type="submit" name="accion" value="{{$expediente->idExpediente}}"/>
+			<img src="{{ asset('images/ico_delete_red.png') }}" />
+		</button>
+	</form>
 </div>
 

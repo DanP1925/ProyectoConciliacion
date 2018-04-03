@@ -144,6 +144,9 @@ Route::middleware(['auth'])->group(function () {
     // >> Expediente Editar
     Route::get('/expediente/editar/{idExpediente}','ExpedienteController@editar');
 
+    // >> Expediente Borrar
+    Route::post('/expediente/borrar/{idExpediente}','ExpedienteController@borrar');
+
     // >> Expediente Buscar
     Route::get('/expediente/lista','ExpedienteController@lista');
     Route::get('/expediente/info/{id}', 'ExpedienteController@info');

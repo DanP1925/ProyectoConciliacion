@@ -368,4 +368,7 @@ class ExpedienteEquipoLegal extends Model {
 		);
 	}
 
+	public static function eliminarEquipo($idExpediente){
+		DB::table('expediente_equipo_legal')->where('idExpediente',$idExpediente)->delete();
+	}
 }

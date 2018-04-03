@@ -11,6 +11,7 @@ use App\Http\Models\ExpedienteEstado;
 use App\Http\Models\ExpedienteSubtipoCaso;
 use App\Http\Models\ExpedienteTipoCaso;
 use App\Http\Models\ExpedienteClienteLegal;
+use App\Http\Models\Incidente;
 use App\Http\Models\LaudoAFavor;
 use App\Http\Models\LaudoEjecucion;
 use App\Http\Models\LaudoResultado;
@@ -54,10 +55,6 @@ class ExpedienteController extends Controller
     public function nuevo(Request $request)
     {
 		$request->session()->forget('accion');
-		FiltroExpediente::quitarDeSesion($request);
-		FiltroUsuarioLegal::quitarDeSesion($request);
-		FiltroClienteLegal::quitarDeSesion($request);
-		FiltroRegion::quitarDeSesion($request);
 
         $expedienteTemporal = ExpedienteTemporal::withRequest($request);
         ExpedienteTemporal::quitarDeSesion($request);
@@ -106,10 +103,6 @@ class ExpedienteController extends Controller
 	public function info(Request $request, $id)
 	{
 		$request->session()->forget('accion');
-		FiltroExpediente::quitarDeSesion($request);
-		FiltroUsuarioLegal::quitarDeSesion($request);
-		FiltroClienteLegal::quitarDeSesion($request);
-		FiltroRegion::quitarDeSesion($request);
 
 		if (count($request->request) == 0)
 			$expedienteTemporal = ExpedienteTemporal::withId($id);
@@ -222,6 +215,9 @@ class ExpedienteController extends Controller
 			ExpedienteEquipoLegal::actualizarEquipo($idExpediente, $request);
 			LaudoRecursoPresentado::actualizarRecursos($idExpediente, $request);
 		}
+			
+		FiltroExpediente::guardarEnSesion($request);
+		$filtroExpediente = new FiltroExpediente($request);
 
         $estadosExpediente = DB::table('expediente_estado')->get()->all();
         $tipos = DB::table('expediente_tipo_caso')->get()->all();
@@ -229,8 +225,28 @@ class ExpedienteController extends Controller
 		$expedientes = Expediente::paginate(5);
 
 		return view('expediente.lista', compact('estadosExpediente',
-					'tipos', 'subtipos', 'expedientes' ));
+					'tipos', 'subtipos', 'expedientes', 'filtroExpediente' ));
     }
+
+	public function borrar(Request $request, $idExpediente){
+		LaudoRecursoPresentado::eliminarRecursos($idExpediente);
+		ExpedienteEquipoLegal::eliminarEquipo($idExpediente);
+		RegionControversia::eliminarRegiones($idExpediente);
+		Incidente::eliminarIncidentes($idExpediente);
+		Expediente::eliminarExpediente($idExpediente);
+		
+		FiltroExpediente::guardarEnSesion($request);
+		$filtroExpediente = new FiltroExpediente($request);
+
+        $estadosExpediente = DB::table('expediente_estado')->get()->all();
+        $tipos = DB::table('expediente_tipo_caso')->get()->all();
+        $subtipos = DB::table('expediente_subtipo_caso')->get()->all();
+
+		$expedientes = Expediente::buscarExpediente($request);
+
+		return view('expediente.lista', compact('estadosExpediente',
+					'tipos', 'subtipos', 'expedientes', 'filtroExpediente' ));
+	}
 
     public function buscarPersonal(Request $request)
     {
@@ -347,4 +363,5 @@ class ExpedienteController extends Controller
 			compact('recursosPresentados', 'resultadoRecursos', 'accion',
 					'nuevoRecurso', 'tipoAccion', 'id'));
     }
+
 }

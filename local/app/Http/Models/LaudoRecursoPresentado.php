@@ -69,4 +69,8 @@ class LaudoRecursoPresentado extends Model {
 			}
 		}
 	}
+	
+	public static function eliminarRecursos($idExpediente){
+		DB::table('laudo_recurso_presentado')->where('idExpediente',$idExpediente)->delete();
+	}
 }

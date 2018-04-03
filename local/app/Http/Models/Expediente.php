@@ -145,6 +145,10 @@ class Expediente extends Model {
 		);
 	}
 
+	public static function eliminarExpediente($idExpediente){
+		DB::table('expediente')->where('idExpediente',$idExpediente)->delete();
+	}
+
 	public static function buscarExpediente(Request $request){
 
 		$numeroExpediente = $request->input('numeroExpediente');

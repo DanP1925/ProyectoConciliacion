@@ -1,6 +1,7 @@
 <?php namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Incidente extends Model {
 
@@ -43,5 +44,8 @@ class Incidente extends Model {
         return $this->hasMany(\App\Http\Models\IncidenteUsuario::class, 'idIncidente', 'idIncidente');
     }
 
+	public static function eliminarIncidentes($idExpediente) {
+		DB::table('incidente')->where('idExpediente',$idExpediente)->delete();
+	}
 
 }

@@ -43,4 +43,8 @@ class RegionControversia extends Model
 			}
 		}
 	}
+
+	public static function eliminarRegiones($idExpediente){
+		DB::table('region_controversia')->where('idExpediente',$idExpediente)->delete();
+	}
 }
