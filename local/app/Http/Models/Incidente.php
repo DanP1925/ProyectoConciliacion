@@ -45,7 +45,14 @@ class Incidente extends Model {
     }
 
 	public static function eliminarIncidentes($idExpediente) {
-		DB::table('incidente')->where('idExpediente',$idExpediente)->delete();
+		$incidentes = DB::table('incidente')->where('idExpediente',$idExpediente)->get()->all();
+		foreach ($incidentes as $incidente){
+			$idIncidente = $incidente->idIncidente;
+			IncidenteDetalle::where('idIncidente','=',$idIncidente)->delete();
+			IncidenteObservacion::where('idIncidente','=',$idIncidente)->delete();
+			IncidenteUsuario::where('idIncidente','=',$idIncidente)->delete();
+			Incidente::where('idIncidente','=',$idIncidente)->delete();
+		}
 	}
 
 }

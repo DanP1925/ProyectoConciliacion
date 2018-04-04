@@ -56,8 +56,9 @@ class ExpedienteController extends Controller
     {
 		$request->session()->forget('accion');
 
+		if (count($request->request) == 0)
+			ExpedienteTemporal::quitarDeSesion($request);
         $expedienteTemporal = ExpedienteTemporal::withRequest($request);
-        ExpedienteTemporal::quitarDeSesion($request);
 
         if (!is_null($request->input('accion'))){
 

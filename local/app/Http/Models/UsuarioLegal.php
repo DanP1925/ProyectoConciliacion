@@ -114,6 +114,8 @@ class UsuarioLegal extends Model {
         $correo = $request->session()->get('filtroCorreo');
         $resultado = $resultado->where('email','LIKE', '%'.$correo.'%'); 
 
+		$resultado = $resultado->whereNull('flagValidado');
+
         return $resultado->paginate(5);
     }
 

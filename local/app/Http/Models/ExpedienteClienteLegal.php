@@ -99,7 +99,6 @@ class ExpedienteClienteLegal extends Model {
 		$ruc = $request->input('ruc'); 
 
 		$personasJuridicas = DB::table('persona_juridica')->where('razonSocial','LIKE','%'.$razonSocial.'%');
-		$personasJuridicas = $personasJuridicas->where('razonSocial','LIKE','%'.$razonSocial.'%');
 		$personasJuridicas = $personasJuridicas->where('ruc','LIKE','%'.$ruc.'%');
 
 		$listaPersonasJuridicas = [];
@@ -155,7 +154,20 @@ class ExpedienteClienteLegal extends Model {
 			array_push($listaNatural, $resultadoNat->idExpedienteClienteLegal);
 		}
 
-		$lista = array_merge($listaJuridica ,$listaNatural);
+		if (!(is_null($razonSocial)&&is_null($ruc)&&is_null($nombre)&&is_null($dni))){
+
+			if (is_null($razonSocial)&&is_null($ruc))
+				$lista = $listaNatural;
+			else{
+				if (is_null($nombre)&&is_null($dni))
+					$lista = $listaJuridica;
+				else 
+					$lista = array_merge($listaJuridica ,$listaNatural);
+			}
+		} else{
+			$lista = array_merge($listaJuridica ,$listaNatural);
+		}
+			
 
 		$resultado = ExpedienteClienteLegal::whereIn('idExpedienteClienteLegal',$lista);
 		

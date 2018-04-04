@@ -308,6 +308,7 @@
                 <div class="grid-x grid-margin-x">
                     <div class="cell small-4">
 						@if (!is_null($expedienteTemporal->consorcioDemandante))
+							<input type="hidden" name="consorcioDemandante" value="{{$expedienteTemporal->consorcioDemandante}}" />
 							<div class="site-line">
 								<div class="table-full-cell-div padding-bottom-5">
 									<div class="site-label">
@@ -331,13 +332,14 @@
 					</div>
                     <div class="cell small-4">
 						@if (!is_null($expedienteTemporal->consorcioDemandado))
+							<input type="hidden" name="consorcioDemandado" value="{{$expedienteTemporal->consorcioDemandado}}" />
 							<div class="table-full-cell-div padding-bottom-5">
 								<div class="site-label">
 									<strong>Miembros Demandado</strong>
 								</div>
 							</div>
 							@foreach ($expedienteTemporal->miembrosDemandado as $miembro)
-								<input type="hidden" name="miembrosDemandante[]" value="{{$miembro}}" />
+								<input type="hidden" name="miembrosDemandado[]" value="{{$miembro}}" />
 								<div class="site-control">
 									@if($loop->iteration % 2 == 0)
 										<div class="site-control-no-border">

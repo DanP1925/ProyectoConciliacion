@@ -102,7 +102,7 @@
 					<div class="site-control-border">
 						<select class="site-select" id="sector" name="sector">
 							<option value="">Seleccione una opción</option>
-							<option value="PRI" @if ("PRI" == $filtroClienteLegal->sector) selected @endif >Privado</option>
+							<option value="PRV" @if ("PRI" == $filtroClienteLegal->sector) selected @endif >Privado</option>
 							<option value="PUB" @if ("PUB" == $filtroClienteLegal->sector) selected @endif >Público</option>
 						</select>
 					</div>

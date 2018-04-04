@@ -18,6 +18,7 @@
 						@else
 							<form method="GET" action="{{ url('expediente/nuevo', []) }}">
 						@endif
+								<input type="hidden" name="volver" value="nuevoRecurso"/>
 								<button class="site-title-button float-right">
 									Regresar
 								</button>
