@@ -25,16 +25,8 @@ class ExpedienteTemporal {
     var $secretarioArbitral;
 	var $idSecretarioLider;
     var $secretarioArbitralLider;
-	var $idDemandante;
-	var $demandante;
-	var $idDemandado;
-	var $demandado;
-	var $consorcioDemandante;
-	var $miembrosDemandante;
-	var $consorcioDemandado;
-	var $miembrosDemandado;
-	var $tipoDemandante;
-	var $tipoDemandado;
+	var $parteDemandante;
+	var $parteDemandado;
 	var $origenArbitraje;
 	var $montoContrato;
 	var $anhoContrato;
@@ -82,9 +74,8 @@ class ExpedienteTemporal {
             $instance->secretarioArbitralLider = $request->session()->get('secretarioArbitralLider');
 		}
 
-		if (!is_null($request->session()->get('demandante'))){
-			$instance->idDemandante = $request->session()->get('idDemandante');
-			$instance->demandante = $request->session()->get('demandante');
+		if (!is_null($request->session()->get('parteDemandante'))){
+			$instance->parteDemandante = $request->session()->get('parteDemandante');
 		}
 
 		if (!is_null($request->session()->get('demandado'))){
