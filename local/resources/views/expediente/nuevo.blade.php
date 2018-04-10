@@ -838,6 +838,8 @@
 </div>
 
 <input type="hidden" id="borrarItem" name="borrarItem" value="" />
+<div id="mensajesValidacion">
+</div>
 
 @include('shared.modals')
 
@@ -872,26 +874,38 @@
 
         if ($('#numero').val()==""){
             cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Número Expediente" /> ');
         }
 
         if ($('#fechaSolicitud').val()==""){
             cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Fecha Inicio de Solicitud" /> ');
         }
 
         if ($('#estadoExpediente').val()==""){
             cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Estado de Expediente" />');
         }
 
         if ($('#tipoCaso').val()==""){
             cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Tipo de Caso" />');
         }
 
         if ($('#subtipoCaso').val()==""){
             cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Subtipo de Caso" />');
         }
 
         if ($('#cuantiaControversiaInicial').val()==""){
             cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Cuantía Controversia Inicial"/>');
         } else {
             if (isNaN($('#cuantiaControversiaInicial').val())){
                 cont = cont + 1;
@@ -906,34 +920,26 @@
 
         if ($('#tipoCuantia').val()==""){
             cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Tipo Cuantía"/>');
         }
 
         if ($('#escalaPago').val()==""){
             cont = cont + 1;
-        }
-
-        if ($('#idDemandante').val()==""){
-            cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Escala de Pago (A-H)"/>');
         }
 
         if ($('#demandante').val()==""){
             cont = cont + 1;
-        }
-
-        if ($('#idDemandado').val()==""){
-            cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Demandante"/>');
         }
 
         if ($('#demandado').val()==""){
             cont = cont + 1;
-        }
-
-        if ($('#tipoDemandante').val()==""){
-            cont = cont + 1;
-        }
-
-        if ($('#tipoDemandado').val()==""){
-            cont = cont + 1;
+			document.getElementById('mensajesValidacion')
+				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Demandado"/>');
         }
 
         if ($('#anhoContrato').val()!=""){
@@ -949,11 +955,32 @@
         }
 
         if(cont>0){
-            $('#modalFaltanDatos').foundation('open');
+			var validaciones = $("input[name='validaciones[]']")
+				              .map(function(){return $(this).val();}).get();
+
+			var lista = document.getElementById("listaValidacionesModal");
+			for (i=0; i<validaciones.length;i++){
+				lista.insertAdjacentHTML('beforeend','<li>' + validaciones[i] + '</li>');
+			}
+			$('#modalFaltanDatosExpediente').foundation('open');
+
         } else{
             $('#modalRegistrarConfirmar').foundation('open');
         }
     });
+
+	$("#aceptarValidacion").click(function() {
+		var lista = document.getElementById("listaValidacionesModal");
+		while (lista.firstChild) {
+			lista.removeChild(lista.firstChild);
+		}
+
+		var mensajes = document.getElementById('mensajesValidacion');
+		while (mensajes.firstChild) {
+			mensajes.removeChild(mensajes.firstChild);
+		}
+
+	});
 
     $("#btn-registrar").click(function() {
         $('#modalRegistrarConfirmar').foundation('close');
