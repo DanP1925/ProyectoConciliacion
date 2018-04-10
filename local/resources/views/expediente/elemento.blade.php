@@ -47,11 +47,11 @@
 	</a>
 </div>
 <div class="list-icon-div">
-	<form method="POST" action="{{ url('expediente/borrar', ['idExpediente'=>$expediente->idExpediente])}}"/>
+	<form id ="form-eliminar-{{$expediente->idExpediente}}"  method="POST" action="{{ url('expediente/borrar', ['idExpediente'=>$expediente->idExpediente])}}"/>
 		{{csrf_field()}}
-		<button type="submit" name="accion" value="{{$expediente->idExpediente}}"/>
+		<div class="btn-eliminar-expediente" name="accion" value="{{$expediente->idExpediente}}"/>
 			<img src="{{ asset('images/ico_delete_red.png') }}" />
-		</button>
+		</div>
 	</form>
 </div>
 

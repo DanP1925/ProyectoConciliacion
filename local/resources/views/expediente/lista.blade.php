@@ -49,4 +49,30 @@
         
     </div>
 </div>
+
+<input type="hidden" id="borrarItem" name="borrarItem" value="" />
+
+@include('shared.modals')
+
+<script>
+
+	$(".btn-eliminar-expediente").click(function() {
+		var idBorrarExpediente = $(this).attr("value");
+		$("#borrarItem").val(idBorrarExpediente);
+		$('#modalBorrarConfirmar01').foundation('open');
+	});
+
+	$("#btn-borrar-01").click(function () {
+		$('#modalBorrarConfirmar01').foundation('close');
+		$('#modalBorrarMensaje').foundation('open');
+
+		var indexExpediente = $("#borrarItem").val();
+
+		var form = document.getElementById("form-eliminar-" + indexExpediente);
+		form.submit();
+	});
+
+</script>
+
 @endsection
+
