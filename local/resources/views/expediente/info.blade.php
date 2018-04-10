@@ -271,8 +271,8 @@
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="hidden" name="idDemandante" value="{{$expedienteTemporal->idDemandante}}" />
-							<input type="text" class="site-input" id="demandante" name="demandante" @if (!is_null($expedienteTemporal->demandante)) value="{{$expedienteTemporal->demandante}}" @endif/>
+							<input type="hidden" name="idDemandante" @if (!is_null($expedienteTemporal->parteDemandante)) value="{{$expedienteTemporal->parteDemandante->id}}" @endif/>
+							<input type="text" class="site-input" id="demandante" name="demandante" placeholder="Seleccione un personal" @if (!is_null($expedienteTemporal->parteDemandante)) value="{{$expedienteTemporal->parteDemandante->nombre}}" @endif/>
 						</div>
 					</div>
 				</div>
@@ -292,8 +292,8 @@
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="hidden" name="idDemandado" value="{{$expedienteTemporal->idDemandado}}" />
-							<input type="text" class="site-input" id="demandado" name="demandado" @if (!is_null($expedienteTemporal->demandado)) value="{{$expedienteTemporal->demandado}}" @endif/>
+							<input type="hidden" name="idDemandado" @if (!is_null($expedienteTemporal->parteDemandado)) value="{{$expedienteTemporal->parteDemandado->id}}" @endif/>
+							<input type="text" class="site-input" id="demandado" name="demandado" placeholder="Seleccione un personal"  @if (!is_null($expedienteTemporal->parteDemandado)) value="{{$expedienteTemporal->parteDemandado->nombre}}" @endif/>
 						</div>
 					</div>
 				</div>
@@ -303,19 +303,21 @@
 			</div>
 		</div>
 
-		@if (!is_null($expedienteTemporal->consorcioDemandante) || !is_null($expedienteTemporal->consorcioDemandado))
+		@if (!is_null($expedienteTemporal->parteDemandante) || !is_null($expedienteTemporal->parteDemandado))
 			<div class="cell small-12">
                 <div class="grid-x grid-margin-x">
                     <div class="cell small-4">
-						@if (!is_null($expedienteTemporal->consorcioDemandante))
-							<input type="hidden" name="consorcioDemandante" value="{{$expedienteTemporal->consorcioDemandante}}" />
+						@if (!is_null($expedienteTemporal->parteDemandante))
+						@if (!is_null($expedienteTemporal->parteDemandante->consorcio))
+							<input type="hidden" name="consorcioDemandante" value="{{$expedienteTemporal->parteDemandante->consorcio}}" />
 							<div class="site-line">
 								<div class="table-full-cell-div padding-bottom-5">
 									<div class="site-label">
 										<strong>Miembros Demandante</strong>
 									</div>
 								</div>
-								@foreach ($expedienteTemporal->miembrosDemandante as $miembro)
+								@if (!is_null($expedienteTemporal->parteDemandante->miembrosConsorcio))
+								@foreach ($expedienteTemporal->parteDemandante->miembrosConsorcio as $miembro)
 									<input type="hidden" name="miembrosDemandante[]" value="{{$miembro}}" />
 									<div class="site-control">
 										@if($loop->iteration % 2 == 0)
@@ -327,18 +329,22 @@
 											</div>
 									</div>
 								@endforeach
+								@endif
 							</div>
+						@endif
 						@endif
 					</div>
                     <div class="cell small-4">
-						@if (!is_null($expedienteTemporal->consorcioDemandado))
-							<input type="hidden" name="consorcioDemandado" value="{{$expedienteTemporal->consorcioDemandado}}" />
+						@if (!is_null($expedienteTemporal->parteDemandado))
+						@if (!is_null($expedienteTemporal->parteDemandado->consorcio))
+							<input type="hidden" name="consorcioDemandado" value="{{$expedienteTemporal->parteDemandado->consorcio}}" />
 							<div class="table-full-cell-div padding-bottom-5">
 								<div class="site-label">
 									<strong>Miembros Demandado</strong>
 								</div>
 							</div>
-							@foreach ($expedienteTemporal->miembrosDemandado as $miembro)
+							@if (!is_null($expedienteTemporal->parteDemandado->miembrosConsorcio))
+							@foreach ($expedienteTemporal->parteDemandado->miembrosConsorcio as $miembro)
 								<input type="hidden" name="miembrosDemandado[]" value="{{$miembro}}" />
 								<div class="site-control">
 									@if($loop->iteration % 2 == 0)
@@ -350,6 +356,8 @@
 										</div>
 								</div>
 							@endforeach
+							@endif
+						@endif
 						@endif
 					</div>
 					<div class="cell small-4">
@@ -373,8 +381,8 @@
 						<div class="site-control-border">
 							<select class="site-select" id="tipoDemandante" name="tipoDemandante">
 								<option value="">Seleccione una opción</option>
-								<option value="PUB" @if ($expedienteTemporal->tipoDemandante == "PUB") selected @endif>Público</option>
-								<option value="PRV" @if ($expedienteTemporal->tipoDemandante == "PRV") selected @endif>Privado</option>
+								<option value="PUB" @if (!is_null($expedienteTemporal->parteDemandante)) @if ($expedienteTemporal->parteDemandante->tipo == "PUB") selected @endif @endif>Público</option>
+								<option value="PRV" @if (!is_null($expedienteTemporal->parteDemandante)) @if ($expedienteTemporal->parteDemandante->tipo == "PRV") selected @endif @endif>Privado</option>
 							</select>
 						</div>
 					</div>
@@ -391,8 +399,8 @@
 						<div class="site-control-border">
 							<select class="site-select" id="tipoDemandado" name="tipoDemandado">
 								<option value="">Seleccione una opción</option>
-									<option value="PUB" @if ($expedienteTemporal->tipoDemandado == "PUB") selected @endif>Público</option>
-									<option value="PRV" @if ($expedienteTemporal->tipoDemandado == "PRV") selected @endif>Privado</option>
+								<option value="PUB" @if (!is_null($expedienteTemporal->parteDemandado)) @if ($expedienteTemporal->parteDemandado->tipo == "PUB") selected @endif @endif>Público</option>
+								<option value="PRV" @if (!is_null($expedienteTemporal->parteDemandado)) @if ($expedienteTemporal->parteDemandado->tipo == "PRV") selected @endif @endif>Privado</option>
 							</select>
 						</div>
 					</div>

@@ -36,12 +36,12 @@ class RecursoTemporal {
 		return $instance;
 	}	
 
-	function getNombreRecurso()
+	public function getNombreRecurso()
 	{
 		return DB::table('laudo_recurso')->where('idLaudoRecurso',$this->recursoPresentado)->first()->nombre;
 	}
 
-	function getNombreResultado()
+	public function getNombreResultado()
 	{
 		return DB::table('laudo_recurso_resultado')->where('idLaudoRecursoResultado',$this->resultadoRecursoPresentado)->first()->nombre;
 	}
