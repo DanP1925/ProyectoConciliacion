@@ -434,6 +434,7 @@ class ExpedienteTemporal {
 		$this->parteDemandante->actualizarNombre();
 		$this->parteDemandante->actualizarConsorcio();
 		$this->parteDemandante->actualizarMiembros();
+		$this->parteDemandante->actualizarTipo();
 	}
 
 	function agregarDemandado($idClienteLegal){
@@ -444,6 +445,7 @@ class ExpedienteTemporal {
 		$this->parteDemandado->actualizarNombre();
 		$this->parteDemandado->actualizarConsorcio();
 		$this->parteDemandado->actualizarMiembros();
+		$this->parteDemandado->actualizarTipo();
 	}
 
 	function agregarRegion($idRegion){

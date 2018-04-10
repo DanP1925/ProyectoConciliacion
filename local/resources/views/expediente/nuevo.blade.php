@@ -377,11 +377,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="tipoDemandante" name="tipoDemandante">
-                                    <option value="">Seleccione una opción</option>
-									<option value="PUB" @if (!is_null($expedienteTemporal->parteDemandante)) @if ($expedienteTemporal->parteDemandante->tipo == "PUB") selected @endif @endif>Público</option>
-									<option value="PRV" @if (!is_null($expedienteTemporal->parteDemandante)) @if ($expedienteTemporal->parteDemandante->tipo == "PRV") selected @endif @endif>Privado</option>
-                                </select>
+                                <input type="text" class="site-input" id="tipoDemandante" name="tipoDemandante" @if (!is_null($expedienteTemporal->parteDemandante)) @if($expedienteTemporal->parteDemandante->tipo=="PUB") value="Publico" @else @if ($expedienteTemporal->parteDemandante->tipo=="PRV") value="Privado" @endif @endif @endif readonly/>
                             </div>
                         </div>
                     </div>
@@ -395,11 +391,7 @@
                         </div>
                         <div class="site-control">
                             <div class="site-control-border">
-                                <select class="site-select" id="tipoDemandado" name="tipoDemandado">
-                                    <option value="">Seleccione una opción</option>
-									<option value="PUB" @if (!is_null($expedienteTemporal->parteDemandado)) @if ($expedienteTemporal->parteDemandado->tipo == "PUB") selected @endif @endif>Público</option>
-									<option value="PRV" @if (!is_null($expedienteTemporal->parteDemandado)) @if ($expedienteTemporal->parteDemandado->tipo == "PRV") selected @endif @endif>Privado</option>
-                                </select>
+                                <input type="text" class="site-input" id="tipoDemandado" name="tipoDemandado" @if (!is_null($expedienteTemporal->parteDemandado)) @if($expedienteTemporal->parteDemandado->tipo=="PUB") value="Publico" @else @if ($expedienteTemporal->parteDemandado->tipo=="PRV") value="Privado" @endif @endif @endif readonly/>
                             </div>
                         </div>
                     </div>

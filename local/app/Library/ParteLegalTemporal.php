@@ -25,7 +25,10 @@ class ParteLegalTemporal {
 		$instance->nombre = $nombre;
 		$instance->consorcio = $consorcio;
 		$instance->miembrosConsorcio = $miembros;
-		$instance->tipo = $tipo;
+		if ($tipo=="Publico") 
+			$instance->tipo = "PUB";
+		else if ($tipo == "Privado")
+			$instance->tipo = "PRV";
 		return $instance;
 	}
 
@@ -153,5 +156,10 @@ class ParteLegalTemporal {
 		} else {
 			$this->miembrosConsorcio = null;
 		}
+	}
+
+	public function actualizarTipo(){
+		$clienteLegal = ExpedienteClienteLegal::where('idExpedienteClienteLegal',$this->id)->first();
+		$this->tipo = $clienteLegal->flgSector;
 	}
 }
