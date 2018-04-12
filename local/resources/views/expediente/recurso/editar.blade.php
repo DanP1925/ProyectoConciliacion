@@ -72,6 +72,21 @@
 								</div>
 							</div>
 						</div>
+						<div class="cell small-4">
+							<div class="site-label padding-bottom-5">
+								Presentado por el
+							</div>
+							<div class="site-control">
+								<div class="site-control-border">
+									<select class="site-select" id="recursoAFavor" name="recursoAFavor">
+										<option value="">Seleccione una opción</option>
+										@foreach ($aFavor as $favor)
+											<option value="{{$favor->idLaudoAFavor}}" @if ($favor->idLaudoAFavor == $nuevoRecurso->recursoAFavor) selected @endif>{{$favor->nombre}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="cell small-12 padding-bottom-20">
@@ -83,7 +98,6 @@
 							<div class="site-control">
 								<div class="site-control-border">
 									<select class="site-select" id="resultadoRecursoPresentado" name="resultadoRecursoPresentado">
-										<option value="">Seleccione una opción</option>
 										@foreach ($resultadoRecursos as $resultadoRecurso)
 											<option value="{{$resultadoRecurso->idLaudoRecursoResultado}}" @if ($resultadoRecurso->idLaudoRecursoResultado == $nuevoRecurso->resultadoRecursoPresentado) selected @endif>{{$resultadoRecurso->nombre}}</option>
 										@endforeach
@@ -124,6 +138,10 @@
 		}
 
 		if($('#fechaPresentacion').val()==""){
+			cont = cont + 1;
+		}
+
+		if($('#recursoAFavor').val()==""){
 			cont = cont + 1;
 		}
 

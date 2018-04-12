@@ -328,10 +328,7 @@ class ExpedienteEquipoLegal extends Model {
 			}
 
 			if (!is_null($request->input('designacionArbitroUnico')))
-				$tipDesArbitroUnico = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionArbitroUnico'))->first();
-
-			if (!is_null($tipDesArbitroUnico))
-				$tipDesArbitroUnico = $tipDesArbitroUnico->idDesignacionTipo;
+				$tipDesArbitroUnico = $request->input('designacionArbitroUnico');
 		}
 
 
@@ -380,10 +377,7 @@ class ExpedienteEquipoLegal extends Model {
 			}
 
 			if (!is_null($request->input('designacionPresidenteTribunal')))
-				$tipDesPresidenteTribunal = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionPresidenteTribunal'))->first();
-
-			if (!is_null($tipDesPresidenteTribunal))
-				$tipDesPresidenteTribunal = $tipDesPresidenteTribunal->idDesignacionTipo;
+				$tipDesPresidenteTribunal = $request->input('designacionPresidenteTribunal');
 		}
 
 
@@ -432,10 +426,7 @@ class ExpedienteEquipoLegal extends Model {
 			}
 
 			if (!is_null($request->input('designacionDemandante')))
-				$tipDesArbitroDemandante = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandante'))->first();
-
-			if (!is_null($tipDesArbitroDemandante))
-				$tipDesArbitroDemandante = $tipDesArbitroDemandante->idDesignacionTipo;
+				$tipDesArbitroDemandante = $request->input('designacionDemandante');
 		}
 
 
@@ -483,10 +474,7 @@ class ExpedienteEquipoLegal extends Model {
 			}
 
 			if (!is_null($request->input('designacionDemandado')))
-				$tipDesArbitroDemandado = DB::table('designacion_tipo')->where('nombre','=',$request->input('designacionDemandado'))->first();
-
-			if (!is_null($tipDesArbitroDemandado))
-				$tipDesArbitroDemandado = $tipDesArbitroDemandado->idDesignacionTipo;
+				$tipDesArbitroDemandado = $request->input('designacionDemandado');
 		}
 
 		DB::table('expediente_equipo_legal')->where('idExpediente',$idExpediente)->update

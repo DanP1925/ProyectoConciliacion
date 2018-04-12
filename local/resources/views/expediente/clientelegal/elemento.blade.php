@@ -20,9 +20,11 @@
 							{{$cliente->getPersonaNatural()->apellidoPaterno}} {{$cliente->getPersonaNatural()->apellidoMaterno}}, {{$cliente->getPersonaNatural()->nombre}}
 						@endif
 					</div>
+					@if (!is_null($cliente->getConsorcioPersona()))
 					<div class="list-sublabel-avant-garde-regular">
-						Consorcio: <strong>{{ $cliente->getConsorcioPersona()->nombre }}</strong>
+						Consorcio: <strong> {{ $cliente->getConsorcioPersona()->nombre }} </strong>
 					</div>
+					@endif
 				</div>
 				<div class="list-text-4-div">
 					<div class="list-label-avant-garde-lite">

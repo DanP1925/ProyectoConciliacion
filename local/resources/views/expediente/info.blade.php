@@ -64,7 +64,6 @@
                     <div class="site-control">
                     	<div class="site-control-border">
 							<select class="site-select" id="estadoExpediente" name="estadoExpediente">
-								<option value="">Seleccione una opción</option>
 								@foreach ($estadosExpediente as $estadoExpediente)
 								<option value="{{$estadoExpediente->idExpedienteEstado}}" @if ($estadoExpediente->idExpedienteEstado == $expedienteTemporal->estadoExpediente) selected @endif>{{$estadoExpediente->nombre}}</option>
 								@endforeach
@@ -137,7 +136,7 @@
 				</div>
 				<div class="cell small-4">
 					<div class="site-label padding-bottom-5">
-						Cuantía Controversia Inicial (S/.)
+						Cuantía Controversia Inicial (S/)
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
@@ -147,7 +146,7 @@
 				</div>
 				<div class="cell small-4">
 					<div class="site-label padding-bottom-5">
-						Cuantía Controversia Final (S/.)
+						Cuantía Controversia Final (S/)
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
@@ -313,6 +312,8 @@
 							<div class="site-line">
 								<div class="table-full-cell-div padding-bottom-5">
 									<div class="site-label">
+										<strong>{{$expedienteTemporal->parteDemandante->consorcio}}</strong>
+										<br/>
 										<strong>Miembros Demandante</strong>
 									</div>
 								</div>
@@ -340,6 +341,8 @@
 							<input type="hidden" name="consorcioDemandado" value="{{$expedienteTemporal->parteDemandado->consorcio}}" />
 							<div class="table-full-cell-div padding-bottom-5">
 								<div class="site-label">
+									<strong>{{$expedienteTemporal->parteDemandado->consorcio}}</strong>
+									<br/>
 									<strong>Miembros Demandado</strong>
 								</div>
 							</div>
@@ -427,7 +430,7 @@
 				</div>
 				<div class="cell small-4">
 					<div class="site-label padding-bottom-5">
-						Monto del Contrato (S/.)
+						Monto del Contrato (S/)
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
@@ -544,8 +547,9 @@
 						<div class="site-control-border">
 							<select class="site-select" id="designacionArbitroUnico" name="designacionArbitroUnico">
 								<option value="">Seleccione una opción</option>
-								<option value="Por la parte" @if ($expedienteTemporal->designacionArbitroUnico == "Por la parte") selected @endif>Designado por la Parte</option>
-								<option value="Por la corte" @if ($expedienteTemporal->designacionArbitroUnico == "Por la corte") selected @endif>Designado por la Corte</option>
+								@foreach ($tiposDesignacion as $tipoDesignacion)
+									<option value="{{$tipoDesignacion->idDesignacionTipo}}" @if ($tipoDesignacion->idDesignacionTipo == $expedienteTemporal->designacionArbitroUnico) selected @endif>{{$tipoDesignacion->nombre}}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -601,8 +605,9 @@
 						<div class="site-control-border">
 							<select class="site-select" id="designacionPresidenteTribunal" name="designacionPresidenteTribunal">
 								<option value="">Seleccione una opción</option>
-								<option value="Por la parte" @if ($expedienteTemporal->designacionPresidenteTribunal == "Por la parte") selected @endif>Designado por la Parte</option>
-								<option value="Por la corte" @if ($expedienteTemporal->designacionPresidenteTribunal == "Por la corte") selected @endif>Designado por la Corte</option>
+								@foreach ($tiposDesignacion as $tipoDesignacion)
+									<option value="{{$tipoDesignacion->idDesignacionTipo}}" @if ($tipoDesignacion->idDesignacionTipo == $expedienteTemporal->designacionPresidenteTribunal) selected @endif>{{$tipoDesignacion->nombre}}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -615,8 +620,9 @@
 						<div class="site-control-border">
 							<select class="site-select" id="designacionDemandante" name="designacionDemandante">
 								<option value="">Seleccione una opción</option>
-								<option value="Por la parte" @if ($expedienteTemporal->designacionDemandante == "Por la parte") selected @endif>Designado por la Parte</option>
-								<option value="Por la corte" @if ($expedienteTemporal->designacionDemandante == "Por la corte") selected @endif>Designado por la Corte</option>
+								@foreach ($tiposDesignacion as $tipoDesignacion)
+									<option value="{{$tipoDesignacion->idDesignacionTipo}}" @if ($tipoDesignacion->idDesignacionTipo == $expedienteTemporal->designacionDemandante) selected @endif>{{$tipoDesignacion->nombre}}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -629,8 +635,9 @@
 						<div class="site-control-border">
 							<select class="site-select" id="designacionDemandado" name="designacionDemandado">
 								<option value="">Seleccione una opción</option>
-								<option value="Por la parte" @if ($expedienteTemporal->designacionDemandado == "Por la parte") selected @endif>Designado por la Parte</option>
-								<option value="Por la corte" @if ($expedienteTemporal->designacionDemandado == "Por la corte") selected @endif>Designado por la Corte</option>
+								@foreach ($tiposDesignacion as $tipoDesignacion)
+									<option value="{{$tipoDesignacion->idDesignacionTipo}}" @if ($tipoDesignacion->idDesignacionTipo == $expedienteTemporal->designacionDemandado) selected @endif>{{$tipoDesignacion->nombre}}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -745,6 +752,7 @@
 								@foreach ($expedienteTemporal->recursos as $recurso)
 									<input id="recursoPresentado {{$loop->index + 1}}" type="hidden" name="recursoPresentado[]" value="{{$recurso->recursoPresentado}}" />
 									<input id="fechaPresentacion {{$loop->index + 1}}" type="hidden" name="fechaPresentacion[]" value="{{$recurso->fechaPresentacion}}" />
+									<input id="recursoAFavor {{$loop->index + 1}}" type="hidden" name="recursoAFavor[]" value="{{$recurso->recursoAFavor}}" />
 									<input id="resultadoRecursoPresentado {{$loop->index + 1}}" type="hidden" name="resultadoRecursoPresentado[]" value="{{$recurso->resultadoRecursoPresentado}}" />
 									<input id="fechaResultado {{$loop->index + 1}}" type="hidden" name="fechaResultado[]" value="{{$recurso->fechaResultado}}" />
 									@if ($loop->index % 2 == 0)
@@ -752,7 +760,7 @@
 									@else
 										<div id="outputRecurso {{$loop->index + 1}}" class="site-list-item-div background-color-FFFFFF">
 									@endif
-											<div class="list-text-4-div">
+											<div class="list-text-5-div">
 												<div class="list-label-avant-garde-lite">
 													Recurso
 												</div>
@@ -762,7 +770,7 @@
 													@endif
 												</div>
 											</div>
-											<div class="list-text-4-div">
+											<div class="list-text-5-div">
 												<div class="list-label-avant-garde-lite">
 													Fecha de Presentación
 												</div>
@@ -770,7 +778,17 @@
 													{{$recurso->fechaPresentacion}}
 												</div>
 											</div>
-											<div class="list-text-4-div">
+											<div class="list-text-5-div">
+												<div class="list-label-avant-garde-lite">
+													Recurso por parte de
+												</div>
+												<div class="list-biglabel-avant-garde-regular">
+													@if (!is_null($recurso->recursoAFavor))
+														{{$recurso->getNombreRecursoAFavor()}}
+													@endif
+												</div>
+											</div>
+											<div class="list-text-5-div">
 												<div class="list-label-avant-garde-lite">
 													Fecha de Resultado
 												</div>
@@ -778,7 +796,7 @@
 													{{$recurso->fechaResultado}}
 												</div>
 											</div>
-											<div class="list-text-4-div">
+											<div class="list-text-5-div">
 												<div class="list-label-avant-garde-lite">
 													Resultado
 												</div>
@@ -839,198 +857,6 @@
 
 @include('shared.modals')
 
-<script>
-
-	function buscarSecretario() {
-		$('#modalRegistrarMensaje').foundation('open');
-	}
-
-	function buscarSecretarioLider() {
-		$('#modalRegistrarMensaje').foundation('open');
-	}
-
-	function buscarDemandante() {
-		$('#modalRegistrarMensaje').foundation('open');
-	}
-
-	function buscarDemandado() {
-		$('#modalRegistrarMensaje').foundation('open');
-	}
-
-	function buscarRegion() {
-		$('#modalRegistrarMensaje').foundation('open');
-	}
-
-	function buscarRecurso() {
-		$('#modalRegistrarMensaje').foundation('open');
-	}
-
-	$("#btn-registrar-expediente").click(function() {
-		var cont = 0;
-
-		if ($('#numero').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Número Expediente" /> ');
-		}
-
-		if ($('#fechaSolicitud').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Fecha Inicio de Solicitud" /> ');
-		}
-
-		if ($('#estadoExpediente').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Estado de Expediente" />');
-		}
-
-		if ($('#tipoCaso').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Tipo de Caso" />');
-		}
-
-		if ($('#subtipoCaso').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Subtipo de Caso" />');
-		}
-
-		if ($('#cuantiaControversiaInicial').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Cuantía Controversia Inicial"/>');
-		} else {
-			if (isNaN($('#cuantiaControversiaInicial').val())){
-				cont = cont + 1;
-			}
-		}
-
-		if ($('#cuantiaControversiaFinal').val()!=""){
-			if (isNaN($('#cuantiaControversiaFinal').val())){
-				cont = cont + 1;
-			}
-		}
-
-		if ($('#tipoCuantia').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Tipo Cuantía"/>');
-		}
-
-		if ($('#escalaPago').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Escala de Pago (A-H)"/>');
-		}
-
-		if ($('#demandante').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Demandante"/>');
-		}
-
-		if ($('#demandado').val()==""){
-			cont = cont + 1;
-			document.getElementById('mensajesValidacion')
-				.insertAdjacentHTML('beforeend','<input type="hidden" name="validaciones[]" value="Demandado"/>');
-		}
-
-		if ($('#anhoContrato').val()!=""){
-			if (isNaN($('#anhoContrato').val())){
-				cont = cont + 1;
-			}
-		}
-
-		if ($('#resultadoEnSoles').val()!=""){
-			if (isNaN($('#resultadoEnSoles').val())){
-				cont = cont + 1;
-			}
-		}
-
-		if(cont>0){
-			var validaciones = $("input[name='validaciones[]']")
-				              .map(function(){return $(this).val();}).get();
-
-			var lista = document.getElementById("listaValidacionesModal");
-			for (i=0; i<validaciones.length;i++){
-				lista.insertAdjacentHTML('beforeend','<li>' + validaciones[i] + '</li>');
-			}
-			$('#modalFaltanDatosExpediente').foundation('open');
-		} else{
-			$('#modalRegistrarConfirmar').foundation('open');
-		}
-	});
-
-	$("#aceptarValidacion").click(function() {
-		var lista = document.getElementById("listaValidacionesModal");
-		while (lista.firstChild) {
-			lista.removeChild(lista.firstChild);
-		}
-
-		var mensajes = document.getElementById('mensajesValidacion');
-		while (mensajes.firstChild) {
-			mensajes.removeChild(mensajes.firstChild);
-		}
-
-	});
-
-	$("#btn-registrar").click(function() {
-		$('#modalRegistrarConfirmar').foundation('close');
-		$('#modalRegistrarMensaje').foundation('open');
-		var form = document.getElementById("form-registrar-expediente");
-		form.submit()
-		$('#modalRegistrarMensaje').foundation('close');
-	});
-
-	$(".btn-borrar-region").click(function() {
-		var idBorrarRegion = $(this).attr("idBorrarRegion");
-		$("#borrarItem").val(idBorrarRegion);
-		$('#modalBorrarConfirmar01').foundation('open');
-	});
-
-	$("#btn-borrar-01").click(function(){
-		$('#modalBorrarConfirmar01').foundation('close');
-		$('#modalBorrarMensaje').foundation('open');
-
-		var indexRegion = $("#borrarItem").val();
-
-		var region = document.getElementById('region ' + indexRegion);
-		region.parentNode.removeChild(region);
-		var outputRegion = document.getElementById('outputRegion ' + indexRegion);
-		outputRegion.parentNode.removeChild(outputRegion);
-
-		$('#modalBorrarMensaje').foundation('close');
-	});
-
-	$(".btn-borrar-recurso").click(function() {
-		var idBorrarRecurso = $(this).attr("idBorrarRecurso");
-		$("#borrarItem").val(idBorrarRecurso);
-		$('#modalBorrarConfirmar02').foundation('open');
-	});
-
-	$("#btn-borrar-02").click(function(){
-		$('#modalBorrarConfirmar02').foundation('close');
-		$('#modalBorrarMensaje').foundation('open');
-
-		var indexRecurso = $("#borrarItem").val();
-
-		var recursoPresentado = document.getElementById('recursoPresentado ' + indexRecurso);
-		recursoPresentado.parentNode.removeChild(recursoPresentado);
-		var fechaPresentacion = document.getElementById('fechaPresentacion ' + indexRecurso);
-		fechaPresentacion.parentNode.removeChild(fechaPresentacion);
-		var resultadoRecursoPresentado = document.getElementById('resultadoRecursoPresentado ' + indexRecurso);
-		resultadoRecursoPresentado.parentNode.removeChild(resultadoRecursoPresentado);
-		var fechaResultado = document.getElementById('fechaResultado ' + indexRecurso);
-		fechaResultado.parentNode.removeChild(fechaResultado);
-		var outputRecurso = document.getElementById('outputRecurso ' + indexRecurso);
-		outputRecurso.parentNode.removeChild(outputRecurso);
-
-		$('#modalBorrarMensaje').foundation('close');
-	});
-
-</script>
+@include('expediente.jsexpediente')
 
 @endsection

@@ -181,7 +181,7 @@ class ExpedienteTemporal {
 
 			if(!is_null($equipoLegal->tipDesArbitroUnico)){
 				$tipDesArbitroUnico = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroUnico)->first();
-				$instance->designacionArbitroUnico = $tipDesArbitroUnico->nombre;
+				$instance->designacionArbitroUnico = $tipDesArbitroUnico->idDesignacionTipo;
 			}
 
 			if(!is_null($equipoLegal->idPresidenteTribunal)){
@@ -191,7 +191,7 @@ class ExpedienteTemporal {
 
 			if(!is_null($equipoLegal->tipDesPresidenteTribunal)){
 				$tipDesPresidenteTribunal = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesPresidenteTribunal)->first();
-				$instance->designacionPresidenteTribunal = $tipDesPresidenteTribunal->nombre;
+				$instance->designacionPresidenteTribunal = $tipDesPresidenteTribunal->idDesignacionTipo;
 			}
 
 			if(!is_null($equipoLegal->idArbitroDemandante)){
@@ -201,7 +201,7 @@ class ExpedienteTemporal {
 
 			if(!is_null($equipoLegal->tipDesArbitroDemandante)){
 				$tipDesArbitroDemandante = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroDemandante)->first();
-				$instance->designacionDemandante= $tipDesArbitroDemandante->nombre;
+				$instance->designacionDemandante= $tipDesArbitroDemandante->idDesignacionTipo;
 			}
 
 			if(!is_null($equipoLegal->idArbitroDemandado)){
@@ -211,7 +211,7 @@ class ExpedienteTemporal {
 
 			if(!is_null($equipoLegal->tipDesArbitroDemandado)){
 				$tipDesArbitroDemandado = DB::table('designacion_tipo')->where('idDesignacionTipo',$equipoLegal->tipDesArbitroDemandado)->first();
-				$instance->designacionDemandado = $tipDesArbitroDemandado->nombre;
+				$instance->designacionDemandado = $tipDesArbitroDemandado->idDesignacionTipo;
 			}
 		}
 
@@ -229,7 +229,7 @@ class ExpedienteTemporal {
 			$tempFechaResultado = explode(" ",$recurso->fechaResultado);
 			$fechaResultado = $tempFechaResultado[0];
 			$recursoTemporal = RecursoTemporal::withData(
-				$recurso->idLaudoRecurso,$fechaPresentacion,
+				$recurso->idLaudoRecurso,$fechaPresentacion,$recurso->idRecursoAFavor,
 				$recurso->idLaudoRecursoResultado,$fechaResultado);
 			array_push($listaRecursos,$recursoTemporal);
 		}
@@ -285,18 +285,21 @@ class ExpedienteTemporal {
         if (!is_null($request->input('secretarioLider')))
             $request->session()->put('secretarioArbitralLider',$request->input('secretarioLider'));
 
-		$parteDemandante = ParteLegalTemporal::withRequest(
-			$request->input('idDemandante'),$request->input('demandante'),
-			$request->input('consorcioDemandante'),$request->input('miembrosDemandante'),
-			$request->input('tipoDemandante'));
-		$request->session()->put('parteDemandante',$parteDemandante);
+		if (!is_null($request->input('demandante'))){
+			$parteDemandante = ParteLegalTemporal::withRequest(
+				$request->input('idDemandante'),$request->input('demandante'),
+				$request->input('consorcioDemandante'),$request->input('miembrosDemandante'),
+				$request->input('tipoDemandante'));
+			$request->session()->put('parteDemandante',$parteDemandante);
+		}
 
-		$parteDemandado = ParteLegalTemporal::withRequest(
-			$request->input('idDemandado'),$request->input('demandado'),
-			$request->input('consorcioDemandado'),$request->input('miembrosDemandado'),
-			$request->input('tipoDemandado'));
-
-		$request->session()->put('parteDemandado',$parteDemandado);
+		if (!is_null($request->input('demandado'))){
+			$parteDemandado = ParteLegalTemporal::withRequest(
+				$request->input('idDemandado'),$request->input('demandado'),
+				$request->input('consorcioDemandado'),$request->input('miembrosDemandado'),
+				$request->input('tipoDemandado'));
+			$request->session()->put('parteDemandado',$parteDemandado);
+		}
 
         if (!is_null($request->input('secretarioLider')))
             $request->session()->put('secretarioArbitralLider',$request->input('secretarioLider'));
@@ -359,13 +362,14 @@ class ExpedienteTemporal {
 			
 			$recursosPresentados = $request->input('recursoPresentado');
 			$fechasPresentacion = $request->input('fechaPresentacion');
+			$recursosAfavor = $request->input('recursoAFavor');
 			$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');
 			$fechasResultado = $request->input('fechaResultado');
 			
 			$length = count($recursosPresentados);
 			for($i=0;$i<$length;$i++){
 				$nuevoRecurso = RecursoTemporal::withData($recursosPresentados[$i],$fechasPresentacion[$i],
-														$resultadosRecursosPresentado[$i],$fechasResultado[$i]);
+					$recursosAfavor[$i],$resultadosRecursosPresentado[$i],$fechasResultado[$i]);
 				array_push($recursos,$nuevoRecurso);
 			}
 

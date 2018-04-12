@@ -62,13 +62,13 @@ class ExpedienteController extends Controller
 
 		list($estadosExpediente,$tipos,$subtipos,$tiposCuantia,$escalasDePago,
 			$origenesArbitraje,$montosContrato,$resultadosLaudo,
-			$ejecucionesLaudo,$favorLaudo) = $this->prepararVistaExpediente(); 
+			$ejecucionesLaudo,$favorLaudo,$tiposDesignacion) = $this->prepararVistaExpediente(); 
 
         return view('expediente.nuevo',
             compact('estadosExpediente', 'tipos', 'subtipos', 'tiposCuantia',
                     'escalasDePago', 'expedienteTemporal', 'origenesArbitraje',
 					'montosContrato', 'resultadosLaudo', 'ejecucionesLaudo',
-					'favorLaudo'));
+					'favorLaudo','tiposDesignacion'));
     }
 
 	public function info(Request $request, $id)
@@ -86,23 +86,28 @@ class ExpedienteController extends Controller
 
 		list($estadosExpediente,$tipos,$subtipos,$tiposCuantia,$escalasDePago,
 			$origenesArbitraje,$montosContrato,$resultadosLaudo,
-			$ejecucionesLaudo,$favorLaudo) = $this->prepararVistaExpediente(); 
+			$ejecucionesLaudo,$favorLaudo, $tiposDesignacion) = $this->prepararVistaExpediente(); 
 
 		return view('expediente.info',
 			compact('expedienteTemporal',
 					'estadosExpediente','tipos','subtipos','tiposCuantia',
 					'escalasDePago','origenesArbitraje','montosContrato',
-					'resultadosLaudo','ejecucionesLaudo','favorLaudo', 'id'));
+					'resultadosLaudo','ejecucionesLaudo','favorLaudo', 
+					'tiposDesignacion', 'id'));
 	}
 
 	public function ejecutarAccion(Request $request, $expedienteTemporal){
         if (!is_null($request->input('accion'))){
             $accion = explode(" ",$request->input('accion'));
             $tipoAccion = $accion[0];
-			if ($tipoAccion != "agregarRecurso")
-				$resultadoAccion = $accion[1];
-			else if ($tipoAccion != "agregarRecursoId")
-				$resultadoAccion = $accion[2];
+
+			if (substr($tipoAccion,-2) != "Id"){
+				if ($tipoAccion != "agregarRecurso")
+					$resultadoAccion = $accion[1];
+			} else{
+				if ($tipoAccion != "agregarRecursoId")
+					$resultadoAccion = $accion[2];
+			}
             
             if ($tipoAccion == "buscarSecretario" || $tipoAccion == "buscarSecretarioId")
                 $expedienteTemporal->agregarSecretario($resultadoAccion);
@@ -180,10 +185,11 @@ class ExpedienteController extends Controller
 		$resultadosLaudo = DB::table('laudo_resultado')->get()->all();
 		$ejecucionesLaudo = DB::table('laudo_ejecucion')->get()->all();
 		$favorLaudo = DB::table('laudo_a_favor')->get()->all();
+		$designacionTipo = DB::table('designacion_tipo')->get()->all();
 		
 		return array($estadosExpediente,$tipos,$subtipos,$tiposCuantia,$escalasDePago,
 			$origenesArbitraje,$montosContrato,$resultadosLaudo,
-			$ejecucionesLaudo,$favorLaudo);
+			$ejecucionesLaudo,$favorLaudo,$designacionTipo);
 	}
 
 	public function prepararVistaLista(){
@@ -217,14 +223,14 @@ class ExpedienteController extends Controller
 
 	public function buscarCliente(Request $request)
 	{
-		FiltroClienteLegal::guardarEnSesion($request);
+		if (count($request->request)!= 1)
+			FiltroClienteLegal::guardarEnSesion($request);
 		$filtroClienteLegal = new FiltroClienteLegal($request);
 
 		list($accion,$tipoAccion,$id) = 
 			$this->separarAccion($request, ["buscarDemandanteId","buscarDemandadoId"]);
 
 		$clientes = ExpedienteClienteLegal::buscarCliente($request); 
-
 		ExpedienteTemporal::guardarEnSesion($request);
 
 		return view('expediente.clientelegal.directorio',
@@ -250,14 +256,15 @@ class ExpedienteController extends Controller
     {
 		$recursosPresentados = DB::table('laudo_recurso')->get()->all();
 		$resultadoRecursos = DB::table('laudo_recurso_resultado')->get()->all();
+		$aFavor = DB::table('laudo_a_favor')->get()->all();
 
 		list($accion,$tipoAccion,$id) =	$this->separarAccion($request, ["agregarRecursoId"]);
 
         ExpedienteTemporal::guardarEnSesion($request);
 
 		return view('expediente.recurso.nuevo',
-			compact('recursosPresentados', 'resultadoRecursos', 'accion',
-					'tipoAccion', 'id'));
+			compact('recursosPresentados', 'resultadoRecursos', 'aFavor',
+			'accion','tipoAccion', 'id'));
     }
 
 	public function separarAccion($request, $tiposValidos){
@@ -283,9 +290,11 @@ class ExpedienteController extends Controller
     {
 		$recursosPresentados = DB::table('laudo_recurso')->get()->all();
 		$resultadoRecursos = DB::table('laudo_recurso_resultado')->get()->all();
+		$aFavor = DB::table('laudo_a_favor')->get()->all();
 
 		$recursos = $request->input('recursoPresentado');
 		$fechasPresentacion = $request->input('fechaPresentacion');
+		$recursosAFavor = $request->input('recursoAFavor');
 		$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');
 		$fechasResultado = $request->input('fechaResultado');
 
@@ -298,14 +307,13 @@ class ExpedienteController extends Controller
 		} else
 			$idRecurso = $accion[1];
 
-		$nuevoRecurso = RecursoTemporal::withData($recursos[$idRecurso],$fechasPresentacion[$idRecurso],
-			$resultadosRecursosPresentado[$idRecurso],$fechasResultado[$idRecurso]);
+		$nuevoRecurso = RecursoTemporal::withData($recursos[$idRecurso],$fechasPresentacion[$idRecurso], $recursosAFavor[$idRecurso] ,$resultadosRecursosPresentado[$idRecurso],$fechasResultado[$idRecurso]);
 
         $accion = $request->input('accion');
         ExpedienteTemporal::guardarEnSesion($request);
 		return view('expediente.recurso.editar',
-			compact('recursosPresentados', 'resultadoRecursos', 'accion',
-					'nuevoRecurso', 'tipoAccion', 'id'));
+			compact('recursosPresentados', 'resultadoRecursos', 'aFavor',
+		   	'accion','nuevoRecurso', 'tipoAccion', 'id'));
     }
 
 }

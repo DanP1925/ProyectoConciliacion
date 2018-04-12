@@ -48,16 +48,18 @@ class ParteLegalTemporal {
 		if (!is_null($persona)){
 			$instance->nombre = ParteLegalTemporal::seleccionarNombre($clienteLegal,$persona );
 			$consorcioDetalle = DB::table('consorcio_persona_detalle')->where($idObjetivo, $idPersona)->first();
-			$consorcioPersona = DB::table('consorcio_persona')->where('idConsorcioPersona',$consorcioDetalle->idConsorcioPersona)->first();
-			$instance->consorcio = $consorcioPersona->nombre;
-			$miembrosConsorcio = DB::table('consorcio_persona_detalle')->where('idConsorcioPersona',$consorcioDetalle->idConsorcioPersona)->get()->all();
-			$listaNombreMiembros = [];
-			foreach($miembrosConsorcio as $miembro){
-				$miembroId = ParteLegalTemporal::seleccionarMiembroId($clienteLegal,$miembro);
-				$personaMiembro = DB::table($tablaPersona)->where($idObjetivo,$miembroId)->first();
-				$listaNombreMiembros = ParteLegalTemporal::agregarNombre($clienteLegal, $listaNombreMiembros, $personaMiembro);
+			if (!is_null($consorcioDetalle)){
+				$consorcioPersona = DB::table('consorcio_persona')->where('idConsorcioPersona',$consorcioDetalle->idConsorcioPersona)->first();
+				$instance->consorcio = $consorcioPersona->nombre;
+				$miembrosConsorcio = DB::table('consorcio_persona_detalle')->where('idConsorcioPersona',$consorcioDetalle->idConsorcioPersona)->get()->all();
+				$listaNombreMiembros = [];
+				foreach($miembrosConsorcio as $miembro){
+					$miembroId = ParteLegalTemporal::seleccionarMiembroId($clienteLegal,$miembro);
+					$personaMiembro = DB::table($tablaPersona)->where($idObjetivo,$miembroId)->first();
+					$listaNombreMiembros = ParteLegalTemporal::agregarNombre($clienteLegal, $listaNombreMiembros, $personaMiembro);
+				}
+				$instance->miembrosConsorcio = $listaNombreMiembros;
 			}
-			$instance->miembrosConsorcio = $listaNombreMiembros;
 		}
 		$instance->tipo = $clienteLegal->flgSector;
 
