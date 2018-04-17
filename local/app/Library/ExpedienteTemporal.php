@@ -176,7 +176,7 @@ class ExpedienteTemporal {
 		if (!is_null($equipoLegal)){
 			if(!is_null($equipoLegal->idArbitroUnico)){
 				$arbitroUnico = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroUnico)->first(); 
-				$instance->arbitroUnico = ($arbitroUnico->nombre).' '.($arbitroUnico->apellidoPaterno).' '.($arbitroUnico->apellidoMaterno);
+				$instance->arbitroUnico = ($arbitroUnico->apellidoPaterno).' '.($arbitroUnico->apellidoMaterno).' '.($arbitroUnico->nombre);
 			}
 
 			if(!is_null($equipoLegal->tipDesArbitroUnico)){
@@ -186,7 +186,7 @@ class ExpedienteTemporal {
 
 			if(!is_null($equipoLegal->idPresidenteTribunal)){
 				$presidenteTribunal = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idPresidenteTribunal)->first(); 
-				$instance->presidenteTribunal = ($presidenteTribunal->nombre).' '.($presidenteTribunal->apellidoPaterno).' '.($presidenteTribunal->apellidoMaterno);
+				$instance->presidenteTribunal = ($presidenteTribunal->apellidoPaterno).' '.($presidenteTribunal->apellidoMaterno).' '.($presidenteTribunal->nombre);
 			}
 
 			if(!is_null($equipoLegal->tipDesPresidenteTribunal)){
@@ -196,7 +196,7 @@ class ExpedienteTemporal {
 
 			if(!is_null($equipoLegal->idArbitroDemandante)){
 				$arbitroDemandante = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroDemandante)->first(); 
-				$instance->arbitroDemandante = ($arbitroDemandante->nombre).' '.($arbitroDemandante->apellidoPaterno).' '.($arbitroDemandante->apellidoMaterno);
+				$instance->arbitroDemandante = ($arbitroDemandante->apellidoPaterno).' '.($arbitroDemandante->apellidoMaterno).' '.($arbitroDemandante->nombre);
 			}
 
 			if(!is_null($equipoLegal->tipDesArbitroDemandante)){
@@ -206,7 +206,7 @@ class ExpedienteTemporal {
 
 			if(!is_null($equipoLegal->idArbitroDemandado)){
 				$arbitroDemandado = DB::table('usuario_legal')->where('idUsuarioLegal',$equipoLegal->idArbitroDemandado)->first(); 
-				$instance->arbitroDemandado = ($arbitroDemandado->nombre).' '.($arbitroDemandado->apellidoPaterno).' '.($arbitroDemandado->apellidoMaterno);
+				$instance->arbitroDemandado = ($arbitroDemandado->apellidoPaterno).' '.($arbitroDemandado->apellidoMaterno).' '.($arbitroDemandado->nombre);
 			}
 
 			if(!is_null($equipoLegal->tipDesArbitroDemandado)){
@@ -418,17 +418,17 @@ class ExpedienteTemporal {
     function agregarSecretario($idUsuarioLegal){
         $secretario = DB::table('usuario_legal')->where('idUsuarioLegal',$idUsuarioLegal)->first();
 		$this->idSecretarioResponsable = $secretario->idUsuarioLegal;
-        $this->secretarioArbitral = $secretario->nombre;
-        $this->secretarioArbitral .= ' '.$secretario->apellidoPaterno;
+        $this->secretarioArbitral = $secretario->apellidoPaterno;
         $this->secretarioArbitral .= ' '.$secretario->apellidoMaterno;
+        $this->secretarioArbitral .= ' '.$secretario->nombre;
     }
 
     function agregarSecretarioLider($idUsuarioLegal){
         $secretario = DB::table('usuario_legal')->where('idUsuarioLegal',$idUsuarioLegal)->first();
 		$this->idSecretarioLider = $secretario->idUsuarioLegal;
-        $this->secretarioArbitralLider = $secretario->nombre;
-        $this->secretarioArbitralLider .= ' '.$secretario->apellidoPaterno;
+        $this->secretarioArbitralLider = $secretario->apellidoPaterno;
         $this->secretarioArbitralLider .= ' '.$secretario->apellidoMaterno;
+        $this->secretarioArbitralLider .= ' '.$secretario->nombre;
     }
 
 	function agregarDemandante($idClienteLegal){
@@ -469,6 +469,34 @@ class ExpedienteTemporal {
 	function editarRecurso($id, Request $request){
 		$nuevoRecurso = RecursoTemporal::withRequest($request);
 		$this->recursos[$id] = $nuevoRecurso;
-
 	}
+
+	function agregarArbitroUnico($idArbitroUnico){
+        $arbitroUnico = DB::table('usuario_legal')->where('idUsuarioLegal',$idArbitroUnico)->first();
+        $this->arbitroUnico = $arbitroUnico->apellidoPaterno;
+        $this->arbitroUnico .= ' '.$arbitroUnico->apellidoMaterno;
+        $this->arbitroUnico .= ' '.$arbitroUnico->nombre;
+	}
+
+	function agregarPresidenteTribunal($idPresidenteTribunal){
+        $presidenteTribunal = DB::table('usuario_legal')->where('idUsuarioLegal',$idPresidenteTribunal)->first();
+        $this->presidenteTribunal = $presidenteTribunal->apellidoPaterno;
+        $this->presidenteTribunal .= ' '.$presidenteTribunal->apellidoMaterno;
+        $this->presidenteTribunal .= ' '.$presidenteTribunal->nombre;
+	}
+
+	function agregarArbitroDemandante($idArbitroDemandante){
+        $arbitroDemandante = DB::table('usuario_legal')->where('idUsuarioLegal',$idArbitroDemandante)->first();
+        $this->arbitroDemandante = $arbitroDemandante->apellidoPaterno;
+        $this->arbitroDemandante .= ' '.$arbitroDemandante->apellidoMaterno;
+        $this->arbitroDemandante .= ' '.$arbitroDemandante->nombre;
+	}
+
+	function agregarArbitroDemandado($idArbitroDemandado){
+        $arbitroDemandado = DB::table('usuario_legal')->where('idUsuarioLegal',$idArbitroDemandado)->first();
+        $this->arbitroDemandado = $arbitroDemandado->apellidoPaterno;
+        $this->arbitroDemandado .= ' '.$arbitroDemandado->apellidoMaterno;
+        $this->arbitroDemandado .= ' '.$arbitroDemandado->nombre;
+	}
+
 }

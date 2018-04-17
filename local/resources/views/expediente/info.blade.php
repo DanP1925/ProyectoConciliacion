@@ -530,12 +530,22 @@
 					</div>
 				</div>
 				<div class="cell small-4">
-					<div class="site-label padding-bottom-5">
-						Nombre del Árbitro Único
+					<div class="table-2cells-div padding-bottom-5">
+						<div class="left-div">
+							<div class="site-label">
+								Nombre del Árbitro Único
+							</div>
+						</div>
+						<div class="right-div">
+							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarUnico" class="site-label-button float-right" onclick="buscarSecretario()">
+								buscar
+							</button>
+							<div style="clear:both;"></div>
+						</div>
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="text" class="site-input" id="arbitroUnico" name="arbitroUnico" @if (!is_null($expedienteTemporal->arbitroUnico)) value="{{$expedienteTemporal->arbitroUnico}}" @endif/>
+							<input type="text" class="site-input" id="arbitroUnico" name="arbitroUnico" @if (!is_null($expedienteTemporal->arbitroUnico)) value="{{$expedienteTemporal->arbitroUnico}}" @endif readonly/>
 						</div>
 					</div>
 				</div>
@@ -564,32 +574,62 @@
 					</div>
 				</div>
 				<div class="cell small-4">
-					<div class="site-label padding-bottom-5">
-						Presidente Tribunal
+					<div class="table-2cells-div padding-bottom-5">
+						<div class="left-div">
+							<div class="site-label">
+								Presidente Tribunal
+							</div>
+						</div>
+						<div class="right-div">
+							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarPresidente" class="site-label-button float-right" onclick="buscarSecretario()">
+								buscar
+							</button>
+							<div style="clear:both;"></div>
+						</div>
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="text" class="site-input" id="presidenteTribunal" name="presidenteTribunal" @if (!is_null($expedienteTemporal->presidenteTribunal)) value="{{$expedienteTemporal->presidenteTribunal}}" @endif/>
+							<input type="text" class="site-input" id="presidenteTribunal" name="presidenteTribunal" @if (!is_null($expedienteTemporal->presidenteTribunal)) value="{{$expedienteTemporal->presidenteTribunal}}" @endif readonly/>
 						</div>
 					</div>
 				</div>
 				<div class="cell small-4">
-					<div class="site-label padding-bottom-5">
-						Arbitro Demandante
+					<div class="table-2cells-div padding-bottom-5">
+						<div class="left-div">
+							<div class="site-label">
+								Arbitro Demandante
+							</div>
+						</div>
+						<div class="right-div">
+							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarArbitroDemandante" class="site-label-button float-right" onclick="buscarSecretario()">
+								buscar
+							</button>
+							<div style="clear:both;"></div>
+						</div>
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="text" class="site-input" id="arbitroDemandante" name="arbitroDemandante" @if (!is_null($expedienteTemporal->arbitroDemandante)) value="{{$expedienteTemporal->arbitroDemandante}}" @endif/>
+							<input type="text" class="site-input" id="arbitroDemandante" name="arbitroDemandante" @if (!is_null($expedienteTemporal->arbitroDemandante)) value="{{$expedienteTemporal->arbitroDemandante}}" @endif readonly/>
 						</div>
 					</div>
 				</div>
 				<div class="cell small-4">
-					<div class="site-label padding-bottom-5">
-						Arbitro Demandado
+					<div class="table-2cells-div padding-bottom-5">
+						<div class="left-div">
+							<div class="site-label">
+								Arbitro Demandado
+							</div>
+						</div>
+						<div class="right-div">
+							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarArbitroDemandado" class="site-label-button float-right" onclick="buscarSecretario()">
+								buscar
+							</button>
+							<div style="clear:both;"></div>
+						</div>
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="text" class="site-input" id="arbitroDemandado" name="arbitroDemandado" @if (!is_null($expedienteTemporal->arbitroDemandado)) value="{{$expedienteTemporal->arbitroDemandado}}" @endif/>
+							<input type="text" class="site-input" id="arbitroDemandado" name="arbitroDemandado" @if (!is_null($expedienteTemporal->arbitroDemandado)) value="{{$expedienteTemporal->arbitroDemandado}}" @endif readonly/>
 						</div>
 					</div>
 				</div>

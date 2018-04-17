@@ -127,6 +127,14 @@ class ExpedienteController extends Controller
 				$expedienteTemporal->agregarRecurso($request);
 			else if ($tipoAccion == "editarRecurso" || $tipoAccion == "editarRecursoId")
 				$expedienteTemporal->editarRecurso($resultadoAccion, $request);
+			else if ($tipoAccion == "buscarUnico" || $tipoAccion == "buscarUnicoId")
+				$expedienteTemporal->agregarArbitroUnico($resultadoAccion);
+			else if ($tipoAccion == "buscarPresidente" || $tipoAccion == "buscarPresidenteId")
+				$expedienteTemporal->agregarPresidenteTribunal($resultadoAccion);
+			else if ($tipoAccion == "buscarArbitroDemandante" || $tipoAccion == "buscarArbitroDemandanteId")
+				$expedienteTemporal->agregarArbitroDemandante($resultadoAccion);
+			else if ($tipoAccion == "buscarArbitroDemandado" || $tipoAccion == "buscarArbitroDemandadoId")
+				$expedienteTemporal->agregarArbitroDemandado($resultadoAccion);
         }
 
 		return $expedienteTemporal;
