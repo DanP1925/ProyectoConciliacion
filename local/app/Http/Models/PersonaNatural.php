@@ -39,4 +39,16 @@ class PersonaNatural extends Model {
 		}
 		return $lista;
 	}
+
+	public static function getListaIdUsandoNombreYDNI($nombre,$dni){
+		$listaIdNombre = PersonaNatural::getListaIdUsandoNombre($nombre);
+		$personasNaturales = DB::table('persona_natural')->whereIn('idPersonaNatural',$listaIdNombre);
+		$personasNaturales = $personasNaturales->where('dni','LIKE','%'.$dni.'%');
+
+		$lista = [];
+		foreach($personasNaturales->get() as $persona){
+			array_push($lista, $persona->idPersonaNatural);
+		}
+		return $lista;
+	}
 }

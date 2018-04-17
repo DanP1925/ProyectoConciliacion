@@ -34,7 +34,7 @@ class FiltroClienteLegal{
 		$request->session()->put('filtroRuc', $request->input('ruc'));
 		$request->session()->put('filtroEmail', $request->input('email'));
 		$request->session()->put('filtroFlagConsorcio', $request->input('flagConsorcio'));
-		$request->session()->put('filtroSector', $request->input('flagConsorcio'));
+		$request->session()->put('filtroSector', $request->input('sector'));
 	}
 
 	public static function quitarDeSesion(Request $request)

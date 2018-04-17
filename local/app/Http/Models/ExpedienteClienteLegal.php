@@ -79,99 +79,53 @@ class ExpedienteClienteLegal extends Model {
 
     public static function buscarCliente(Request $request){
 
-		//Persona Natural
-		$nombre = $request->input('nombre'); 
-		$dni = $request->input('dni'); 
+		$flagConsorcio = $request->input('flagConsorcio');
+		if (!is_null($flagConsorcio)){
+			if ($flagConsorcio == "Si")
+				$resultado = ExpedienteClienteLegal::whereNotNull('idConsorcioPersona');
+			else if ($flagConsorcio == "No")
+				$resultado = ExpedienteClienteLegal::whereNull('idConsorcioPersona');
+		} else
+			$resultado = ExpedienteClienteLegal::getModel();
 
-		$personasNaturales = DB::table('persona_natural')->where('nombre','LIKE', '%'.$nombre.'%');
-		$personasNaturales = $personasNaturales->where('apellidoPaterno','LIKE', '%'.$nombre.'%');
-		$personasNaturales = $personasNaturales->where('apellidoPaterno','LIKE', '%'.$nombre.'%');
-		$personasNaturales = $personasNaturales->where('dni','LIKE', '%'.$dni.'%');
-
-		$listaPersonasNaturales = [];
-		foreach ($personasNaturales->get()->all() as $personaNatural)
-			array_push($listaPersonasNaturales, $personaNatural->idPersonaNatural);
-
-		$resultadoNatural = ExpedienteClienteLegal::whereIn('idPersonaNatural', $listaPersonasNaturales);
-
-		//Persona Jurdica
-		$razonSocial = $request->input('razonSocial'); 
-		$ruc = $request->input('ruc'); 
-
-		$personasJuridicas = DB::table('persona_juridica')->where('razonSocial','LIKE','%'.$razonSocial.'%');
-		$personasJuridicas = $personasJuridicas->where('ruc','LIKE','%'.$ruc.'%');
-
-		$listaPersonasJuridicas = [];
-		foreach($personasJuridicas->get()->all() as $personaJuridica)
-			array_push($listaPersonasJuridicas, $personaJuridica->idPersonaJuridica);
-
-		$resultadoJuridico = ExpedienteClienteLegal::whereIn('idPersonaJuridica', $listaPersonasJuridicas);
+		$flagSector = $request->input('sector');
+		if (!is_null($flagSector))
+			$resultado = $resultado->where('flgSector',$flagSector);
 
 		$email = $request->input('email');
-		$resultadoNatural = $resultadoNatural->where('emailClienteLegal','LIKE', '%'.$email.'%');
-		$resultadoJuridico= $resultadoJuridico->where('emailClienteLegal','LIKE', '%'.$email.'%');
+		if (!is_null($email))
+			$resultado = $resultado->where('emailClienteLegal','LIKE', '%'.$email.'%');
 
-		if (!is_null($request->input('sector'))){
-			$sector = $request->input('sector');
-			$resultadoNatural = $resultadoNatural->where('flgSector','=', $sector);
-			$resultadoJuridico = $resultadoJuridico->where('flgSector','=', $sector);
-		}
-
-		if (!is_null($request->input('flagConsorcio'))){
-			//PersonaJuridica
-			$consorciosJuridicos = DB::table('consorcio_persona_detalle')->where('idPersonaJuridica','<>',0)->get();
-
-			$listaConsorciosJuridicos = [];
-			foreach($consorciosJuridicos as $consorcioJuridico)
-				array_push($listaConsorciosJuridicos, $consorcioJuridico->idPersonaJuridica);
-
-			if ($request->input('flagConsorcio')=='Si')
-				$resultadoJuridico = $resultadoJuridico->whereIn('idPersonaJuridica',$listaConsorciosJuridicos);
-			else
-				$resultadoJuridico = $resultadoJuridico->whereNotIn('idPersonaJuridica',$listaConsorciosJuridicos);
-
-			//PersonaNatural
-			$consorciosNaturales = DB::table('consorcio_persona_detalle')->where('idPersonaNatural','<>',0)->get();
-
-			$listaConsorciosNaturales = [];
-			foreach($consorciosNaturales as $consorcioNatural)
-				array_push($listaConsorciosNaturales, $consorcioNatural->idPersonaNatural);
-
-			if ($request->input('flagConsorcio')=='Si')
-				$resultadoNatural = $resultadoNatural->whereIn('idPersonaNatural',$listaConsorciosNaturales);
-			else
-				$resultadoNatural = $resultadoNatural->whereNotIn('idPersonaNatural',$listaConsorciosNaturales);
-
-		}	
-
-		$listaJuridica = [];
-		foreach($resultadoJuridico->get()->all() as $resultadoJur){
-			array_push($listaJuridica, $resultadoJur->idExpedienteClienteLegal);
-		}
-
-		$listaNatural = [];
-		foreach($resultadoNatural->get()->all() as $resultadoNat){
-			array_push($listaNatural, $resultadoNat->idExpedienteClienteLegal);
-		}
-
-		if (!(is_null($razonSocial)&&is_null($ruc)&&is_null($nombre)&&is_null($dni))){
-
-			if (is_null($razonSocial)&&is_null($ruc))
-				$lista = $listaNatural;
-			else{
-				if (is_null($nombre)&&is_null($dni))
-					$lista = $listaJuridica;
-				else 
-					$lista = array_merge($listaJuridica ,$listaNatural);
+		if (ExpedienteClienteLegal::buscaPersonaNatural($request) && ExpedienteClienteLegal::buscaPersonaJuridica($request)){
+			$resultado = ExpedienteClienteLegal::getModel();
+		} else {
+			if (ExpedienteClienteLegal::buscaPersonaNatural($request)){
+				$nombre = $request->input('nombre'); 
+				$dni = $request->input('dni'); 
+				$listaNaturales = PersonaNatural::getListaIdUsandoNombreYDNI($nombre,$dni);
+				$resultado = $resultado->whereIn('idPersonaNatural', $listaNaturales);
+			} 
+			else if (ExpedienteClienteLegal::buscaPersonaJuridica($request)){
+				$razonSocial = $request->input('razonSocial'); 
+				$ruc = $request->input('ruc'); 
+				$listaJuridicas = PersonaJuridica::getListaIdUsandoRazonSocialYRUC($razonSocial,$ruc);
+				$resultado = $resultado->whereIn('idPersonaJuridica', $listaJuridicas);
 			}
-		} else{
-			$lista = array_merge($listaJuridica ,$listaNatural);
 		}
-			
 
-		$resultado = ExpedienteClienteLegal::whereIn('idExpedienteClienteLegal',$lista);
-		
-        return $resultado->paginate(5);
+		return $resultado->paginate(5);
     }
+
+	private static function buscaPersonaNatural(Request $request){
+		$hayNombre = !is_null($request->input('nombre'));
+		$hayDni = !is_null($request->input('dni'));
+		return $hayNombre || $hayDni;
+	}
+
+	private static function buscaPersonaJuridica(Request $request){
+		$hayRazonSocial = !is_null($request->input('razonSocial'));
+		$hayRuc = !is_null($request->input('ruc'));
+		return $hayRazonSocial || $hayRuc;
+	}
 
 }

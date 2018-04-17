@@ -186,7 +186,7 @@ class ExpedienteController extends Controller
 		$ejecucionesLaudo = DB::table('laudo_ejecucion')->get()->all();
 		$favorLaudo = DB::table('laudo_a_favor')->get()->all();
 		$designacionTipo = DB::table('designacion_tipo')->get()->all();
-		
+		$numerosExpediente = DB::table('expediente')->select('numero')->get()->all();
 		return array($estadosExpediente,$tipos,$subtipos,$tiposCuantia,$escalasDePago,
 			$origenesArbitraje,$montosContrato,$resultadosLaudo,
 			$ejecucionesLaudo,$favorLaudo,$designacionTipo);

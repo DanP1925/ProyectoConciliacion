@@ -33,4 +33,13 @@ class PersonaJuridica extends Model {
 		return $lista;
 	}
 
+	public static function getListaIdUsandoRazonSocialYRUC($razonSocial, $ruc){
+		$personasJuridicas = DB::table('persona_juridica')->where('razonSocial','LIKE','%'.$razonSocial.'%');
+		$personasJuridicas = $personasJuridicas->where('ruc','LIKE','%'.$ruc.'%');
+		$lista = [];
+		foreach($personasJuridicas->get() as $personaJuridica)
+			array_push($lista, $personaJuridica->idPersonaJuridica);
+		return $lista;
+	}
+
 }

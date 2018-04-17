@@ -36,7 +36,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="email" name="email" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->email}}" @endif/>
+						<input type="text" class="site-input" id="email" name="email" @if (!is_null($filtroClienteLegal->email)) value="{{$filtroClienteLegal->email}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -50,7 +50,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="razonSocial" name="razonSocial" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->razonSocial}}" @endif/>
+						<input type="text" class="site-input" id="razonSocial" name="razonSocial" @if (!is_null($filtroClienteLegal->razonSocial)) value="{{$filtroClienteLegal->razonSocial}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -64,7 +64,7 @@
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<input type="text" class="site-input" id="ruc" name="ruc" @if (!is_null($filtroClienteLegal->nombre)) value="{{$filtroClienteLegal->ruc}}" @endif/>
+						<input type="text" class="site-input" id="ruc" name="ruc" @if (!is_null($filtroClienteLegal->ruc)) value="{{$filtroClienteLegal->ruc}}" @endif/>
 					</div>
 				</div>
 			</div>
@@ -102,7 +102,7 @@
 					<div class="site-control-border">
 						<select class="site-select" id="sector" name="sector">
 							<option value="">Seleccione una opción</option>
-							<option value="PRV" @if ("PRI" == $filtroClienteLegal->sector) selected @endif >Privado</option>
+							<option value="PRV" @if ("PRV" == $filtroClienteLegal->sector) selected @endif >Privado</option>
 							<option value="PUB" @if ("PUB" == $filtroClienteLegal->sector) selected @endif >Público</option>
 						</select>
 					</div>
