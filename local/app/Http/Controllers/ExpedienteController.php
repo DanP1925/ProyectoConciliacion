@@ -18,6 +18,7 @@ use App\Http\Models\LaudoResultado;
 use App\Http\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 use App\Library\ExpedienteTemporal;
 use App\Library\RecursoTemporal;
 use App\Library\FiltroExpediente;
@@ -152,13 +153,7 @@ class ExpedienteController extends Controller
 			LaudoRecursoPresentado::actualizarRecursos($idExpediente, $request);
 		}
 			
-		$filtroExpediente = new FiltroExpediente($request);
-        list($estadosExpediente,$tipos,$subtipos) = $this->prepararVistaLista();
-
-		$expedientes = Expediente::paginate(5);
-
-		return view('expediente.lista', compact('estadosExpediente',
-					'tipos', 'subtipos', 'expedientes', 'filtroExpediente' ));
+		return redirect()->action('ExpedienteController@lista');
     }
 
 	public function borrar(Request $request, $idExpediente){
@@ -168,13 +163,7 @@ class ExpedienteController extends Controller
 		Incidente::eliminarIncidentes($idExpediente);
 		Expediente::eliminarExpediente($idExpediente);
 		
-        list($estadosExpediente,$tipos,$subtipos) = $this->prepararVistaLista();
-		$filtroExpediente = new FiltroExpediente($request);
-
-		$expedientes = Expediente::buscarExpediente($request);
-
-		return view('expediente.lista', compact('estadosExpediente',
-					'tipos', 'subtipos', 'expedientes', 'filtroExpediente' ));
+		return redirect()->action('ExpedienteController@lista');
 	}
 
 	public function prepararVistaExpediente(){
