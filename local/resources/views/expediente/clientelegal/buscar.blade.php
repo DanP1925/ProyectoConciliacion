@@ -16,20 +16,6 @@
 				<div class="table-2cells-div padding-bottom-5">
 					<div class="left-div">
 						<div class="site-label">
-							DNI
-						</div>
-					</div>
-				</div>
-				<div class="site-control">
-					<div class="site-control-border">
-						<input type="text" class="site-input" id="dni" name="dni" @if (!is_null($filtroClienteLegal->dni)) value="{{$filtroClienteLegal->dni}}" @endif/>
-					</div>
-				</div>
-			</div>
-			<div class="cell small-4">
-				<div class="table-2cells-div padding-bottom-5">
-					<div class="left-div">
-						<div class="site-label">
 							Correo Electrónico
 						</div>
 					</div>
@@ -40,38 +26,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="cell small-12 padding-bottom-20">
-		<div class="grid-x grid-margin-x">
-			<div class="cell small-4">
-				<div class="site-label padding-bottom-5">
-					Razon Social
-				</div>
-				<div class="site-control">
-					<div class="site-control-border">
-						<input type="text" class="site-input" id="razonSocial" name="razonSocial" @if (!is_null($filtroClienteLegal->razonSocial)) value="{{$filtroClienteLegal->razonSocial}}" @endif/>
-					</div>
-				</div>
-			</div>
-			<div class="cell small-4">
-				<div class="table-2cells-div padding-bottom-5">
-					<div class="left-div">
-						<div class="site-label">
-							RUC
-						</div>
-					</div>
-				</div>
-				<div class="site-control">
-					<div class="site-control-border">
-						<input type="text" class="site-input" id="ruc" name="ruc" @if (!is_null($filtroClienteLegal->ruc)) value="{{$filtroClienteLegal->ruc}}" @endif/>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="cell small-12 padding-bottom-20">
-		<div class="grid-x grid-margin-x">
 			<div class="cell small-4">
 				<div class="table-2cells-div padding-bottom-5">
 					<div class="left-div">
@@ -87,6 +41,38 @@
 							<option value="Si" @if ("Si" == $filtroClienteLegal->flagConsorcio) selected @endif >Si</option>
 							<option value="No" @if ("No" == $filtroClienteLegal->flagConsorcio) selected @endif >No</option>
 						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cell small-12 padding-bottom-20">
+		<div class="grid-x grid-margin-x">
+			<div class="cell small-4">
+				<div class="table-2cells-div padding-bottom-5">
+					<div class="left-div">
+						<div class="site-label">
+							DNI
+						</div>
+					</div>
+				</div>
+				<div class="site-control">
+					<div class="site-control-border">
+						<input type="text" class="site-input" id="dni" name="dni" @if (!is_null($filtroClienteLegal->dni)) value="{{$filtroClienteLegal->dni}}" @endif/>
+					</div>
+				</div>
+			</div>
+			<div class="cell small-4">
+				<div class="table-2cells-div padding-bottom-5">
+					<div class="left-div">
+						<div class="site-label">
+							RUC
+						</div>
+					</div>
+				</div>
+				<div class="site-control">
+					<div class="site-control-border">
+						<input type="text" class="site-input" id="ruc" name="ruc" @if (!is_null($filtroClienteLegal->ruc)) value="{{$filtroClienteLegal->ruc}}" @endif/>
 					</div>
 				</div>
 			</div>

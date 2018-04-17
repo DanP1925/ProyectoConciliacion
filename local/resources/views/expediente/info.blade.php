@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="right-div">
-					<input type="hidden" name="accionRegistrar" value="editarExpediente {{$id}}"/>
+					<input type="hidden" id="accionRegistrar" name="accionRegistrar" value="editarExpediente {{$id}}"/>
 					<a href="{{ url('/expediente/lista') }}">
 						<div id="btn-regresar" class="site-title-button float-right">
 							Regresar
@@ -857,6 +857,18 @@
 
 @include('shared.modals')
 
+<script>
 @include('expediente.jsexpediente')
 
+function esNumeroValido(){
+	var numeroExpediente = $('#numero').val();
+	@foreach($listaExpedientes as $expediente)
+		if (numeroExpediente == "{{$expediente}}" && numeroExpediente != "{{$numeroId}}"){
+			return true;
+		}
+	@endforeach
+	return false;
+}
+
+</script>
 @endsection

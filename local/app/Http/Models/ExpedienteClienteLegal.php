@@ -79,7 +79,7 @@ class ExpedienteClienteLegal extends Model {
 
     public static function buscarCliente(Request $request){
 
-		$flagConsorcio = $request->input('flagConsorcio');
+		$flagConsorcio = $request->session()->get('filtroFlagConsorcio');
 		if (!is_null($flagConsorcio)){
 			if ($flagConsorcio == "Si")
 				$resultado = ExpedienteClienteLegal::whereNotNull('idConsorcioPersona');
@@ -88,44 +88,35 @@ class ExpedienteClienteLegal extends Model {
 		} else
 			$resultado = ExpedienteClienteLegal::getModel();
 
-		$flagSector = $request->input('sector');
+		$flagSector = $request->session()->get('filtroSector');
 		if (!is_null($flagSector))
 			$resultado = $resultado->where('flgSector',$flagSector);
 
-		$email = $request->input('email');
+		$email = $request->session()->get('filtroEmail');
 		if (!is_null($email))
 			$resultado = $resultado->where('emailClienteLegal','LIKE', '%'.$email.'%');
 
-		if (ExpedienteClienteLegal::buscaPersonaNatural($request) && ExpedienteClienteLegal::buscaPersonaJuridica($request)){
+		$nombre = $request->session()->get('filtroNombre');
+		if (!is_null($nombre))
+			$resultado = $resultado->where('nombre','LIKE','%'.$nombre.'%');
+
+		$dni = $request->session()->get('filtroDni'); 
+		$ruc = $request->session()->get('filtroRuc'); 
+
+		if (!is_null($dni) && !is_null($ruc)){
 			$resultado = ExpedienteClienteLegal::getModel();
 		} else {
-			if (ExpedienteClienteLegal::buscaPersonaNatural($request)){
-				$nombre = $request->input('nombre'); 
-				$dni = $request->input('dni'); 
-				$listaNaturales = PersonaNatural::getListaIdUsandoNombreYDNI($nombre,$dni);
+			if (!is_null($dni)){
+				$listaNaturales = PersonaNatural::getListaIdUsandoDNI($dni);
 				$resultado = $resultado->whereIn('idPersonaNatural', $listaNaturales);
 			} 
-			else if (ExpedienteClienteLegal::buscaPersonaJuridica($request)){
-				$razonSocial = $request->input('razonSocial'); 
-				$ruc = $request->input('ruc'); 
-				$listaJuridicas = PersonaJuridica::getListaIdUsandoRazonSocialYRUC($razonSocial,$ruc);
+			else if (!is_null($ruc)){
+				$listaJuridicas = PersonaJuridica::getListaIdUsandoRUC($ruc);
 				$resultado = $resultado->whereIn('idPersonaJuridica', $listaJuridicas);
 			}
 		}
 
 		return $resultado->paginate(5);
     }
-
-	private static function buscaPersonaNatural(Request $request){
-		$hayNombre = !is_null($request->input('nombre'));
-		$hayDni = !is_null($request->input('dni'));
-		return $hayNombre || $hayDni;
-	}
-
-	private static function buscaPersonaJuridica(Request $request){
-		$hayRazonSocial = !is_null($request->input('razonSocial'));
-		$hayRuc = !is_null($request->input('ruc'));
-		return $hayRazonSocial || $hayRuc;
-	}
 
 }

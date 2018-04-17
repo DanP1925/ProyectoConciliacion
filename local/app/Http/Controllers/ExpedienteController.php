@@ -62,13 +62,13 @@ class ExpedienteController extends Controller
 
 		list($estadosExpediente,$tipos,$subtipos,$tiposCuantia,$escalasDePago,
 			$origenesArbitraje,$montosContrato,$resultadosLaudo,
-			$ejecucionesLaudo,$favorLaudo,$tiposDesignacion) = $this->prepararVistaExpediente(); 
+			$ejecucionesLaudo,$favorLaudo,$tiposDesignacion,$listaExpedientes) = $this->prepararVistaExpediente(); 
 
         return view('expediente.nuevo',
             compact('estadosExpediente', 'tipos', 'subtipos', 'tiposCuantia',
                     'escalasDePago', 'expedienteTemporal', 'origenesArbitraje',
 					'montosContrato', 'resultadosLaudo', 'ejecucionesLaudo',
-					'favorLaudo','tiposDesignacion'));
+					'favorLaudo','tiposDesignacion','listaExpedientes'));
     }
 
 	public function info(Request $request, $id)
@@ -86,14 +86,17 @@ class ExpedienteController extends Controller
 
 		list($estadosExpediente,$tipos,$subtipos,$tiposCuantia,$escalasDePago,
 			$origenesArbitraje,$montosContrato,$resultadosLaudo,
-			$ejecucionesLaudo,$favorLaudo, $tiposDesignacion) = $this->prepararVistaExpediente(); 
+			$ejecucionesLaudo,$favorLaudo, $tiposDesignacion,$listaExpedientes) = $this->prepararVistaExpediente(); 
+
+		$expediente = Expediente::where('idExpediente',$id)->first();
+		$numeroId = $expediente->numero;
 
 		return view('expediente.info',
 			compact('expedienteTemporal',
 					'estadosExpediente','tipos','subtipos','tiposCuantia',
 					'escalasDePago','origenesArbitraje','montosContrato',
 					'resultadosLaudo','ejecucionesLaudo','favorLaudo', 
-					'tiposDesignacion', 'id'));
+					'tiposDesignacion', 'id', 'numeroId','listaExpedientes'));
 	}
 
 	public function ejecutarAccion(Request $request, $expedienteTemporal){
@@ -186,10 +189,15 @@ class ExpedienteController extends Controller
 		$ejecucionesLaudo = DB::table('laudo_ejecucion')->get()->all();
 		$favorLaudo = DB::table('laudo_a_favor')->get()->all();
 		$designacionTipo = DB::table('designacion_tipo')->get()->all();
+
 		$numerosExpediente = DB::table('expediente')->select('numero')->get()->all();
+		$listaNumeros = [];
+		foreach($numerosExpediente as $numeroExpediente)
+			array_push($listaNumeros,$numeroExpediente->numero);
+
 		return array($estadosExpediente,$tipos,$subtipos,$tiposCuantia,$escalasDePago,
 			$origenesArbitraje,$montosContrato,$resultadosLaudo,
-			$ejecucionesLaudo,$favorLaudo,$designacionTipo);
+			$ejecucionesLaudo,$favorLaudo,$designacionTipo,$listaNumeros);
 	}
 
 	public function prepararVistaLista(){

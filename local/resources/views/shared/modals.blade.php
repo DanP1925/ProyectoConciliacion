@@ -587,6 +587,36 @@
 	</div>
 </div>
 
+<div class="reveal" id="modalExpedienteExistente" data-reveal data-options="closeOnClick:false;closeOnEsc:false;">
+	<div class="alert-box-div" class="lity-hide">
+		<div class="grid-container">
+			<div class="grid-x">
+				<div class="cell small-12">
+					<div class="alert-line-icon-div">
+						<div class="alert-icon-div">
+							<img src="{{ asset('images/ico_info.png') }}" />
+						</div>
+					</div>
+					<div class="alert-text-div">
+						El número de expediente que quiere ingresar ya ha sido registrado anteriormente.
+					</div>
+					<ul id="listaValidacionesModal">
+					</ul>
+					<div class="alert-line-button-div">
+						<div class="grid-x">
+							<div class="cell small-6 center-horizontally-div" data-close>
+								<div class="alert-button-div">
+									Aceptar
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="reveal" id="modalFormatoDatos" data-reveal data-options="closeOnClick:false;closeOnEsc:false;">
 	<div class="alert-box-div" class="lity-hide">
 		<div class="grid-container">
