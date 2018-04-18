@@ -88,7 +88,6 @@ class ExpedienteController extends Controller
 		list($estadosExpediente,$tipos,$subtipos,$tiposCuantia,$escalasDePago,
 			$origenesArbitraje,$montosContrato,$resultadosLaudo,
 			$ejecucionesLaudo,$favorLaudo, $tiposDesignacion,$listaExpedientes) = $this->prepararVistaExpediente(); 
-
 		$expediente = Expediente::where('idExpediente',$id)->first();
 		$numeroId = $expediente->numero;
 
@@ -215,7 +214,9 @@ class ExpedienteController extends Controller
         $perfiles = DB::table('usuario_legal_tipo')->get()->all();
 
 		list($accion,$tipoAccion,$id) = 
-			$this->separarAccion($request, ["buscarSecretarioId","buscarLiderId"]);
+			$this->separarAccion($request, ["buscarSecretarioId","buscarLiderId",
+				"buscarUnicoId","buscarPresidenteId",
+				"buscarArbitroDemandanteId","buscarArbitroDemandadoId"]);
 		
         $secretarios = UsuarioLegal::buscarPersonal($request);
         ExpedienteTemporal::guardarEnSesion($request);

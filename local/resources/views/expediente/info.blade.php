@@ -537,7 +537,7 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarUnico" class="site-label-button float-right" onclick="buscarSecretario()">
+							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarUnicoId {{$id}}" class="site-label-button float-right" onclick="buscarSecretario()">
 								buscar
 							</button>
 							<div style="clear:both;"></div>
@@ -581,7 +581,7 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarPresidente" class="site-label-button float-right" onclick="buscarSecretario()">
+							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarPresidenteId {{$id}}" class="site-label-button float-right" onclick="buscarSecretario()">
 								buscar
 							</button>
 							<div style="clear:both;"></div>
@@ -601,7 +601,7 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarArbitroDemandante" class="site-label-button float-right" onclick="buscarSecretario()">
+							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarArbitroDemandanteId {{$id}}" class="site-label-button float-right" onclick="buscarSecretario()">
 								buscar
 							</button>
 							<div style="clear:both;"></div>
@@ -621,7 +621,7 @@
 							</div>
 						</div>
 						<div class="right-div">
-							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarArbitroDemandado" class="site-label-button float-right" onclick="buscarSecretario()">
+							<button type="submit" formmethod="GET" formaction="{{ url('expediente/usuariolegal/directorio', []) }}" name="accion" value="buscarArbitroDemandadoId {{$id}}" class="site-label-button float-right" onclick="buscarSecretario()">
 								buscar
 							</button>
 							<div style="clear:both;"></div>

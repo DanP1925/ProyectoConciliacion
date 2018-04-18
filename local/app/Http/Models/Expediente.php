@@ -348,26 +348,12 @@ class Expediente extends Model {
 
 	public function getDemandante(){
 		$clienteLegal = DB::table('expediente_cliente_legal')->where('idExpedienteClienteLegal',$this->idDemandante)->first();
-		if ($clienteLegal->flgTipoPersona == 'J'){
-			$personaJuridica = DB::table('persona_juridica')->where('idPersonaJuridica',$clienteLegal->idPersonaJuridica)->first();
-			$nombre = $personaJuridica->razonSocial;
-		} else {
-			$personaNatural = DB::table('persona_natural')->where('idPersonaNatural',$clienteLegal->idPersonaNatural)->first();
-			$nombre = ($personaNatural->nombre).' '.($personaNatural->apellidoPaterno).' '.($personaNatural->apellidoMaterno);
-		}
-		return $nombre;
+		return $clienteLegal->nombre;
 	}
 	
 	public function getDemandado(){
 		$clienteLegal = DB::table('expediente_cliente_legal')->where('idExpedienteClienteLegal',$this->idDemandado)->first();
-		if ($clienteLegal->flgTipoPersona == 'J'){
-			$personaJuridica = DB::table('persona_juridica')->where('idPersonaJuridica',$clienteLegal->idPersonaJuridica)->first();
-			$nombre = $personaJuridica->razonSocial;
-		} else {
-			$personaNatural = DB::table('persona_natural')->where('idPersonaNatural',$clienteLegal->idPersonaNatural)->first();
-			$nombre = ($personaNatural->nombre).' '.($personaNatural->apellidoPaterno).' '.($personaNatural->apellidoMaterno);
-		}
-		return $nombre;
+		return $clienteLegal->nombre;
 	}
 
 	public function getSecretarioResponsable(){

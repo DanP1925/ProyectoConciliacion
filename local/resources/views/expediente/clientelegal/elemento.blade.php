@@ -14,11 +14,7 @@
 						Nombre/Razon Social
 					</div>
 					<div class="list-biglabel-avant-garde-regular">
-						@if ($cliente->flgTipoPersona == "J")
-							{{$cliente->getPersonaJuridica()->razonSocial}}
-						@else
-							{{$cliente->getPersonaNatural()->apellidoPaterno}} {{$cliente->getPersonaNatural()->apellidoMaterno}}, {{$cliente->getPersonaNatural()->nombre}}
-						@endif
+						{{$cliente->nombre}}
 					</div>
 					@if (!is_null($cliente->getConsorcioPersona()))
 					<div class="list-sublabel-avant-garde-regular">
