@@ -168,6 +168,11 @@ class ExpedienteController extends Controller
 		ExpedienteEquipoLegal::eliminarEquipo($idExpediente);
 		RegionControversia::eliminarRegiones($idExpediente);
 		Incidente::eliminarIncidentes($idExpediente);
+		$designaciones = DB::table('expediente_designacion')->where('idExpediente',$idExpediente);
+		foreach($designaciones->get()->all() as $designacion){
+			DB::table('expediente_designacion_propuesta')->where('idExpedienteDesignacion',$designacion->idExpedienteDesignacion)->delete();
+		}
+		$designaciones->delete();
 		Expediente::eliminarExpediente($idExpediente);
 		
 		return redirect()->action('ExpedienteController@lista');

@@ -55,6 +55,7 @@ class LaudoRecursoPresentado extends Model {
 
 		$recursosPresentados = $request->input('recursoPresentado');
 		$fechasPresentacion = $request->input('fechaPresentacion');
+		$recursosAFavor = $request->input('recursoAFavor');
 		$resultadosRecursosPresentado = $request->input('resultadoRecursoPresentado');
 		$fechasResultado = $request->input('fechaResultado');
 

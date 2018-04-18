@@ -53,7 +53,7 @@ class ConsorcioPersonaDetalle extends Model {
 	}
 
 	public static function getListaIdConsorcioUsandoConsorcioPersona($listaId){
-		$consorcios = DB::table('consorcio_persona_detalle')->whereIn('idPersonaJuridica',$listaId);
+		$consorcios = DB::table('consorcio_persona_detalle')->whereIn('idConsorcioPersona',$listaId);
 		$lista = [];
 		foreach($consorcios->get()->all() as $consorcio)
 			array_push($lista,$consorcio->idPersonaJuridica);
