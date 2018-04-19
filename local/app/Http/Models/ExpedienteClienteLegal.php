@@ -69,7 +69,7 @@ class ExpedienteClienteLegal extends Model {
 	public static function getListaIdUsandoIdPersonaNatural($listaPersonasNatural){
 		$clientesNaturales = DB::table('expediente_cliente_legal')->whereIn('idPersonaNatural',$listaPersonasNatural)->get();
 
-		$lista= [];
+		$lista = [];
 		foreach($clientesNaturales as $clienteNatural){
 			array_push($lista, $clienteNatural->idExpedienteClienteLegal);
 		}
@@ -77,16 +77,19 @@ class ExpedienteClienteLegal extends Model {
 		return $lista;
 	}
 
-    public static function buscarCliente(Request $request){
+	public static function getListaIdUsandoIdConsorcio($listaConsorcio){
+		$clientes = DB::table('expediente_cliente_legal')->whereIn('idConsorcioPersona',$listaConsorcio)->get();
 
-		$flagConsorcio = $request->session()->get('filtroFlagConsorcio');
-		if (!is_null($flagConsorcio)){
-			if ($flagConsorcio == "Si")
-				$resultado = ExpedienteClienteLegal::whereNotNull('idConsorcioPersona');
-			else if ($flagConsorcio == "No")
-				$resultado = ExpedienteClienteLegal::whereNull('idConsorcioPersona');
-		} else
-			$resultado = ExpedienteClienteLegal::getModel();
+		$lista = [];
+		foreach($clientes as $cliente){
+			array_push($lista, $cliente->idExpedienteClienteLegal);
+		}
+		return $lista;
+	}
+
+	public static function buscarCliente(Request $request){
+
+		$resultado = ExpedienteClienteLegal::getModel();
 
 		$flagSector = $request->session()->get('filtroSector');
 		if (!is_null($flagSector))
@@ -108,11 +111,14 @@ class ExpedienteClienteLegal extends Model {
 		} else {
 			if (!is_null($dni)){
 				$listaNaturales = PersonaNatural::getListaIdUsandoDNI($dni);
-				$resultado = $resultado->whereIn('idPersonaNatural', $listaNaturales);
+				$listaConsorcios= ConsorcioPersonaDetalle::getListaIdConsorcioUsandoPersonaNatural($listaNaturales);
+				$resultado = $resultado->whereIn('idConsorcioPersona',$listaConsorcios);
+				
 			} 
 			else if (!is_null($ruc)){
 				$listaJuridicas = PersonaJuridica::getListaIdUsandoRUC($ruc);
-				$resultado = $resultado->whereIn('idPersonaJuridica', $listaJuridicas);
+				$listaConsorcios= ConsorcioPersonaDetalle::getListaIdConsorcioUsandoPersonaJuridica($listaJuridicas);
+				$resultado = $resultado->whereIn('idConsorcioPersona',$listaConsorcios);
 			}
 		}
 

@@ -30,16 +30,16 @@
 				<div class="table-2cells-div padding-bottom-5">
 					<div class="left-div">
 						<div class="site-label">
-							¿Es Consorcio?
+							Sector
 						</div>
 					</div>
 				</div>
 				<div class="site-control">
 					<div class="site-control-border">
-						<select class="site-select" id="flagConsorcio" name="flagConsorcio">
+						<select class="site-select" id="sector" name="sector">
 							<option value="">Seleccione una opción</option>
-							<option value="Si" @if ("Si" == $filtroClienteLegal->flagConsorcio) selected @endif >Si</option>
-							<option value="No" @if ("No" == $filtroClienteLegal->flagConsorcio) selected @endif >No</option>
+							<option value="PRV" @if ("PRV" == $filtroClienteLegal->sector) selected @endif >Privado</option>
+							<option value="PUB" @if ("PUB" == $filtroClienteLegal->sector) selected @endif >Público</option>
 						</select>
 					</div>
 				</div>
@@ -73,24 +73,6 @@
 				<div class="site-control">
 					<div class="site-control-border">
 						<input type="text" class="site-input" id="ruc" name="ruc" @if (!is_null($filtroClienteLegal->ruc)) value="{{$filtroClienteLegal->ruc}}" @endif/>
-					</div>
-				</div>
-			</div>
-			<div class="cell small-4">
-				<div class="table-2cells-div padding-bottom-5">
-					<div class="left-div">
-						<div class="site-label">
-							Sector
-						</div>
-					</div>
-				</div>
-				<div class="site-control">
-					<div class="site-control-border">
-						<select class="site-select" id="sector" name="sector">
-							<option value="">Seleccione una opción</option>
-							<option value="PRV" @if ("PRV" == $filtroClienteLegal->sector) selected @endif >Privado</option>
-							<option value="PUB" @if ("PUB" == $filtroClienteLegal->sector) selected @endif >Público</option>
-						</select>
 					</div>
 				</div>
 			</div>

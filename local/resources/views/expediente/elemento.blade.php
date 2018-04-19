@@ -15,14 +15,22 @@
 			Secretario Responsable
 		</div>
 		<div class="list-label-avant-garde-regular">
-			{{$expediente->getSecretarioResponsable()}}
+			@if ($expediente->getSecretarioResponsable() != "")
+				{{$expediente->getSecretarioResponsable()}}
+			@else
+				--------------------------
+			@endif
 		</div>
 	</div>
 	<div class="list-sublabel-avant-garde-lite">
 		Secretario Lider
 	</div>
 	<div class="list-label-avant-garde-regular">
-		{{$expediente->getSecretarioLider()}}
+		@if ($expediente->getSecretarioLider() != "")
+			{{$expediente->getSecretarioLider()}}
+		@else
+			--------------------------
+		@endif
 	</div>
 </div>
 <div class="list-text-3-div">

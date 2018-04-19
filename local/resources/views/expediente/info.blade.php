@@ -545,7 +545,7 @@
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="text" class="site-input" id="arbitroUnico" name="arbitroUnico" @if (!is_null($expedienteTemporal->arbitroUnico)) value="{{$expedienteTemporal->arbitroUnico}}" @endif readonly/>
+							<input type="text" class="site-input" id="arbitroUnico" name="arbitroUnico" @if (!is_null($expedienteTemporal->arbitroUnico)) value="{{$expedienteTemporal->arbitroUnico}}" @endif />
 						</div>
 					</div>
 				</div>
@@ -553,6 +553,7 @@
 					<div class="site-label padding-bottom-5">
 						Tipo de Designación del Árbitro Único
 					</div>
+					<br/>
 					<div class="site-control">
 						<div class="site-control-border">
 							<select class="site-select" id="designacionArbitroUnico" name="designacionArbitroUnico">
@@ -589,7 +590,7 @@
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="text" class="site-input" id="presidenteTribunal" name="presidenteTribunal" @if (!is_null($expedienteTemporal->presidenteTribunal)) value="{{$expedienteTemporal->presidenteTribunal}}" @endif readonly/>
+							<input type="text" class="site-input" id="presidenteTribunal" name="presidenteTribunal" @if (!is_null($expedienteTemporal->presidenteTribunal)) value="{{$expedienteTemporal->presidenteTribunal}}" @endif />
 						</div>
 					</div>
 				</div>
@@ -609,7 +610,7 @@
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="text" class="site-input" id="arbitroDemandante" name="arbitroDemandante" @if (!is_null($expedienteTemporal->arbitroDemandante)) value="{{$expedienteTemporal->arbitroDemandante}}" @endif readonly/>
+							<input type="text" class="site-input" id="arbitroDemandante" name="arbitroDemandante" @if (!is_null($expedienteTemporal->arbitroDemandante)) value="{{$expedienteTemporal->arbitroDemandante}}" @endif />
 						</div>
 					</div>
 				</div>
@@ -629,7 +630,7 @@
 					</div>
 					<div class="site-control">
 						<div class="site-control-border">
-							<input type="text" class="site-input" id="arbitroDemandado" name="arbitroDemandado" @if (!is_null($expedienteTemporal->arbitroDemandado)) value="{{$expedienteTemporal->arbitroDemandado}}" @endif readonly/>
+							<input type="text" class="site-input" id="arbitroDemandado" name="arbitroDemandado" @if (!is_null($expedienteTemporal->arbitroDemandado)) value="{{$expedienteTemporal->arbitroDemandado}}" @endif />
 						</div>
 					</div>
 				</div>
