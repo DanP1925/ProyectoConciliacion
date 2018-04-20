@@ -796,7 +796,7 @@
                             @if(!is_null($expedienteTemporal->recursos))
                                 <div class="cell small-12">
                                     @foreach ($expedienteTemporal->recursos as $recurso)
-                                        <input id="idRecurso {{$loop->index + 1}}" type="hidden" name="idRecurso[]" value="{{$$loop->index + 1}}" />
+                                        <input id="idRecurso {{$loop->index + 1}}" type="hidden" name="idRecurso[]" value="{{$loop->index + 1}}" />
                                         <input id="recursoPresentado {{$loop->index + 1}}" type="hidden" name="recursoPresentado[]" value="{{$recurso->recursoPresentado}}" />
                                         <input id="fechaPresentacion {{$loop->index + 1}}" type="hidden" name="fechaPresentacion[]" value="{{$recurso->fechaPresentacion}}" />
                                         <input id="recursoAFavor {{$loop->index + 1}}" type="hidden" name="recursoAFavor[]" value="{{$recurso->recursoAFavor}}" />
