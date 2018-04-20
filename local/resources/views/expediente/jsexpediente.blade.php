@@ -195,10 +195,18 @@
 
 		var indexRecurso = $("#borrarItem").val();
 
+		var idRecurso = document.getElementById('idRecurso ' + indexRecurso);
+		idRecurso.parentNode.removeChild(idRecurso);	
+
 		var recursoPresentado = document.getElementById('recursoPresentado ' + indexRecurso);
 		recursoPresentado.parentNode.removeChild(recursoPresentado);
+
 		var fechaPresentacion = document.getElementById('fechaPresentacion ' + indexRecurso);
 		fechaPresentacion.parentNode.removeChild(fechaPresentacion);
+
+		var recursoAFavor = document.getElementById('recursoAFavor ' + indexRecurso);
+		recursoAFavor.parentNode.removeChild(recursoAFavor);
+
 		var resultadoRecursoPresentado = document.getElementById('resultadoRecursoPresentado ' + indexRecurso);
 		resultadoRecursoPresentado.parentNode.removeChild(resultadoRecursoPresentado);
 		var fechaResultado = document.getElementById('fechaResultado ' + indexRecurso);

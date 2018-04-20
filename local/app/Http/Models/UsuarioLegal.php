@@ -134,4 +134,19 @@ class UsuarioLegal extends Model {
 		return $resultado;
 	}
 
+	public static function getUsandoNombreYApellidos($nombre, $apellidoPaterno, $apellidoMaterno, $tamanho){
+
+		if ($tamanho >2)
+			$usuario = DB::table('usuario_legal')
+			->where([['nombre','LIKE','%'.$nombre.'%'],['apellidoPaterno','LIKE','%'.$apellidoPaterno.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaterno.'%']])->first();
+		else if ($tamanho > 1)
+			$usuario = DB::table('usuario_legal')
+			->where([['apellidoPaterno','LIKE','%'.$apellidoPaterno.'%'],['apellidoMaterno','LIKE','%'.$apellidoMaterno.'%']])->first();
+		else if ($tamanho == 1)
+			$usuario = DB::table('usuario_legal')
+			->where('apellidoPaterno','LIKE','%'.$apellidoPaterno.'%')->first();
+
+		return $usuario;
+	}
+
 }

@@ -303,6 +303,7 @@ class ExpedienteController extends Controller
 		$resultadoRecursos = DB::table('laudo_recurso_resultado')->get()->all();
 		$aFavor = DB::table('laudo_a_favor')->get()->all();
 
+		$idRecursos = $request->input('idRecurso');
 		$recursos = $request->input('recursoPresentado');
 		$fechasPresentacion = $request->input('fechaPresentacion');
 		$recursosAFavor = $request->input('recursoAFavor');
@@ -312,15 +313,29 @@ class ExpedienteController extends Controller
 		$accion = explode(" ",$request->input('accion'));
 		$tipoAccion = $accion[0];
 		$id = 0;
+
 		if ($tipoAccion == "editarRecursoId"){
 			$id = $accion[1];
-			$idRecurso = $accion[2];
+			$idRecurso = $accion[2]+1;
 		} else
-			$idRecurso = $accion[1];
+			$idRecurso = $accion[1]+1;
 
-		$nuevoRecurso = RecursoTemporal::withData($recursos[$idRecurso],$fechasPresentacion[$idRecurso], $recursosAFavor[$idRecurso] ,$resultadosRecursosPresentado[$idRecurso],$fechasResultado[$idRecurso]);
+		$indice = 0;
+		foreach($idRecursos as $indexRecurso){
+			if ($indexRecurso == $idRecurso)
+				break;
+			$indice++;
+		}
 
-        $accion = $request->input('accion');
+		$nuevoRecurso = RecursoTemporal::withData($recursos[$indice],$fechasPresentacion[$indice], $recursosAFavor[$indice] ,$resultadosRecursosPresentado[$indice],$fechasResultado[$indice]);
+
+		$previaAccion = explode(" ",$request->input('accion'));
+		if ($tipoAccion == "editarRecursoId"){
+			$accion = $previaAccion[0].' '.$previaAccion[1].' '.$indice;
+		} else {
+			$accion = $previaAccion[0].' '.$indice;
+		} 
+
         ExpedienteTemporal::guardarEnSesion($request);
 		return view('expediente.recurso.editar',
 			compact('recursosPresentados', 'resultadoRecursos', 'aFavor',
