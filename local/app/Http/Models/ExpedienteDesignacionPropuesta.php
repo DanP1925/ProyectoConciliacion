@@ -19,5 +19,4 @@ class ExpedienteDesignacionPropuesta extends Model {
         return $this->belongsTo(\App\Http\Models\UsuarioLegal::class, 'idUsuarioLegal', 'idUsuarioLegal');
     }
 
-
 }

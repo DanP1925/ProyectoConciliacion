@@ -27,5 +27,13 @@ class ExpedienteDesignacion extends Model {
         return $this->hasMany(\App\Http\Models\ExpedienteDesignacionPropuesta::class, 'idExpedienteDesignacion', 'idExpedienteDesignacion');
     }
 
+	public function eliminarDesignacion($idExpediente){
+		$designaciones = DB::table('expediente_designacion')->where('idExpediente',$idExpediente);
+		foreach ($designaciones->get()->all() as $designacion){
+			$idDesignacion = $designacion->idExpedienteDesignacion;
+			DB::table('expediente_designacion_propuesta')->where('idExpedienteDesignacion','=',$idDesignacion)->delete();
+		}
+		$desginaciones->delete();
+	}
 
 }
